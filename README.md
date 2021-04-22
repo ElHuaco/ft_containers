@@ -1,0 +1,1 @@
+- Uso "Friend" en template classes -> [Link](https://web.mst.edu/~nmjxv3/articles/templates.html)
