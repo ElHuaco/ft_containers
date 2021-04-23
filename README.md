@@ -1,1 +1,2 @@
 - Uso "Friend" en template classes -> [Link](https://web.mst.edu/~nmjxv3/articles/templates.html)
+- Uso "explicit" en constructores -> [Link](https://stackoverflow.com/questions/121162/what-does-the-explicit-keyword-mean)

@@ -6,11 +6,11 @@
 #    By: aleon-ca <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/22 09:25:30 by aleon-ca          #+#    #+#              #
-#    Updated: 2021/04/22 12:06:10 by aleon-ca         ###   ########.fr        #
+#    Updated: 2021/04/23 11:14:54 by alejandro        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.cpp queue.cpp
+SRCS = main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

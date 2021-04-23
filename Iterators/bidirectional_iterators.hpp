@@ -1,20 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   bidirectional_iterators.hpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/23 12:23:44 by alejandro        ###   ########.fr       */
+/*   Created: 2021/04/23 11:57:22 by alejandro         #+#    #+#             */
+/*   Updated: 2021/04/23 11:57:26 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.hpp"
-#include <iostream>
-#include <string>
-
-int main (void)
-{
-	return (0);
-}
+#

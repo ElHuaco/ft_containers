@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:07:41 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/22 13:12:20 by aleon-ca         ###   ########.fr       */
+/*   Updated: 2021/04/22 16:47:11 by aleon-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "deque.hpp"
 
-namespace my
+namespace ft
 {
 	template<class T, class Container> class queue;
 
@@ -32,7 +32,7 @@ namespace my
 	template <class T, class Container>
 		bool operator>=(const queue<T, Container>& lhs, const queue<T, Container>& rhs);
 
-	template <class T, class Container = my::deque<T>> class queue
+	template <class T, class Container = ft::deque<T>> class queue
 	{
 		private:
 			Container	c;
