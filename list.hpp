@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 10:38:27 by alejandro         #+#    #+#             */
-/*   Updated: 2021/04/27 11:40:53 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/04/27 12:25:51 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ namespace ft
 			typedef allocator_type::const_pointer			const_pointer;
 			typedef BidirectionalIterator<value_type>		iterator;
 			typedef BidirectionalIterator<const value_type>	const_iterator;
-			typedef ReverseIterator<value_type>				reverse_iterator;
-			typedef ReveserseIterator<const value_type>		const_reverse_iterator;
+			typedef ReverseIterator<iterator>				reverse_iterator;
+			typedef ReveserseIterator<const_iterator>		const_reverse_iterator;
 			typedef ptrdiff_t								difference_type;
 			typedef size_t									size_type;
 
