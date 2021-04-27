@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 10:38:27 by alejandro         #+#    #+#             */
-/*   Updated: 2021/04/23 11:55:26 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/04/27 11:40:53 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,18 @@ namespace ft
 	template <class T, class Alloc = std::allocator<T>> class list
 	{
 		private:
-			typedef T									value_type;
-			typedef Alloc								allocator_type;
-			typedef allocator_type::reference			reference;
-			typedef allocator_type::const_reference		const_reference;
-			typedef allocator_type::pointer				pointer;
-			typedef allocator_type::const_pointer		const_pointer;
-			typedef BidirectionalIterator<value_type,
-				pointer, reference>						iterator;
-			typedef BidirectionalIterator<value_type,
-				const_pointer, const_reference>			const_iterator;
-			typedef ReverseIterator<iterator>			reverse_iterator;
-			typedef ReveserseIterator<const_iterator>	const_reverse_iterator;
-			typedef std::iterator_traits<iterator>
-				::difference_type						difference_type;
-			typedef size_t								size_type;
+			typedef T										value_type;
+			typedef Alloc									allocator_type;
+			typedef allocator_type::reference				reference;
+			typedef allocator_type::const_reference			const_reference;
+			typedef allocator_type::pointer					pointer;
+			typedef allocator_type::const_pointer			const_pointer;
+			typedef BidirectionalIterator<value_type>		iterator;
+			typedef BidirectionalIterator<const value_type>	const_iterator;
+			typedef ReverseIterator<value_type>				reverse_iterator;
+			typedef ReveserseIterator<const value_type>		const_reverse_iterator;
+			typedef ptrdiff_t								difference_type;
+			typedef size_t									size_type;
 
 		public:
 			/****************************/
@@ -50,8 +47,8 @@ namespace ft
 			{
 			}
 			template <class InputIterator>
-				list (InputIterator first, InputIterator last,
-					const allocator_type &alloc = allocator_type())
+			list (InputIterator first, InputIterator last,
+				const allocator_type &alloc = allocator_type())
 			{
 			}
 			list (const list &other)
