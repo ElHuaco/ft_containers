@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/30 13:09:38 by aleon-ca         ###   ########.fr       */
+/*   Updated: 2021/04/30 13:30:41 by aleon-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
 			typedef size_t										size_type;
 
 		protected:
-			typedef Node<value_type>						node;
+			typedef Node<value_type>							node;
 
 		private:
 			node		*_head;
@@ -48,24 +48,29 @@ namespace ft
 			/* COPLIEN MEMBER FUNCTIONS */
 			/****************************/
 			explicit list (const allocator_type &alloc = allocator_type()) :
-				_size(1)
+				_size(0), _head(nullptr), _end(nullptr)
 			{
-				this->_head = new node();
-				this->_end = this->_head;
 			}
 			explicit list (size_type n, const value_type &val = value_type(),
-				const allocator_type &alloc = allocator_type()) : _size(n)
+				const allocator_type &alloc = allocator_type()) : _size(n),
+				_head(nullptr), _end(nullptr)
 			{
-				this->_head = new node(val);
-				this->_end = this->_head;
 				size_type i = 0;
 				while (i++ < n)
 					this->push_back(val);
 			}
 			template <class InputIterator>
 			list (InputIterator first, InputIterator last,
-				const allocator_type &alloc = allocator_type())
+				const allocator_type &alloc = allocator_type()) :
+				_head(nullptr), _end(nullptr)
 			{
+				size_type size = 0;
+				while (first != last)
+				{
+					this->push_back(*first++);
+					size++;
+				}
+				this->_size = size;
 			}
 			list (const list &other)
 			{
@@ -77,7 +82,7 @@ namespace ft
 			}
 			list	&operator=(const list &rhs)
 			{
-				this->swap(other);
+				ft::swap(*this, rhs);
 				return (*this);
 			}
 			/****************************/
@@ -152,6 +157,7 @@ namespace ft
 			}
 			void		push_back(const value_type &val)
 			{
+				//updatea head, end
 			}
 			void		pop_back(void)
 			{
