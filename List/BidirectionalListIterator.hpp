@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:38:17 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/30 12:24:16 by aleon-ca         ###   ########.fr       */
+/*   Updated: 2021/04/30 17:33:47 by aleon-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ namespace ft
 				_ptr = rhs.ptr;
 				return (*this);
 			}
-			reference	operator*(void) const
+			T&			operator*(void) const
 			{
 				return (_ptr->getData());
 			}
-			pointer		operator->(void) const
+			T*			operator->(void) const
 			{
 				return (&_ptr->getData());
 			}
@@ -80,6 +80,10 @@ namespace ft
 			pointer		getPointer(void) const
 			{
 				return (_ptr);
+			}
+			void		setPointer(pointer newPtr)
+			{
+				_ptr = newPtr;
 			}
 	};
 	template <class T>

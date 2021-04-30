@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/30 13:30:41 by aleon-ca         ###   ########.fr       */
+/*   Updated: 2021/04/30 19:03:08 by aleon-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ namespace ft
 				size_type size = 0;
 				while (first != last)
 				{
-					this->push_back(*first++);
+					this->push_back(*first);
+					first++;
 					size++;
 				}
 				this->_size = size;
@@ -90,15 +91,23 @@ namespace ft
 			/****************************/
 			iterator		begin(void)
 			{
+				iterator head = this->_head;
+				return (head);
 			}
 			const_iterator	begin(void)
 			{
+				const_iterator head = const_cast<const node *>(this->_head);
+				return (head);
 			}
 			iterator		end(void)
 			{
+				iterator end = this->_end->next();
+				return (end);
 			}
 			const_iterator	end(void)
 			{
+				const_iterator end = const_cast<const node *>(this->_end->next());
+				return (end);
 			}
 			reverse_iterator		rbegin(void)
 			{
@@ -117,27 +126,34 @@ namespace ft
 			/****************************/
 			bool		empty(void) const
 			{
+				return (this->_size == 0);
 			}
 			size_type	size(void) const
 			{
+				return (this->_size);
 			}
 			size_type	max_size(void) const
 			{
+				return (std::numeric_limits<size_type>::max() / sizeof(node)); 
 			}
 			/****************************/
-			/* ELEMENT ACCESS FUNCTIONS*/
+			/* ELEMENT ACCESS FUNCTIONS */
 			/****************************/
 			reference		front(void)
 			{
+				return (*(this->_head->getData()));
 			}
 			const_reference front(void)
 			{
+				return (const_cast<const_reference>(*(this->_head->getData())));
 			}
 			reference		back(void)
 			{
+				return (*(this->_end->getData()));
 			}
 			const_reference back(void)
 			{
+				return (const_cast<const_reference>(*(this->_end->getData())));
 			}
 			/****************************/
 			/* MODIFIER MEMBER FUNCTIONS*/
@@ -145,15 +161,19 @@ namespace ft
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last)
 			{
+				//updatea head, end
 			}
 			void		assign(size_type n, const_value_type &val)
 			{
+				//updatea head, end
 			}
 			void		push_front(const value_type &val)
 			{
+				//updatea head, end
 			}
 			void		pop_front(void)
 			{
+				//updatea head, end
 			}
 			void		push_back(const value_type &val)
 			{
@@ -161,35 +181,59 @@ namespace ft
 			}
 			void		pop_back(void)
 			{
+				//updatea head, end
 			}
 			iterator	insert(iterator position, const value_type &val)
 			{
+				//updatea head, end
 			}
 			void		insert(iterator position, size_type n,
 				const value_type &val)
 			{
+				//updatea head, end
 			}
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last)
 			{
+				//updatea head, end
 			}
 			iterator	erase(iterator position)
 			{
-				//delete nodes
+				if (position.getPointer() == nullptr)
+					return (position);
+				if (position.getPointer()->prev() != nullptr)
+					position.getPointer()->prev()->next() =
+						position.getPointer()->next();
+				else
+					this->_head = position.getPointer()->next();
+				if (position.getPointer()->next() != nullptr)
+					position.getPointer()->next()->prev() = 
+						position.getPointer()->prev();
+				else
+					this->_end = position.getPointer()->prev();
+				iterator ret = position.getPointer->next();
+				delete position.getPointer();
+				this->_size--;
+				return (ret);
 			}
 			iterator	erase(iterator first, iterator last)
 			{
+				iterator ret;
 				while (first != last)
-					this->erase(first++);
+					ret = this->erase(first++);
+				return (ret);
 			}
 			void		swap(list &rhs)
 			{
+				//updatea head, end
 			}
 			void		resize(size_type n, value_type val = value_type())
 			{
+				//updatea head, end
 			}
 			void		clear(void)
 			{
+				//updatea head, end
 			}
 			/****************************/
 			/* OPERATION MEMBER FUNCTION*/
