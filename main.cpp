@@ -6,15 +6,16 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/23 12:23:44 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/04/30 12:25:09 by aleon-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list.hpp"
+#include "List/list.hpp"
 #include <iostream>
 #include <string>
 
 int main (void)
 {
+	ft::list<int> L1;
 	return (0);
 }

@@ -3,48 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   list.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
+/*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 10:38:27 by alejandro         #+#    #+#             */
-/*   Updated: 2021/04/27 12:25:51 by alejandro        ###   ########.fr       */
+/*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
+/*   Updated: 2021/04/30 13:09:38 by aleon-ca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIST_HPP
 # define LIST_HPP
 
-# include <memory>
-# include "Iterators/bidirectional_iterator.hpp"
-# include "Iterators/reverse_iterator.hpp"
+# include <limits>
+# include "Node.hpp"
+# include "BidirectionalListIterator.hpp"
 
 namespace ft
 {
 	template <class T, class Alloc = std::allocator<T>> class list
 	{
+		public:
+			typedef T											value_type;
+			typedef Alloc										allocator_type;
+			typedef allocator_type::reference					reference;
+			typedef allocator_type::const_reference				const_reference;
+			typedef allocator_type::pointer						pointer;
+			typedef allocator_type::const_pointer				const_pointer;
+			typedef BidirectionalListIterator<value_type>		iterator;
+			typedef BidirectionalListIterator<const value_type>	const_iterator;
+			typedef ReverseIterator<iterator>					reverse_iterator;
+			typedef ReveserseIterator<const_iterator>			const_reverse_iterator;
+			typedef ptrdiff_t									difference_type;
+			typedef size_t										size_type;
+
+		protected:
+			typedef Node<value_type>						node;
+
 		private:
-			typedef T										value_type;
-			typedef Alloc									allocator_type;
-			typedef allocator_type::reference				reference;
-			typedef allocator_type::const_reference			const_reference;
-			typedef allocator_type::pointer					pointer;
-			typedef allocator_type::const_pointer			const_pointer;
-			typedef BidirectionalIterator<value_type>		iterator;
-			typedef BidirectionalIterator<const value_type>	const_iterator;
-			typedef ReverseIterator<iterator>				reverse_iterator;
-			typedef ReveserseIterator<const_iterator>		const_reverse_iterator;
-			typedef ptrdiff_t								difference_type;
-			typedef size_t									size_type;
+			node		*_head;
+			node		*_end;
+			size_type	_size;
 
 		public:
 			/****************************/
 			/* COPLIEN MEMBER FUNCTIONS */
 			/****************************/
-			explicit list (const allocator_type &alloc = allocator_type())
+			explicit list (const allocator_type &alloc = allocator_type()) :
+				_size(1)
 			{
+				this->_head = new node();
+				this->_end = this->_head;
 			}
 			explicit list (size_type n, const value_type &val = value_type(),
-				const allocator_type &alloc = allocator_type())
+				const allocator_type &alloc = allocator_type()) : _size(n)
 			{
+				this->_head = new node(val);
+				this->_end = this->_head;
+				size_type i = 0;
+				while (i++ < n)
+					this->push_back(val);
 			}
 			template <class InputIterator>
 			list (InputIterator first, InputIterator last,
@@ -53,12 +69,16 @@ namespace ft
 			}
 			list (const list &other)
 			{
+				*this = other;
 			}
 			~list (void)
 			{
+				this->erase(this->begin(), this->end());
 			}
 			list	&operator=(const list &rhs)
 			{
+				this->swap(other);
+				return (*this);
 			}
 			/****************************/
 			/* ITERATOR MEMBER FUNCTIONS*/
@@ -149,9 +169,12 @@ namespace ft
 			}
 			iterator	erase(iterator position)
 			{
+				//delete nodes
 			}
 			iterator	erase(iterator first, iterator last)
 			{
+				while (first != last)
+					this->erase(first++);
 			}
 			void		swap(list &rhs)
 			{
@@ -210,36 +233,36 @@ namespace ft
 	/****************************/
 	/*  RELATIONAL OPERATORS    */
 	/****************************/
-	template <class T, class Alloc>
-	bool operator== (const list<T,Alloc> &lhs, const list<T,Alloc> &rhs)
+	template <class T>
+	bool operator== (const list<T> &lhs, const list<T> &rhs)
 	{
 	}
-	template <class T, class Alloc>
-	bool operator!= (const list<T,Alloc> &lhs, const list<T,Alloc> &rhs)
+	template <class T>
+	bool operator!= (const list<T> &lhs, const list<T> &rhs)
 	{
 	}
-	template <class T, class Alloc>
-	bool operator< (const list<T,Alloc> &lhs, const list<T,Alloc> &rhs)
+	template <class T>
+	bool operator< (const list<T> &lhs, const list<T> &rhs)
 	{
 	}
-	template <class T, class Alloc>
-	bool operator<= (const list<T,Alloc> &lhs, const list<T,Alloc> &rhs)
+	template <class T>
+	bool operator<= (const list<T> &lhs, const list<T> &rhs)
 	{
 	}
-	template <class T, class Alloc>
-	bool operator> (const list<T,Alloc> &lhs, const list<T,Alloc> &rhs)
+	template <class T>
+	bool operator> (const list<T> &lhs, const list<T> &rhs)
 	{
 	}
-	template <class T, class Alloc>
-	bool operator>= (const list<T,Alloc> &lhs, const list<T,Alloc> &rhs)
+	template <class T>
+	bool operator>= (const list<T> &lhs, const list<T> &rhs)
 	{
 	}
 	/****************************/
 	/*      SWAP OVERLOAD       */
 	/****************************/
-	template <class T, class Alloc>
-	void swap (list<T,Alloc> &x, list<T,Alloc> &y)
+	template <class T>
+	void swap (list<T> &x, list<T> &y)
 	{
 	}
-};
+}
 #endif
