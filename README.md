@@ -4,3 +4,4 @@
 
 List:
   1. Necesitamos nodos que se apunten entre sí. -> El iterador bidireccional debe tener eso en cuenta.
+  2. ¿Por qué typedef del nodo es protected? -> Los nodos deben ser accesibles para las clases que hereden la lista, claro.
