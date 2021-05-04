@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/04 09:10:30 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/04 10:38:57 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,19 @@ namespace ft
 			}
 			reverse_iterator		rbegin(void)
 			{
+				return (reverse_iterator(this->_end));
 			}
 			const_reverse_iterator	rbegin(void)
 			{
+				return (const_cast<const_reverse_iterator>(reverse_iterator(this->_end)));
 			}
 			reverse_iterator		rend(void)
 			{
+				return (reverse_iterator(this->_head));
 			}
 			const_reverse_iterator	rend(void)
 			{
+				return (const_cast<const_reverse_iterator>(reverse_iterator(this->_head)));
 			}
 			/****************************/
 			/* CAPACITY MEMBER FUNCTIONS*/
@@ -284,8 +288,9 @@ namespace ft
 			}
 			void		swap(list &rhs)
 			{
-				//updatea head, end
-
+				list temp = *this;
+				this->assign(rhs.begin(), rhs.end());
+				rhs.assign(temp.begin(), temp.end());
 			}
 			void		resize(size_type n, value_type val = value_type())
 			{
@@ -319,20 +324,55 @@ namespace ft
 			}
 			void		remove(const value_type &val)
 			{
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					if (*it == val)
+						it = this->erase(it);
+					else
+						it++;
+				}
 			}
 			template <class Predicate>
 			void remove_if (Predicate pred)
 			{
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					if (pred(*it))
+						it = this->erase(it);
+					else
+						it++;
+				}
 			}
 			void		unique(void)
 			{
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					if (*it == *(it.getPointer()->next()))
+						this->erase(BidirectionalListIterator(it.getPointer->next()));
+					else
+						it++;
+				}
 			}
 			template <class BinaryPredicate>
 			void unique (BinaryPredicate binary_pred)
 			{
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					if (binary_pred(*(it.getPointer()->next()), *it))
+						this->erase(BidirectionalListIterator(it.getPointer->next()));
+					else
+						it++;
+				}
 			}
 			void		merge(list &other)
 			{
+				if (&other == this)
+					return ;
+
 			}
 			template <class Compare>
 			void merge (list &other, Compare comp)
@@ -340,10 +380,13 @@ namespace ft
 			}
 			void		sort(void)
 			{
+				//operator <
+				//no hay copia, destruction o construction
 			}
 			template <class Compare>
 			void sort (Compare comp)
 			{
+				//comp
 			}
 			void		reverse(void)
 			{
@@ -355,26 +398,59 @@ namespace ft
 	template <class T>
 	bool operator== (const list<T> &lhs, const list<T> &rhs)
 	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		else
+		{
+			iterator it = lhs.begin();
+			iterator it2 = rhs.begin();
+			while (it != lhs.end())
+			{
+				if (*it != *it2)
+					return (false);
+				it++;
+				it2++;
+			}
+		}
+		return (true);
 	}
 	template <class T>
 	bool operator!= (const list<T> &lhs, const list<T> &rhs)
 	{
+		return (!(lhs == rhs));
 	}
 	template <class T>
 	bool operator< (const list<T> &lhs, const list<T> &rhs)
 	{
+		iterator it = lhs.begin();
+		iterator it2 = rhs.begin();
+		while (it != lhs.end())
+		{
+			if (it.getPointer() == nullptr && it2.getPointer() != nullptr)
+				return (true);
+			else if (it2.getPointer() == nullptr)
+				return (false);
+			if (*it < *it2)
+				return (true);
+			it++;
+			it2++;
+		}
+		return (false);
 	}
 	template <class T>
 	bool operator<= (const list<T> &lhs, const list<T> &rhs)
 	{
+		return (!(rhs < lhs));
 	}
 	template <class T>
 	bool operator> (const list<T> &lhs, const list<T> &rhs)
 	{
+		return (rhs < lhs);
 	}
 	template <class T>
 	bool operator>= (const list<T> &lhs, const list<T> &rhs)
 	{
+		return (!(lhs < rhs));
 	}
 	/****************************/
 	/*      SWAP OVERLOAD       */
@@ -382,6 +458,9 @@ namespace ft
 	template <class T>
 	void swap (list<T> &x, list<T> &y)
 	{
+		list<T> temp = x;
+		x.assign(y.begin(), y.end());
+		y.assign(temp.begin(), temp.end());
 	}
 }
 #endif
