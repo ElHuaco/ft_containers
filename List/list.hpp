@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/04 10:38:57 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/04 11:05:17 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,7 +372,7 @@ namespace ft
 			{
 				if (&other == this)
 					return ;
-
+				//TODO
 			}
 			template <class Compare>
 			void merge (list &other, Compare comp)
@@ -382,6 +382,7 @@ namespace ft
 			{
 				//operator <
 				//no hay copia, destruction o construction
+				//merge sort
 			}
 			template <class Compare>
 			void sort (Compare comp)
@@ -390,6 +391,10 @@ namespace ft
 			}
 			void		reverse(void)
 			{
+				list temp();
+				temp.assign(this->rbegin(), this->rend());
+				this->clear();
+				this->swap(temp);
 			}
 	};
 	/****************************/
