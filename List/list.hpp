@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/30 19:03:08 by aleon-ca         ###   ########.fr       */
+/*   Updated: 2021/05/04 09:10:30 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ namespace ft
 			{
 			}
 			explicit list (size_type n, const value_type &val = value_type(),
-				const allocator_type &alloc = allocator_type()) : _size(n),
+				const allocator_type &alloc = allocator_type()) : _size(0),
 				_head(nullptr), _end(nullptr)
 			{
 				size_type i = 0;
@@ -61,17 +61,14 @@ namespace ft
 			}
 			template <class InputIterator>
 			list (InputIterator first, InputIterator last,
-				const allocator_type &alloc = allocator_type()) :
+				const allocator_type &alloc = allocator_type()) : _size(0)
 				_head(nullptr), _end(nullptr)
 			{
-				size_type size = 0;
 				while (first != last)
 				{
 					this->push_back(*first);
 					first++;
-					size++;
 				}
-				this->_size = size;
 			}
 			list (const list &other)
 			{
@@ -79,7 +76,7 @@ namespace ft
 			}
 			~list (void)
 			{
-				this->erase(this->begin(), this->end());
+				this->clear();
 			}
 			list	&operator=(const list &rhs)
 			{
@@ -161,41 +158,103 @@ namespace ft
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last)
 			{
-				//updatea head, end
+				this->clear();
+				while (first != last)
+				{
+					this->push_back(*first);
+					first++;
+				}
 			}
 			void		assign(size_type n, const_value_type &val)
 			{
-				//updatea head, end
+				this->clear();
+				this->resize(n, val);
 			}
 			void		push_front(const value_type &val)
 			{
-				//updatea head, end
+				if (this->empty())
+				{
+					this->_head = new node(val);
+					this->_end = this->_head;
+				}
+				else
+				{
+					node *temp = new node(val);
+					this->_head->prev() = temp;
+					temp->next() = this->_head;
+					this->_head = temp;
+				}
+				this->_size++;
 			}
 			void		pop_front(void)
 			{
-				//updatea head, end
+				if (this->empty())
+					return ;
+				if (this->_head->next())
+					this->_head->next()->prev() = nullptr;
+				this->erase(this->begin());
 			}
 			void		push_back(const value_type &val)
 			{
-				//updatea head, end
+				if (this->empty())
+				{
+					this->_head = new node(val);
+					this->_end = this->_head;
+				}
+				else
+				{
+					node *temp = new node(val);
+					this->_end->next() = temp;
+					temp->prev() = this->_end;
+					this->_end = temp;
+				}
+				this->_size++;
 			}
 			void		pop_back(void)
 			{
-				//updatea head, end
+				if (this->empty())
+					return ;
+				if (this->_end->prev())
+					this->_end->prev()->next() = nullptr;
+				this->erase(BidirectionalListIterator(this->_end));
 			}
 			iterator	insert(iterator position, const value_type &val)
 			{
-				//updatea head, end
+				if (!this->empty())
+				{
+					if (position.getPointer() == nullptr)
+						return (position);
+					position.getPointer->insertBefore(new node(val));
+					if (position.getPointer() == this->_head)
+						this->_head = position.getPointer()->prev();
+					this->_size++;
+					return (position--);
+				}
+				else
+				{
+					this->_head = new node(val);
+					this->_end = this->_head;
+					this->_size++;
+					return (this->begin());
+				}
 			}
 			void		insert(iterator position, size_type n,
 				const value_type &val)
 			{
-				//updatea head, end
+				size_type i = 0;
+				while (i++ < n)
+					insert(position, val);
 			}
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last)
 			{
-				//updatea head, end
+				while (first != last)
+				{
+					position = insert(position, *first);
+					first++;
+					if (this->_size != 1)
+						position++;
+				}
 			}
 			iterator	erase(iterator position)
 			{
@@ -226,14 +285,24 @@ namespace ft
 			void		swap(list &rhs)
 			{
 				//updatea head, end
+
 			}
 			void		resize(size_type n, value_type val = value_type())
 			{
-				//updatea head, end
+				if (n > this->_size)
+				{
+					while (this->_size != n)
+						this->push_back(val);
+				}
+				else if (n < this->_size)
+				{
+					while (this->_size != n)
+						this->pop_back();
+				}
 			}
 			void		clear(void)
 			{
-				//updatea head, end
+				this->erase(this->begin(), this->end());
 			}
 			/****************************/
 			/* OPERATION MEMBER FUNCTION*/
