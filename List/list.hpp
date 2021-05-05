@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/05 11:59:04 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/05 12:54:17 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ namespace ft
 			size_type	_size;
 
 		private:
-
 			/****************************/
 			/*       FUNCTION UTILS     */
 			/****************************/
@@ -371,13 +370,67 @@ namespace ft
 			/****************************/
 			void		splice(iterator position, list &other)
 			{
+				if (other.empty() || position.getPointer() == nullptr)
+					return ;
+				iterator it = other.begin();
+				iterator temp;
+				while (it != other.end())
+				{
+					temp = it.getPointer()->next();
+					position.getPointer()->insertAfter(it.getPointer());
+					if (position.getPointer() == this->_end)
+						this->_end = it.getPointer();
+					this->_size++;
+					position++;
+					it = temp;
+				}
+				other._size = 0;
+				other._head = nullptr;
+				other._end = nullptr;
 			}
 			void		splice(iterator position, list &other, iterator i)
 			{
+				if (position.getPointer() == nullptr || i.getPointer() == nullptr)
+					return ;
+				if (i.getPointer()->prev() != nullptr)
+					i.getPointer()->prev()->next() = i.getPointer()->next();
+				else
+					other._head = i.getPointer()->next();
+				if (i.getPointer()->next() != nullptr)
+					i.getPointer()->next()->prev() = i.getPointer()->prev();
+				else
+					other._end = i.getPointer()->prev();
+				position.getPointer()->insertAfter(i.getPointer());
+				if (position.getPointer() == this->_end)
+					this->_end = i.getPointer();
+				this->_size++;
+				other->_size--;
 			}
 			void		splice(iterator position, list &other, iterator first,
 				iterator last)
 			{
+				if (position.getPointer() == nullptr || first.getPointer() == nullptr)
+					return ;
+				if (first.getPointer()->prev != nullptr)
+					first.getPointer()->prev()->next() = last.getPointer();
+				else
+					other._head = last.getPointer();
+				if (last.getPointer() != nullptr)
+					last.getPointer()->prev() = first.getPointer()->prev();
+				else
+					other._end = first.getPointer()->prev();
+				iterator temp;
+				while (first != last)
+				{
+					temp = first.getPointer()->next();
+					position.getPointer()->insertAfter(first.getPointer());
+					if (position.getPointer() == this->_end)
+						this->_end = it.getPointer();
+					this->_size++;
+					other._size--;
+					position++;
+					first = temp;
+				}
 			}
 			void		remove(const value_type &val)
 			{
@@ -429,14 +482,14 @@ namespace ft
 			{
 				if (&other == this)
 					return ;
-				if (other._head == nullptr)
+				if (other.empty())
 					return ;
-				other._size = 0;
-				if (this->_head == nullptr)
+				if (this->empty())
 				{
 					this->_head = other._head;
 					this->_end = other._end;
 					this->_size = other._size;
+					other._size = 0;
 					other._head = nullptr;
 					other._end = nullptr;
 					return ;
@@ -463,6 +516,7 @@ namespace ft
 					this->_size++;
 					it2 = tmp;
 				}
+				other._size = 0;
 				other._head = nullptr;
 				other._end = nullptr;
 				return ;
@@ -472,14 +526,14 @@ namespace ft
 			{
 				if (&other == this)
 					return ;
-				if (other._head == nullptr)
+				if (other.empty())
 					return ;
-				other._size = 0;
-				if (this->_head == nullptr)
+				if (this->empty())
 				{
 					this->_head = other._head;
 					this->_end = other._end;
 					this->_size = other._size;
+					other._size = 0;
 					other._head = nullptr;
 					other._end = nullptr;
 					return ;
@@ -508,6 +562,7 @@ namespace ft
 				}
 				other._head = nullptr;
 				other._end = nullptr;
+				other._size = 0;
 				return ;
 			}
 			void		sort(void)
