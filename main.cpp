@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/30 12:25:09 by aleon-ca         ###   ########.fr       */
+/*   Updated: 2021/05/05 12:59:32 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,7 @@
 int main (void)
 {
 	ft::list<int> L1;
+	L1.push_back(42);
+	std::cout << L1.back() << std::endl;
 	return (0);
 }

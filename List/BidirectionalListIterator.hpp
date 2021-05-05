@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:38:17 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/04/30 17:33:47 by aleon-ca         ###   ########.fr       */
+/*   Updated: 2021/05/05 13:29:44 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,38 @@
 
 namespace ft
 {
-	template <class T> BidirectionalListIterator
-		: public iterator<std::bidirectional_iterator_tag, Node<T>>
+	template <class T> class BidirectionalListIterator
+		: public std::iterator<std::bidirectional_iterator_tag, ft::Node<T> >
 	{
+		public:
+			typedef Node<T>		value_type;
+			typedef Node<T>*	pointer;
+			typedef Node<T>&	reference;
+
 		private:
 			pointer		_ptr;
 	
 		public:
-			explicit BidirectionalIterator(pointer defptr = nullptr) : _ptr(defptr)
+			explicit BidirectionalListIterator(pointer defptr = nullptr) : _ptr(defptr)
 			{
 			}
-			BidirectionalIterator(const BidirectionalIterator &other)
+			BidirectionalListIterator(const BidirectionalListIterator &other)
 			{
-				_ptr = other.ptr;
+				_ptr = other._ptr;
 			}
-			virtual ~BidirectionalIterator(void)
+			virtual ~BidirectionalListIterator(void)
 			{
 			}
-			BidirectionalIterator	&operator=(const pointer newNode)
+			BidirectionalListIterator	&operator=(pointer newNode)
 			{
 				_ptr = newNode;
 				return (*this);
 			}
-			BidirectionalIterator	&operator=(const BidirectionalIterator &rhs)
+			BidirectionalListIterator	&operator=(const BidirectionalListIterator &rhs)
 			{
 				if (*this == rhs)
 					return (*this);
-				_ptr = rhs.ptr;
+				_ptr = rhs._ptr;
 				return (*this);
 			}
 			T&			operator*(void) const
@@ -55,25 +60,25 @@ namespace ft
 			{
 				return (&_ptr->getData());
 			}
-			BidirectionalIterator	&operator++(void)
+			BidirectionalListIterator	&operator++(void)
 			{
 				_ptr = _ptr->next();
 				return (*this);
 			}
-			BidirectionalIterator	operator++(int)
+			BidirectionalListIterator	operator++(int)
 			{
-				BidirectionalIterator temp = *this;
+				BidirectionalListIterator temp = *this;
 				_ptr = _ptr->next();
 				return (temp);
 			}
-			BidirectionalIterator	&operator--(void)
+			BidirectionalListIterator	&operator--(void)
 			{
 				_ptr = _ptr->prev();
 				return (*this);
 			}
-			BidirectionalIterator	operator--(int)
+			BidirectionalListIterator	operator--(int)
 			{
-				BidirectionalIterator temp = *this;
+				BidirectionalListIterator temp = *this;
 				_ptr = _ptr->prev();
 				return (temp);
 			}
@@ -87,14 +92,14 @@ namespace ft
 			}
 	};
 	template <class T>
-		bool operator== (const BidirectionalIterator<T> &lhs,
-			const BidirectionalIterator<T> &rhs)
+		bool operator== (const BidirectionalListIterator<T> &lhs,
+			const BidirectionalListIterator<T> &rhs)
 		{
 			return (lhs.getPointer() == rhs.getPointer());
 		}
 	template <class T>
-		bool operator!= (const BidirectionalIterator<T> &lhs,
-			const BidirectionalIterator<T> &rhs)
+		bool operator!= (const BidirectionalListIterator<T> &lhs,
+			const BidirectionalListIterator<T> &rhs)
 		{
 			return (lhs.getPointer() != rhs.getPointer());
 		}

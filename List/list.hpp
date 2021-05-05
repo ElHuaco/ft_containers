@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/05 12:54:17 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/05 13:31:37 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 namespace ft
 {
-	template <class T, class Alloc = std::allocator<T>> class list
+	template <class T, class Alloc = std::allocator<T> > class list
 	{
 		public:
 			/****************************/
@@ -27,10 +27,10 @@ namespace ft
 			/****************************/
 			typedef T											value_type;
 			typedef Alloc										allocator_type;
-			typedef allocator_type::reference					reference;
-			typedef allocator_type::const_reference				const_reference;
-			typedef allocator_type::pointer						pointer;
-			typedef allocator_type::const_pointer				const_pointer;
+			typedef typename allocator_type::reference			reference;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef typename allocator_type::pointer			pointer;
+			typedef typename allocator_type::const_pointer		const_pointer;
 			typedef BidirectionalListIterator<value_type>		iterator;
 			typedef BidirectionalListIterator<const value_type>	const_iterator;
 			typedef std::reverse_iterator<iterator>				reverse_iterator;
@@ -98,7 +98,7 @@ namespace ft
 			}
 			template <class InputIterator>
 			list (InputIterator first, InputIterator last,
-				const allocator_type &alloc = allocator_type()) : _size(0)
+				const allocator_type &alloc = allocator_type()) : _size(0),
 				_head(nullptr), _end(nullptr)
 			{
 				while (first != last)
@@ -117,7 +117,7 @@ namespace ft
 			}
 			list	&operator=(const list &rhs)
 			{
-				ft::swap(*this, rhs);
+				swap(*this, rhs);
 				return (*this);
 			}
 			/****************************/
@@ -128,7 +128,7 @@ namespace ft
 				iterator head = this->_head;
 				return (head);
 			}
-			const_iterator	begin(void)
+			const_iterator	begin(void) const
 			{
 				const_iterator head = const_cast<const node *>(this->_head);
 				return (head);
@@ -142,7 +142,7 @@ namespace ft
 					end = this->_end->next();
 				return (end);
 			}
-			const_iterator	end(void)
+			const_iterator	end(void) const
 			{
 				const_iterator end;
 				if (this->_end == nullptr)
@@ -155,7 +155,7 @@ namespace ft
 			{
 				return (reverse_iterator(this->_end));
 			}
-			const_reverse_iterator	rbegin(void)
+			const_reverse_iterator	rbegin(void) const
 			{
 				return (const_cast<const_reverse_iterator>(reverse_iterator(this->_end)));
 			}
@@ -168,7 +168,7 @@ namespace ft
 					rend = this->_head->prev();
 				return (rend);
 			}
-			const_reverse_iterator	rend(void)
+			const_reverse_iterator	rend(void) const
 			{
 				const_reverse_iterator rend;
 				if (this->_head == nullptr)
@@ -197,19 +197,19 @@ namespace ft
 			/****************************/
 			reference		front(void)
 			{
-				return (*(this->_head->getData()));
+				return (this->_head->getData());
 			}
-			const_reference front(void)
+			const_reference front(void) const
 			{
-				return (const_cast<const_reference>(*(this->_head->getData())));
+				return (const_cast<const_reference>(this->_head->getData()));
 			}
 			reference		back(void)
 			{
-				return (*(this->_end->getData()));
+				return (this->_end->getData());
 			}
-			const_reference back(void)
+			const_reference back(void) const
 			{
-				return (const_cast<const_reference>(*(this->_end->getData())));
+				return (const_cast<const_reference>(this->_end->getData()));
 			}
 			/****************************/
 			/* MODIFIER MEMBER FUNCTIONS*/
@@ -224,7 +224,7 @@ namespace ft
 					first++;
 				}
 			}
-			void		assign(size_type n, const_value_type &val)
+			void		assign(size_type n, const value_type &val)
 			{
 				this->clear();
 				this->resize(n, val);
@@ -275,7 +275,7 @@ namespace ft
 					return ;
 				if (this->_end->prev())
 					this->_end->prev()->next() = nullptr;
-				this->erase(BidirectionalListIterator(this->_end));
+				this->erase(BidirectionalListIterator<node>(this->_end));
 			}
 			iterator	insert(iterator position, const value_type &val)
 			{
@@ -329,7 +329,7 @@ namespace ft
 						position.getPointer()->prev();
 				else
 					this->_end = position.getPointer()->prev();
-				iterator ret = position.getPointer->next();
+				iterator ret = position.getPointer()->next();
 				delete position.getPointer();
 				this->_size--;
 				return (ret);
@@ -370,7 +370,7 @@ namespace ft
 			/****************************/
 			void		splice(iterator position, list &other)
 			{
-				if (other.empty() || position.getPointer() == nullptr)
+				if (other.empty() || position.getPointer() == nullptr)
 					return ;
 				iterator it = other.begin();
 				iterator temp;
@@ -425,7 +425,7 @@ namespace ft
 					temp = first.getPointer()->next();
 					position.getPointer()->insertAfter(first.getPointer());
 					if (position.getPointer() == this->_end)
-						this->_end = it.getPointer();
+						this->_end = first.getPointer();
 					this->_size++;
 					other._size--;
 					position++;
@@ -461,7 +461,7 @@ namespace ft
 				while (it != this->end())
 				{
 					if (*it == *(it.getPointer()->next()))
-						this->erase(BidirectionalListIterator(it.getPointer->next()));
+						this->erase(it.getPointer->next());
 					else
 						it++;
 				}
@@ -473,7 +473,7 @@ namespace ft
 				while (it != this->end())
 				{
 					if (binary_pred(*(it.getPointer()->next()), *it))
-						this->erase(BidirectionalListIterator(it.getPointer->next()));
+						this->erase(it.getPointer->next());
 					else
 						it++;
 				}
@@ -567,16 +567,16 @@ namespace ft
 			}
 			void		sort(void)
 			{
-				ft::merge_sort(*this);
+				merge_sort(*this);
 			}
 			template <class Compare>
 			void sort (Compare comp)
 			{
-				ft::merge_sort(*this, comp);
+				merge_sort<Compare>(*this, comp);
 			}
 			void		reverse(void)
 			{
-				list temp();
+				list temp;
 				temp.assign(this->rbegin(), this->rend());
 				this->clear();
 				this->swap(temp);
@@ -592,8 +592,8 @@ namespace ft
 			return (false);
 		else
 		{
-			iterator it = lhs.begin();
-			iterator it2 = rhs.begin();
+			typename ft::list<T>::iterator it = lhs.begin();
+			typename ft::list<T>::iterator it2 = rhs.begin();
 			while (it != lhs.end())
 			{
 				if (*it != *it2)
@@ -612,8 +612,8 @@ namespace ft
 	template <class T>
 	bool operator< (const list<T> &lhs, const list<T> &rhs)
 	{
-		iterator it = lhs.begin();
-		iterator it2 = rhs.begin();
+		typename ft::list<T>::iterator it = lhs.begin();
+		typename ft::list<T>::iterator it2 = rhs.begin();
 		while (it != lhs.end())
 		{
 			if (it.getPointer() == nullptr && it2.getPointer() != nullptr)
