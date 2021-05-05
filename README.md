@@ -5,3 +5,6 @@
 List:
   1. Necesitamos nodos que se apunten entre sí. -> El iterador bidireccional debe tener eso en cuenta.
   2. ¿Por qué typedef del nodo es protected? -> Los nodos deben ser accesibles para las clases que hereden la lista, claro.
+  3. Merge sin construir ni destruir -> [Link](https://programmercave0.github.io/assets/mergesortedlinkedlist.png)
+  4. Merge sort -> [Link](https://codereview.stackexchange.com/questions/49459/merge-sort-algorithm-implementation-using-c)
+  5. max_size() -> [Link](https://stackoverflow.com/a/7949501/12320117)

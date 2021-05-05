@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/04 11:05:17 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/05 11:30:12 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ namespace ft
 			typedef allocator_type::const_pointer				const_pointer;
 			typedef BidirectionalListIterator<value_type>		iterator;
 			typedef BidirectionalListIterator<const value_type>	const_iterator;
-			typedef ReverseIterator<iterator>					reverse_iterator;
-			typedef ReveserseIterator<const_iterator>			const_reverse_iterator;
+			typedef std::reverse_iterator<iterator>				reverse_iterator;
+			typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
 			typedef ptrdiff_t									difference_type;
 			typedef size_t										size_type;
 
@@ -98,12 +98,20 @@ namespace ft
 			}
 			iterator		end(void)
 			{
-				iterator end = this->_end->next();
+				iterator end;
+				if (this->_end == nullptr)
+					end = nullptr;
+				else
+					end = this->_end->next();
 				return (end);
 			}
 			const_iterator	end(void)
 			{
-				const_iterator end = const_cast<const node *>(this->_end->next());
+				const_iterator end;
+				if (this->_end == nullptr)
+					end = nullptr;
+				else
+					end = const_cast<const node *>(this->_end->next());
 				return (end);
 			}
 			reverse_iterator		rbegin(void)
@@ -116,11 +124,21 @@ namespace ft
 			}
 			reverse_iterator		rend(void)
 			{
-				return (reverse_iterator(this->_head));
+				reverse_iterator rend;
+				if (this->_head == nullptr)
+					rend = nullptr;
+				else
+					rend = this->_head->prev();
+				return (rend);
 			}
 			const_reverse_iterator	rend(void)
 			{
-				return (const_cast<const_reverse_iterator>(reverse_iterator(this->_head)));
+				const_reverse_iterator rend;
+				if (this->_head == nullptr)
+					rend = nullptr;
+				else
+					rend = const_cast<const_reverse_iterator>(reverse_iterator(this->_head));
+				return (rend);
 			}
 			/****************************/
 			/* CAPACITY MEMBER FUNCTIONS*/
@@ -307,7 +325,8 @@ namespace ft
 			}
 			void		clear(void)
 			{
-				this->erase(this->begin(), this->end());
+				if (this->empty() == false)
+					this->erase(this->begin(), this->end());
 			}
 			/****************************/
 			/* OPERATION MEMBER FUNCTION*/
@@ -372,7 +391,43 @@ namespace ft
 			{
 				if (&other == this)
 					return ;
-				//TODO
+				if (other._head == nullptr)
+					return ;
+				other._size = 0;
+				if (this->_head == nullptr)
+				{
+					this->_head = other._head;
+					this->_end = other._end;
+					this->_size = other._size;
+					other._head = nullptr;
+					other._end = nullptr;
+					return ;
+				}
+				iterator it = this->begin();
+				iterator it2 = other.begin();
+				iterator tmp;
+				while (it2 != other._end)
+				{
+					tmp = it2.getPointer()->next();
+					if (*it > *it2)
+					{
+						it.getPointer()->insertBefore(it2.getPointer());
+						if (it.getPointer() == this->_head)
+							this->_head = it2.getPointer();
+					}
+					else
+					{
+						it.getPointer()->insertAfter(it2.getPointer());
+						if (it.getPointer() == this->_end)
+							this->_end = it2.getPointer();
+						it++;
+					}
+					this->_size++;
+					it2 = tmp;
+				}
+				other._head = nullptr;
+				other._end = nullptr;
+				return ;
 			}
 			template <class Compare>
 			void merge (list &other, Compare comp)
