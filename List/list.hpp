@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/05 11:30:12 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/05 11:59:04 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ namespace ft
 	template <class T, class Alloc = std::allocator<T>> class list
 	{
 		public:
+			/****************************/
+			/*       MEMBER TYPES       */
+			/****************************/
 			typedef T											value_type;
 			typedef Alloc										allocator_type;
 			typedef allocator_type::reference					reference;
@@ -36,12 +39,47 @@ namespace ft
 			typedef size_t										size_type;
 
 		protected:
+			/****************************/
+			/*   INHERITABLE NODE TYPE  */
+			/****************************/
 			typedef Node<value_type>							node;
 
 		private:
+			/****************************/
+			/*        ATTRIBUTES        */
+			/****************************/
 			node		*_head;
 			node		*_end;
 			size_type	_size;
+
+		private:
+
+			/****************************/
+			/*       FUNCTION UTILS     */
+			/****************************/
+			static void	merge_sort(list &x)
+			{
+				if (x.size() <= 1)
+					return ;
+				size_type half = x.size() / 2;
+				list left(x.begin(), x.begin() + half);
+				list right(x.begin() + half, x.end());
+				merge_sort(left);
+				merge_sort(right);
+				left.merge(right);
+			}
+			template <class Compare>
+			static void merge_sort(list &x, Compare &comp)
+			{
+				if (x.size() <= 1)
+					return ;
+				size_type half = x.size() / 2;
+				list left(x.begin(), x.begin() + half);
+				list right(x.begin() + half, x.end());
+				merge_sort(left);
+				merge_sort(right);
+				left.merge(right, comp);
+			}
 
 		public:
 			/****************************/
@@ -432,17 +470,54 @@ namespace ft
 			template <class Compare>
 			void merge (list &other, Compare comp)
 			{
+				if (&other == this)
+					return ;
+				if (other._head == nullptr)
+					return ;
+				other._size = 0;
+				if (this->_head == nullptr)
+				{
+					this->_head = other._head;
+					this->_end = other._end;
+					this->_size = other._size;
+					other._head = nullptr;
+					other._end = nullptr;
+					return ;
+				}
+				iterator it = this->begin();
+				iterator it2 = other.begin();
+				iterator tmp;
+				while (it2 != other._end)
+				{
+					tmp = it2.getPointer()->next();
+					if (comp(*it, *it2) == false)
+					{
+						it.getPointer()->insertBefore(it2.getPointer());
+						if (it.getPointer() == this->_head)
+							this->_head = it2.getPointer();
+					}
+					else
+					{
+						it.getPointer()->insertAfter(it2.getPointer());
+						if (it.getPointer() == this->_end)
+							this->_end = it2.getPointer();
+						it++;
+					}
+					this->_size++;
+					it2 = tmp;
+				}
+				other._head = nullptr;
+				other._end = nullptr;
+				return ;
 			}
 			void		sort(void)
 			{
-				//operator <
-				//no hay copia, destruction o construction
-				//merge sort
+				ft::merge_sort(*this);
 			}
 			template <class Compare>
 			void sort (Compare comp)
 			{
-				//comp
+				ft::merge_sort(*this, comp);
 			}
 			void		reverse(void)
 			{
