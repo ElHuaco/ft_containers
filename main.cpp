@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/06 11:49:29 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/06 17:33:00 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ int main (void)
 	L1.push_back(42);
 	L1.push_back(2);
 	L1.push_back(420);
+	ft::list<int> L2(L1);
+	L2.pop_back();
 	my::print(L1);
-	L1.sort();
+	my::print(L2);
+	ft::swap<int>(L1, L2);
 	my::print(L1);
+	my::print(L2);
 	return (0);
 }

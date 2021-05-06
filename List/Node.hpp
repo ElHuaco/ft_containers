@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:49:35 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/06 11:28:10 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/06 17:17:29 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ namespace ft
 				this->_prev = rhs._prev;
 				return (*this);
 			}
-			/* SET(GET)ERS */
+			/* SET(GET)TERS */
 			m_node		*&next(void)
 			{
 				return (this->_next);
@@ -68,19 +68,46 @@ namespace ft
 			/* METHODS FOR INSERT */
 			void		insertBefore(m_node *ptr)
 			{
+				if (ptr == nullptr)
+					return ;
 				ptr->_prev = this->_prev;
-				if (this->_prev)
+				if (this->_prev != nullptr)
 					this->_prev->_next = ptr;
 				this->_prev = ptr;
 				ptr->_next = this;
+				return ;
 			}
 			void		insertAfter(m_node *ptr)
 			{
+				if (ptr == nullptr)
+					return ;
 				ptr->_next = this->_next;
-				if (this->_next)
+				if (this->_next != nullptr)
 					this->_next->_prev = ptr;
 				this->_next = ptr;
 				ptr->_prev = this;
+				return ;
+			}
+			/* METHODS FOR SWAP  */
+			void		swap(m_node *ptr)
+			{
+				if (ptr == nullptr)
+					return ;
+				if (this->prev() != nullptr)
+					this->prev()->next() = ptr;
+				if (ptr->prev() != nullptr)
+					ptr->prev()->next() = this;
+				m_node *tmp = this->prev();
+				this->prev() = ptr->prev();
+				ptr->prev() = tmp;
+				if (this->next() != nullptr)
+					this->next()->prev() = ptr;
+				if (ptr->next() != nullptr)
+					ptr->next()->prev() = this;
+				tmp = this->next();
+				this->next() = ptr->next();
+				ptr->next() = tmp;
+				return ;
 			}
 	};
 }

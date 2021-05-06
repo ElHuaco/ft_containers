@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/06 13:14:32 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/06 18:53:45 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,37 @@ namespace ft
 	template <class T, class Alloc = std::allocator<T> > class list
 	{
 		public:
-			/****************************/
-			/*       MEMBER TYPES       */
-			/****************************/
 			typedef T											value_type;
-			typedef Alloc										allocator_type;
-			typedef typename allocator_type::reference			reference;
-			typedef typename allocator_type::const_reference	const_reference;
-			typedef typename allocator_type::pointer			pointer;
-			typedef typename allocator_type::const_pointer		const_pointer;
-			typedef BidirectionalListIterator<value_type>		iterator;
-			typedef BidirectionalListIterator<const value_type>	const_iterator;
-			typedef std::reverse_iterator<iterator>				reverse_iterator;
-			typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
-			typedef ptrdiff_t									difference_type;
-			typedef size_t										size_type;
 
 		protected:
 			/****************************/
 			/*   INHERITABLE NODE TYPE  */
 			/****************************/
 			typedef Node<value_type>							node;
+			typedef node *										node_ptr;
+
+		public:
+			/****************************/
+			/*       MEMBER TYPES       */
+			/****************************/
+			typedef Alloc											allocator_type;
+			typedef typename allocator_type::reference				reference;
+			typedef typename allocator_type::const_reference		const_reference;
+			typedef typename allocator_type::pointer				pointer;
+			typedef typename allocator_type::const_pointer			const_pointer;
+			typedef BidirectionalListIterator<value_type, node>		iterator;
+			typedef BidirectionalListIterator<const value_type, const node> const_iterator;
+			typedef std::reverse_iterator<iterator>					reverse_iterator;
+			typedef std::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef ptrdiff_t										difference_type;
+			typedef size_t											size_type;
 
 		private:
 			/****************************/
 			/*        ATTRIBUTES        */
 			/****************************/
-			node		*_head;
-			node		*_end;
+			node_ptr	_head;
+			node_ptr	_end;
 			size_type	_size;
 
 		private:
@@ -60,6 +63,16 @@ namespace ft
 			/****************************/
 
 			//QUICK_SORT
+			void quick_sort(iterator first, iterator last)
+			{
+				if (first == last)
+					return ;
+				//iterator del pivot
+				//quick_sort(first, pivot)
+				//quick_sort(pivot, last)
+				//
+				return ;
+			}
 		public:
 			/****************************/
 			/* COPLIEN MEMBER FUNCTIONS */
@@ -87,7 +100,7 @@ namespace ft
 					first++;
 				}
 			}
-			list (const list &other)
+			list (const list &other) : _size(0)
 			{
 				*this = other;
 			}
@@ -97,7 +110,7 @@ namespace ft
 			}
 			list	&operator=(const list &rhs)
 			{
-				swap(*this, rhs);
+				this->assign(rhs.begin(), rhs.end());
 				return (*this);
 			}
 			/****************************/
@@ -105,13 +118,11 @@ namespace ft
 			/****************************/
 			iterator		begin(void)
 			{
-				iterator head(this->_head);
-				return (head);
+				return (iterator(this->_head));
 			}
 			const_iterator	begin(void) const
 			{
-				const_iterator head = const_cast<const node *>(this->_head);
-				return (head);
+				return (const_iterator(this->_head));
 			}
 			iterator		end(void)
 			{
@@ -128,7 +139,7 @@ namespace ft
 				if (this->_end == nullptr)
 					end = nullptr;
 				else
-					end = const_cast<const node *>(this->_end->next());
+					end = this->_end->next();
 				return (end);
 			}
 			reverse_iterator		rbegin(void)
@@ -142,7 +153,7 @@ namespace ft
 			reverse_iterator		rend(void)
 			{
 				reverse_iterator rend;
-				if (this->_head == nullptr)
+			if (this->_head == nullptr)
 					rend = nullptr;
 				else
 					rend = this->_head->prev();
@@ -255,7 +266,7 @@ namespace ft
 					return ;
 				if (this->_end->prev())
 					this->_end->prev()->next() = nullptr;
-				this->erase(BidirectionalListIterator<node>(this->_end));
+				this->erase(iterator(this->_end));
 			}
 			iterator	insert(iterator position, const value_type &val)
 			{
@@ -323,10 +334,31 @@ namespace ft
 			}
 			void		swap(list &rhs)
 			{
-				//REDO sin copiar elementos
-				list temp = *this;
-				this->assign(rhs.begin(), rhs.end());
-				rhs.assign(temp.begin(), temp.end());
+				iterator it = this->begin();
+				iterator it2 = rhs.begin();
+				iterator tmp(it.getPointer()->next());
+				iterator tmp2(it2.getPointer()->next());
+				it.getPointer()->swap(it2.getPointer());
+				this->_head = it.getPointer();
+				rhs._head = it2.getPointer();
+				it = tmp;
+				it2 = tmp2;
+				while (it.getPointer() != nullptr && it2.getPointer() != nullptr)
+				{
+					tmp = it.getPointer()->next();
+					tmp2 = it2.getPointer()->next();
+					it.getPointer()->swap(it2.getPointer());
+					if (tmp.getPointer() == nullptr)
+						rhs._end = it2.getPointer();
+					if (tmp2.getPointer() == nullptr)
+						this->_end = it.getPointer();
+					it = tmp;
+					it2 = tmp2;
+				}
+				size_type tmp_s = this->_size;
+				this->_size = rhs._size;
+				rhs._size = tmp_s;
+				return ;
 			}
 			void		resize(size_type n, value_type val = value_type())
 			{
@@ -549,12 +581,11 @@ namespace ft
 			}
 			void		sort(void)
 			{
-				merge_sort(*this);
+				quick_sort(this->begin(), this->end());
 			}
 			template <class Compare>
 			void sort (Compare comp)
 			{
-				merge_sort<Compare>(*this, comp);
 			}
 			void		reverse(void)
 			{

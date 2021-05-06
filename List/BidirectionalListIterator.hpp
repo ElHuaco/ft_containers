@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:38:17 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/06 11:32:08 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/06 18:30:29 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 
 namespace ft
 {
-	template <class T> class BidirectionalListIterator
-		: public std::iterator<std::bidirectional_iterator_tag, ft::Node<T> >
+	template <class T, class Node> class BidirectionalListIterator
+		: public std::iterator<std::bidirectional_iterator_tag, Node>
 	{
 		public:
-			typedef Node<T>		value_type;
-			typedef Node<T>*	pointer;
-			typedef Node<T>&	reference;
+			typedef T			value_type;
+			typedef Node		*pointer;
+			typedef Node		&reference;
 
 		private:
 			pointer		_ptr;
@@ -91,15 +91,15 @@ namespace ft
 				_ptr = newPtr;
 			}
 	};
-	template <class T>
-		bool operator== (const BidirectionalListIterator<T> &lhs,
-			const BidirectionalListIterator<T> &rhs)
+	template <class T, class Node>
+		bool operator== (const BidirectionalListIterator<T, Node> &lhs,
+			const BidirectionalListIterator<T, Node> &rhs)
 		{
 			return (lhs.getPointer() == rhs.getPointer());
 		}
-	template <class T>
-		bool operator!= (const BidirectionalListIterator<T> &lhs,
-			const BidirectionalListIterator<T> &rhs)
+	template <class T, class Node>
+		bool operator!= (const BidirectionalListIterator<T, Node> &lhs,
+			const BidirectionalListIterator<T, Node> &rhs)
 		{
 			return (lhs.getPointer() != rhs.getPointer());
 		}
