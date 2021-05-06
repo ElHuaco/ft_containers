@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/06 11:42:46 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/06 13:14:32 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <limits>
 # include "Node.hpp"
 # include "BidirectionalListIterator.hpp"
+
+# include <iostream>
 
 namespace ft
 {
@@ -56,36 +58,8 @@ namespace ft
 			/****************************/
 			/*       FUNCTION UTILS     */
 			/****************************/
-			static void	merge_sort(list &x)
-			{
-				if (x.size() <= 1)
-					return ;
-				size_type half = x.size() / 2;
-				iterator middle = x.begin();
-				for (size_type i = 0; i <= half; i++)
-					middle++;
-				list left(x.begin(), middle);
-				list right(middle, x.end());
-				merge_sort(left);
-				merge_sort(right);
-				left.merge(right);
-			}
-			template <class Compare>
-			static void merge_sort(list &x, Compare &comp)
-			{
-				if (x.size() <= 1)
-					return ;
-				size_type half = x.size() / 2;
-				iterator middle = x.begin();
-				for (size_type i = 0; i <= half; i++)
-					middle++;
-				list left(x.begin(), middle);
-				list right(middle, x.end());
-				merge_sort(left);
-				merge_sort(right);
-				left.merge(right, comp);
-			}
 
+			//QUICK_SORT
 		public:
 			/****************************/
 			/* COPLIEN MEMBER FUNCTIONS */
@@ -349,6 +323,7 @@ namespace ft
 			}
 			void		swap(list &rhs)
 			{
+				//REDO sin copiar elementos
 				list temp = *this;
 				this->assign(rhs.begin(), rhs.end());
 				rhs.assign(temp.begin(), temp.end());
@@ -396,7 +371,8 @@ namespace ft
 			}
 			void		splice(iterator position, list &other, iterator i)
 			{
-				if (position.getPointer() == nullptr || i.getPointer() == nullptr)
+				if (position == i || position.getPointer() == nullptr
+					|| i.getPointer() == nullptr)
 					return ;
 				if (i.getPointer()->prev() != nullptr)
 					i.getPointer()->prev()->next() = i.getPointer()->next();
@@ -654,9 +630,7 @@ namespace ft
 	template <class T>
 	void swap (list<T> &x, list<T> &y)
 	{
-		list<T> temp = x;
-		x.assign(y.begin(), y.end());
-		y.assign(temp.begin(), temp.end());
+		x.swap(y);
 	}
 }
 #endif
