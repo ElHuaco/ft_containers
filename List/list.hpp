@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/05 13:31:37 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/06 11:42:46 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ namespace ft
 				if (x.size() <= 1)
 					return ;
 				size_type half = x.size() / 2;
-				list left(x.begin(), x.begin() + half);
-				list right(x.begin() + half, x.end());
+				iterator middle = x.begin();
+				for (size_type i = 0; i <= half; i++)
+					middle++;
+				list left(x.begin(), middle);
+				list right(middle, x.end());
 				merge_sort(left);
 				merge_sort(right);
 				left.merge(right);
@@ -73,8 +76,11 @@ namespace ft
 				if (x.size() <= 1)
 					return ;
 				size_type half = x.size() / 2;
-				list left(x.begin(), x.begin() + half);
-				list right(x.begin() + half, x.end());
+				iterator middle = x.begin();
+				for (size_type i = 0; i <= half; i++)
+					middle++;
+				list left(x.begin(), middle);
+				list right(middle, x.end());
 				merge_sort(left);
 				merge_sort(right);
 				left.merge(right, comp);
@@ -125,7 +131,7 @@ namespace ft
 			/****************************/
 			iterator		begin(void)
 			{
-				iterator head = this->_head;
+				iterator head(this->_head);
 				return (head);
 			}
 			const_iterator	begin(void) const
@@ -329,7 +335,7 @@ namespace ft
 						position.getPointer()->prev();
 				else
 					this->_end = position.getPointer()->prev();
-				iterator ret = position.getPointer()->next();
+				iterator ret(position.getPointer()->next());
 				delete position.getPointer();
 				this->_size--;
 				return (ret);
@@ -497,7 +503,7 @@ namespace ft
 				iterator it = this->begin();
 				iterator it2 = other.begin();
 				iterator tmp;
-				while (it2 != other._end)
+				while (it2 != other.end())
 				{
 					tmp = it2.getPointer()->next();
 					if (*it > *it2)
@@ -541,7 +547,7 @@ namespace ft
 				iterator it = this->begin();
 				iterator it2 = other.begin();
 				iterator tmp;
-				while (it2 != other._end)
+				while (it2 != other.end())
 				{
 					tmp = it2.getPointer()->next();
 					if (comp(*it, *it2) == false)

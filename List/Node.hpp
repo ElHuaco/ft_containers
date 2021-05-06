@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:49:35 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/05 13:36:16 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/06 11:28:10 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,22 @@ namespace ft
 				return (*this);
 			}
 			/* SET(GET)ERS */
-			m_node		*next(void) const
+			m_node		*&next(void)
 			{
 				return (this->_next);
 			}
-			m_node		*prev(void) const
+			m_node		*&prev(void)
 			{
 				return (this->_prev);
 			}
-			value_type	getData(void) const
+			value_type	&getData(void)
 			{
 				return (this->_data);
 			}
-			void		setNext(m_node *ptr)
+			const value_type &getData(void) const
 			{
-				this->_next = ptr;
-			}
-			void		setPrev(m_node *ptr)
-			{
-				this->_prev = ptr;
-			}
-			void		setData(value_type data)
-			{
-				this->_data = data;
-			}
+				return (this->_data);
+			}	
 			/* METHODS FOR INSERT */
 			void		insertBefore(m_node *ptr)
 			{
