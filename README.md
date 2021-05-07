@@ -8,3 +8,4 @@ List:
   3. Merge sin construir ni destruir -> [Link](https://programmercave0.github.io/assets/mergesortedlinkedlist.png)
   4. Merge sort -> [Link](https://codereview.stackexchange.com/questions/49459/merge-sort-algorithm-implementation-using-c)
   5. max_size() -> [Link](https://stackoverflow.com/a/7949501/12320117)
+  6. Range template overload called wrongly -> [Link](https://stackoverflow.com/questions/24346869/wrong-constructor-called-in-custom-vector-class)

@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 18:38:09 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/07 19:18:12 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ namespace ft
 				while (i++ < n)
 					this->push_back(val);
 			}
-			list (iterator first, iterator last,
+			template <class InputIterator>
+			list (InputIterator first, InputIterator last,
 				const allocator_type &alloc = allocator_type()) :
 				_size(0), _head(nullptr), _end(nullptr)
 			{
