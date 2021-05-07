@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 13:22:30 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/07 17:18:00 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,49 +413,22 @@ namespace ft
 			/****************************/
 			void		splice(iterator position, list &other)
 			{
-				if (other.empty() || position.getPointer() == nullptr)
-					return ;
-				iterator it = other.begin();
-				iterator temp;
-				while (it != other.end())
-				{
-					temp = it.getPointer()->next();
-					position.getPointer()->insertAfter(it.getPointer());
-					if (position.getPointer() == this->_end)
-						this->_end = it.getPointer();
-					this->_size++;
-					position++;
-					it = temp;
-				}
-				other._size = 0;
-				other._head = nullptr;
-				other._end = nullptr;
+				this->splice(position, other, other.begin(), other.end());
 			}
 			void		splice(iterator position, list &other, iterator i)
 			{
-				if (position == i || position.getPointer() == nullptr
-					|| i.getPointer() == nullptr)
-					return ;
-				if (i.getPointer()->prev() != nullptr)
-					i.getPointer()->prev()->next() = i.getPointer()->next();
-				else
-					other._head = i.getPointer()->next();
-				if (i.getPointer()->next() != nullptr)
-					i.getPointer()->next()->prev() = i.getPointer()->prev();
-				else
-					other._end = i.getPointer()->prev();
-				position.getPointer()->insertAfter(i.getPointer());
-				if (position.getPointer() == this->_end)
-					this->_end = i.getPointer();
-				this->_size++;
-				other->_size--;
+				iterator last = i;
+				this->splice(position, other, i, ++last);
 			}
 			void		splice(iterator position, list &other, iterator first,
 				iterator last)
 			{
-				if (position.getPointer() == nullptr || first.getPointer() == nullptr)
+				if (this->empty())
+				{
+					this->swap(other);
 					return ;
-				if (first.getPointer()->prev != nullptr)
+				}
+				if (first.getPointer()->prev() != nullptr)
 					first.getPointer()->prev()->next() = last.getPointer();
 				else
 					other._head = last.getPointer();
@@ -467,14 +440,14 @@ namespace ft
 				while (first != last)
 				{
 					temp = first.getPointer()->next();
-					position.getPointer()->insertAfter(first.getPointer());
-					if (position.getPointer() == this->_end)
-						this->_end = first.getPointer();
+					position.getPointer()->insertBefore(first.getPointer());
+					if (position.getPointer() == this->_head)
+						this->_head = first.getPointer();
 					this->_size++;
 					other._size--;
-					position++;
 					first = temp;
 				}
+				return ;
 			}
 			void		remove(const value_type &val)
 			{
@@ -526,49 +499,22 @@ namespace ft
 			{
 				if (&other == this)
 					return ;
-				if (other.empty())
-					return ;
-				if (this->empty())
-				{
-					this->_head = other._head;
-					this->_end = other._end;
-					this->_size = other._size;
-					other._size = 0;
-					other._head = nullptr;
-					other._end = nullptr;
-					return ;
-				}
 				iterator it = this->begin();
+				iterator itend = this->end();
 				iterator it2 = other.begin();
-				iterator tmp;
-				while (it2 != other.end())
+				iterator it2end = other.end();
+				while (it != itend && it2 != it2end)
 				{
-					tmp = it2.getPointer()->next();
-					if (*it > *it2)
+					if (*it > *it2 && it != it2)
 					{
-						it.getPointer()->insertBefore(it2.getPointer());
-						if (it.getPointer() == this->_head)
-							this->_head = it2.getPointer();
+						this->splice(it, other, it2);
+						it = this->begin();
+						it2 = other.begin();
 					}
 					else
-					{
-						it.getPointer()->insertAfter(it2.getPointer());
-						if (it.getPointer() == this->_end)
-							this->_end = it2.getPointer();
 						it++;
-					}
-					std::cout << "added one" << std::endl;
-					this->_size++;
-					it2 = tmp;
-					std::cout << "\tnow it2: " << it2.getPointer() << std::endl;
-					std::cout << "\tother._end: " << other._end << std::endl;
-					std::cout << "\tother.end(): " << other.end().getPointer() << std::endl;
-					std::cout << "ended loop iteration" << std::endl;
 				}
-				std::cout << "ended loop" << std::endl;
-				other._size = 0;
-				other._head = nullptr;
-				other._end = nullptr;
+				this->splice(itend, other);
 				return ;
 			}
 			template <class Compare>
@@ -576,43 +522,22 @@ namespace ft
 			{
 				if (&other == this)
 					return ;
-				if (other.empty())
-					return ;
-				if (this->empty())
-				{
-					this->_head = other._head;
-					this->_end = other._end;
-					this->_size = other._size;
-					other._size = 0;
-					other._head = nullptr;
-					other._end = nullptr;
-					return ;
-				}
 				iterator it = this->begin();
+				iterator itend = this->end();
 				iterator it2 = other.begin();
-				iterator tmp;
-				while (it2 != other.end())
+				iterator it2end = other.end();
+				while (it != itend && it2 != it2end)
 				{
-					tmp = it2.getPointer()->next();
-					if (comp(*it, *it2) == false)
+					if (comp(*it2, *it) == true && it != it2)
 					{
-						it.getPointer()->insertBefore(it2.getPointer());
-						if (it.getPointer() == this->_head)
-							this->_head = it2.getPointer();
+						this->splice(it, other, it2);
+						it = this->begin();
+						it2 = other.begin();
 					}
 					else
-					{
-						it.getPointer()->insertAfter(it2.getPointer());
-						if (it.getPointer() == this->_end)
-							this->_end = it2.getPointer();
 						it++;
-					}
-					this->_size++;
-					it2 = tmp;
 				}
-				other._head = nullptr;
-				other._end = nullptr;
-				other._size = 0;
+				this->splice(itend, other);
 				return ;
 			}
 			void		sort(void)
