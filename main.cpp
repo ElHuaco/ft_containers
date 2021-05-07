@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 12:21:13 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/07 13:24:08 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,11 @@ namespace my
 int main (void)
 {
 	ft::list<int> L1;
-	L1.push_back(42);
 	L1.push_back(2);
 	L1.push_back(420);
 	ft::list<int> L2;
 	L2.push_back(123);
 	L2.push_back(0);
-	std::cout << "---L1---" << std::endl;
-	my::print(L1);
-	std::cout << "---L2---" << std::endl;
-	my::print(L2);
-	ft::swap<int>(L1, L2);
-	std::cout << "---L1---" << std::endl;
-	my::print(L1);
-	std::cout << "---L2---" << std::endl;
-	my::print(L2);
-	ft::list<int> L3(L2);
-	std::cout << "---L3---" << std::endl;
-	my::print(L3);
 	std::cout << "Sort L2" << std::endl;
 	L2.sort();
 	my::print(L2);
@@ -54,7 +41,7 @@ int main (void)
 	L1.sort();
 	my::print(L1);
 	std::cout << "Merge L1, L2" << std::endl;
-	L1.merge(L2);
+	L2.merge(L1);
 	my::print(L1);
 	my::print(L2);
 	return (0);

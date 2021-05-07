@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 12:56:05 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/07 13:22:30 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,37 @@ namespace ft
 					quick_sort(++tmp, inc_last);
 				}
 			}
+			template <class Compare>
+			void quick_sort(iterator first, iterator inc_last, Compare comp)
+			{
+				if (inc_last.getPointer() != nullptr
+					&& first.getPointer() != inc_last.getPointer()
+					&& first.getPointer() != inc_last.getPointer()->next())
+				{	
+					iterator pit = first;
+					for (iterator it = first; it != inc_last; it++)
+					{
+						if (comp(*it, *inc_last) == true)
+						{
+							it.getPointer()->swap(pit.getPointer());
+							pit++;
+						}
+					}
+					inc_last.getPointer()->swap(pit.getPointer());
+					iterator tmp = pit;
+					quick_sort(first, --tmp);
+					tmp = pit;
+					quick_sort(++tmp, inc_last);
+				}
+			}
+
 
 		public:
+
+//			node_ptr		getEnd() const
+//			{
+//				return (this->_end);
+//			}
 			/****************************/
 			/* COPLIEN MEMBER FUNCTIONS */
 			/****************************/
@@ -528,9 +557,15 @@ namespace ft
 							this->_end = it2.getPointer();
 						it++;
 					}
+					std::cout << "added one" << std::endl;
 					this->_size++;
 					it2 = tmp;
+					std::cout << "\tnow it2: " << it2.getPointer() << std::endl;
+					std::cout << "\tother._end: " << other._end << std::endl;
+					std::cout << "\tother.end(): " << other.end().getPointer() << std::endl;
+					std::cout << "ended loop iteration" << std::endl;
 				}
+				std::cout << "ended loop" << std::endl;
 				other._size = 0;
 				other._head = nullptr;
 				other._end = nullptr;
@@ -587,6 +622,7 @@ namespace ft
 			template <class Compare>
 			void sort (Compare comp)
 			{
+				quick_sort(this->begin(), iterator(this->_end), comp);
 			}
 			void		reverse(void)
 			{
