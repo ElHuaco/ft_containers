@@ -6,55 +6,46 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 16:48:03 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/07 17:59:15 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "List/list.hpp"
-#include <iostream>
 #include <string>
+#include <iostream>
 
-namespace my
+namespace Color
 {
-	template <class T> void print(ft::list<T> &lst)
+	class Modifier
 	{
-		if (lst.empty())
-			return ;
-	typename ft::list<T>::iterator it = lst.begin();
-	while (it != lst.end())
-		std::cout << *it++ << std::endl;
-	std::cout << "List size: " << lst.size() <<"; List head: " << lst.front() <<
-		"; List end: " << lst.back() << std::endl;
+		std::string	color_code;
+		public:
+			Modifier(std::string code) : color_code(code) {}
+			std::string	getColorCode(void) const { return (this->color_code);}
+			void setColorCode(std::string code) { this->color_code = code;}
+	};
+	std::ostream &operator<<(std::ostream &os, const Modifier &mod)
+	{
+		return (os << "\033[" << mod.getColorCode() << "m");
 	}
+	Modifier clean("0");
+	Modifier red("31");
+	Modifier yellow("93");
+	Modifier blue("34");
+	Modifier green("32");
+	Modifier bold("1");
+	Modifier def("39");
 };
 
-int main (void)
+#include "Tests/test_list.cpp"
+
+int main (int argc, char **argv)
 {
-	ft::list<int> L1;
-	L1.push_back(2);
-	L1.push_back(420);
-	ft::list<int> L2;
-	L2.push_back(123);
-	L2.push_back(0);
-	std::cout << "Sort L2" << std::endl;
-	L2.sort();
-	my::print(L2);
-	std::cout << "Sort L1" << std::endl;
-	L1.sort();
-	my::print(L1);
-	std::cout << "Splice L1, L2" << std::endl;
-	L1.splice(L1.begin(), L2);
-	std::cout << "---L1---" << std::endl;
-	my::print(L1);
-	std::cout << "---L2---" << std::endl;
-	my::print(L2);
-	std::cout << "Merge L1, L2" << std::endl;
-	std::cout << "Sort L1" << std::endl;
-	L1.sort();
-	L2.merge(L1);
-	std::cout << "---L1---" << std::endl;
-	my::print(L1);
-	std::cout << "---L2---" << std::endl;
-	my::print(L2);
+	if (argc != 2)
+	{	
+		std::cout << "Enter a container name." << std::endl;
+		return (0);
+	}
+	if (!strcmp(argv[1], "list"))
+		test_list();
 	return (0);
 }

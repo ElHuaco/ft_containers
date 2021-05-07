@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 17:18:00 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/07 18:38:09 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,6 @@ namespace ft
 
 		public:
 
-//			node_ptr		getEnd() const
-//			{
-//				return (this->_end);
-//			}
 			/****************************/
 			/* COPLIEN MEMBER FUNCTIONS */
 			/****************************/
@@ -125,17 +121,16 @@ namespace ft
 			{
 			}
 			explicit list (size_type n, const value_type &val = value_type(),
-				const allocator_type &alloc = allocator_type()) : _size(0),
-				_head(nullptr), _end(nullptr)
+				const allocator_type &alloc = allocator_type()) :
+				_size(0), _head(nullptr), _end(nullptr)
 			{
 				size_type i = 0;
 				while (i++ < n)
 					this->push_back(val);
 			}
-			template <class InputIterator>
-			list (InputIterator first, InputIterator last,
-				const allocator_type &alloc = allocator_type()) : _size(0),
-				_head(nullptr), _end(nullptr)
+			list (iterator first, iterator last,
+				const allocator_type &alloc = allocator_type()) :
+				_size(0), _head(nullptr), _end(nullptr)
 			{
 				while (first != last)
 				{
@@ -343,10 +338,12 @@ namespace ft
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last)
 			{
-				while (first != last)
+				iterator it(const_cast<node *>(first.getPointer()));
+				iterator it2(const_cast<node *>(last.getPointer()));
+				while (it != it2)
 				{
-					position = insert(position, *first);
-					first++;
+					position = insert(position, *it);
+					it++;
 					if (this->_size != 1)
 						position++;
 				}
