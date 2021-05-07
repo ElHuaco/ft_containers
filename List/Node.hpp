@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:49:35 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/06 17:17:29 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/07 12:28:26 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,22 +91,11 @@ namespace ft
 			/* METHODS FOR SWAP  */
 			void		swap(m_node *ptr)
 			{
-				if (ptr == nullptr)
+				if (ptr == nullptr || this == ptr)
 					return ;
-				if (this->prev() != nullptr)
-					this->prev()->next() = ptr;
-				if (ptr->prev() != nullptr)
-					ptr->prev()->next() = this;
-				m_node *tmp = this->prev();
-				this->prev() = ptr->prev();
-				ptr->prev() = tmp;
-				if (this->next() != nullptr)
-					this->next()->prev() = ptr;
-				if (ptr->next() != nullptr)
-					ptr->next()->prev() = this;
-				tmp = this->next();
-				this->next() = ptr->next();
-				ptr->next() = tmp;
+				value_type tmp = this->_data;
+				this->_data = ptr->_data;
+				ptr->_data = tmp;
 				return ;
 			}
 	};

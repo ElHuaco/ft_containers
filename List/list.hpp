@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/06 18:53:45 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/07 12:56:05 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ namespace ft
 	template <class T, class Alloc = std::allocator<T> > class list
 	{
 		public:
+			/****************************/
+			/*       MEMBER TYPES       */
+			/****************************/
 			typedef T											value_type;
 
 		protected:
@@ -61,18 +64,29 @@ namespace ft
 			/****************************/
 			/*       FUNCTION UTILS     */
 			/****************************/
-
-			//QUICK_SORT
-			void quick_sort(iterator first, iterator last)
+			void quick_sort(iterator first, iterator inc_last)
 			{
-				if (first == last)
-					return ;
-				//iterator del pivot
-				//quick_sort(first, pivot)
-				//quick_sort(pivot, last)
-				//
-				return ;
+				if (inc_last.getPointer() != nullptr
+					&& first.getPointer() != inc_last.getPointer()
+					&& first.getPointer() != inc_last.getPointer()->next())
+				{	
+					iterator pit = first;
+					for (iterator it = first; it != inc_last; it++)
+					{
+						if (*it <= *inc_last)
+						{
+							it.getPointer()->swap(pit.getPointer());
+							pit++;
+						}
+					}
+					inc_last.getPointer()->swap(pit.getPointer());
+					iterator tmp = pit;
+					quick_sort(first, --tmp);
+					tmp = pit;
+					quick_sort(++tmp, inc_last);
+				}
 			}
+
 		public:
 			/****************************/
 			/* COPLIEN MEMBER FUNCTIONS */
@@ -208,11 +222,13 @@ namespace ft
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last)
 			{
+				iterator it(const_cast<node *>(first.getPointer()));
+				iterator it2(const_cast<node *>(last.getPointer()));
 				this->clear();
-				while (first != last)
+				while (it != it2)
 				{
-					this->push_back(*first);
-					first++;
+					this->push_back(*it);
+					it++;
 				}
 			}
 			void		assign(size_type n, const value_type &val)
@@ -334,27 +350,12 @@ namespace ft
 			}
 			void		swap(list &rhs)
 			{
-				iterator it = this->begin();
-				iterator it2 = rhs.begin();
-				iterator tmp(it.getPointer()->next());
-				iterator tmp2(it2.getPointer()->next());
-				it.getPointer()->swap(it2.getPointer());
-				this->_head = it.getPointer();
-				rhs._head = it2.getPointer();
-				it = tmp;
-				it2 = tmp2;
-				while (it.getPointer() != nullptr && it2.getPointer() != nullptr)
-				{
-					tmp = it.getPointer()->next();
-					tmp2 = it2.getPointer()->next();
-					it.getPointer()->swap(it2.getPointer());
-					if (tmp.getPointer() == nullptr)
-						rhs._end = it2.getPointer();
-					if (tmp2.getPointer() == nullptr)
-						this->_end = it.getPointer();
-					it = tmp;
-					it2 = tmp2;
-				}
+				node_ptr tmp_n = this->_head;
+				this->_head = rhs._head;
+				rhs._head = tmp_n;
+				tmp_n = this->_end;
+				this->_end = rhs._end;
+				rhs._end = tmp_n;
 				size_type tmp_s = this->_size;
 				this->_size = rhs._size;
 				rhs._size = tmp_s;
@@ -581,7 +582,7 @@ namespace ft
 			}
 			void		sort(void)
 			{
-				quick_sort(this->begin(), this->end());
+				quick_sort(this->begin(), iterator(this->_end));
 			}
 			template <class Compare>
 			void sort (Compare comp)
