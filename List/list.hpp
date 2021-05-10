@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 19:18:12 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/10 10:05:03 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 # define LIST_HPP
 
 # include <limits>
+# include "disable_if.hpp"
 # include "Node.hpp"
 # include "BidirectionalListIterator.hpp"
 
 # include <iostream>
+//# include <boost/type_traits.hpp>
+//# include <boost/core/enable_if.hpp>
 
 namespace ft
 {
@@ -130,7 +133,9 @@ namespace ft
 			}
 			template <class InputIterator>
 			list (InputIterator first, InputIterator last,
-				const allocator_type &alloc = allocator_type()) :
+				const allocator_type &alloc = allocator_type(),
+				typename ft::disable_if
+					<ft::is_integral<InputIterator> >::type* dummy = 0) :
 				_size(0), _head(nullptr), _end(nullptr)
 			{
 				while (first != last)
@@ -245,7 +250,9 @@ namespace ft
 			/* MODIFIER MEMBER FUNCTIONS*/
 			/****************************/
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last)
+			void assign (InputIterator first, InputIterator last,
+				typename ft::disable_if
+					<ft::is_integral<InputIterator> >::type* dummy = 0)
 			{
 				iterator it(const_cast<node *>(first.getPointer()));
 				iterator it2(const_cast<node *>(last.getPointer()));
@@ -337,7 +344,9 @@ namespace ft
 					insert(position, val);
 			}
 			template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last)
+			void insert (iterator position, InputIterator first, InputIterator last,
+				typename ft::disable_if
+					<ft::is_integral<InputIterator> >::type* dummy = 0)
 			{
 				iterator it(const_cast<node *>(first.getPointer()));
 				iterator it2(const_cast<node *>(last.getPointer()));

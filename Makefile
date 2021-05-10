@@ -6,7 +6,7 @@
 #    By: aleon-ca <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/22 09:25:30 by aleon-ca          #+#    #+#              #
-#    Updated: 2021/05/07 17:55:18 by alejandro        ###   ########.fr        #
+#    Updated: 2021/05/10 10:05:22 by alejandro        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJS = $(SRCS:.cpp=.o)
 NAME = containers.out
 
 FLAGS = -Wall -Wextra -Werror
-CLANG = clang++ $(FLAGS)
+CLANG = clang++ $(FLAGS) 
 
 RM = rm -f
 
