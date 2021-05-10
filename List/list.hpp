@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/10 13:23:22 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/10 13:39:37 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -541,9 +541,11 @@ namespace ft
 			return (false);
 		else
 		{
-			typename ft::list<T>::iterator it = lhs.begin();
-			typename ft::list<T>::iterator it2 = rhs.begin();
-			while (it != lhs.end())
+			typename ft::list<T>::iterator it(
+				const_cast<Node<T> *>(lhs.begin().getPointer()));
+			typename ft::list<T>::iterator it2(
+				const_cast<Node<T> *>(rhs.begin().getPointer()));
+			while (it.getPointer() != nullptr)
 			{
 				if (*it != *it2)
 					return (false);
@@ -561,9 +563,11 @@ namespace ft
 	template <class T>
 	bool operator< (const list<T> &lhs, const list<T> &rhs)
 	{
-		typename ft::list<T>::iterator it = lhs.begin();
-		typename ft::list<T>::iterator it2 = rhs.begin();
-		while (it != lhs.end())
+		typename ft::list<T>::iterator it(
+			const_cast<Node<T> *>(lhs.begin().getPointer()));
+		typename ft::list<T>::iterator it2(
+			const_cast<Node<T> *>(rhs.begin().getPointer()));
+		while (it.getPointer() != nullptr)
 		{
 			if (it.getPointer() == nullptr && it2.getPointer() != nullptr)
 				return (true);
