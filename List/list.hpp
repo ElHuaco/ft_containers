@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/10 11:53:51 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/10 13:23:22 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define LIST_HPP
 
 # include <limits>
-# include "disable_if.hpp"
+# include "../shared_tools/disable_if.hpp"
+# include "../shared_tools/predicates.hpp"
 # include "Node.hpp"
 # include "BidirectionalListIterator.hpp"
 
@@ -65,30 +66,8 @@ namespace ft
 			/****************************/
 			/*       FUNCTION UTILS     */
 			/****************************/
-			void quick_sort(iterator first, iterator inc_last)
-			{
-				if (inc_last.getPointer() != nullptr
-					&& first.getPointer() != inc_last.getPointer()
-					&& first.getPointer() != inc_last.getPointer()->next())
-				{	
-					iterator pit = first;
-					for (iterator it = first; it != inc_last; it++)
-					{
-						if (*it <= *inc_last)
-						{
-							it.getPointer()->swap(pit.getPointer());
-							pit++;
-						}
-					}
-					inc_last.getPointer()->swap(pit.getPointer());
-					iterator tmp = pit;
-					quick_sort(first, --tmp);
-					tmp = pit;
-					quick_sort(++tmp, inc_last);
-				}
-			}
 			template <class Compare>
-			void quick_sort(iterator first, iterator inc_last, Compare comp)
+			void quick_sort(iterator first, iterator inc_last, Compare &comp)
 			{
 				if (inc_last.getPointer() != nullptr
 					&& first.getPointer() != inc_last.getPointer()
@@ -105,12 +84,11 @@ namespace ft
 					}
 					inc_last.getPointer()->swap(pit.getPointer());
 					iterator tmp = pit;
-					quick_sort(first, --tmp);
+					quick_sort(first, --tmp, comp);
 					tmp = pit;
-					quick_sort(++tmp, inc_last);
+					quick_sort(++tmp, inc_last, comp);
 				}
 			}
-
 
 		public:
 
@@ -168,47 +146,48 @@ namespace ft
 			}
 			iterator		end(void)
 			{
-				iterator end;
+				iterator it_end;
 				if (this->_end == nullptr)
-					end = nullptr;
+					it_end = nullptr;
 				else
-					end = this->_end->next();
-				return (end);
+					it_end = this->_end->next();
+				return (it_end);
 			}
 			const_iterator	end(void) const
 			{
-				const_iterator end;
+				const_iterator it_end;
 				if (this->_end == nullptr)
-					end = nullptr;
+					it_end = nullptr;
 				else
-					end = this->_end->next();
-				return (end);
+					it_end = this->_end->next();
+				return (it_end);
 			}
 			reverse_iterator		rbegin(void)
 			{
-				return (reverse_iterator(this->_end));
+				return (reverse_iterator(iterator(this->_end)));
 			}
 			const_reverse_iterator	rbegin(void) const
 			{
-				return (const_cast<const_reverse_iterator>(reverse_iterator(this->_end)));
+				return (const_cast<const_reverse_iterator>(reverse_iterator(
+					iterator(this->_end))));
 			}
 			reverse_iterator		rend(void)
 			{
-				reverse_iterator rend;
+				reverse_iterator rev_end;
 			if (this->_head == nullptr)
-					rend = nullptr;
+					rev_end(iterator());
 				else
-					rend = this->_head->prev();
-				return (rend);
+					rev_end(iterator(this->_head->prev()));
+				return (rev_end);
 			}
 			const_reverse_iterator	rend(void) const
 			{
-				const_reverse_iterator rend;
+				const_reverse_iterator rev_end;
 				if (this->_head == nullptr)
-					rend = nullptr;
+					rev_end(iterator());
 				else
-					rend = const_cast<const_reverse_iterator>(reverse_iterator(this->_head));
-				return (rend);
+					rev_end(iterator(this->_head->prev()));
+				return (rev_end);
 			}
 			/****************************/
 			/* CAPACITY MEMBER FUNCTIONS*/
@@ -504,25 +483,7 @@ namespace ft
 			}
 			void		merge(list &other)
 			{
-				if (&other == this)
-					return ;
-				iterator it = this->begin();
-				iterator itend = this->end();
-				iterator it2 = other.begin();
-				iterator it2end = other.end();
-				while (it != itend && it2 != it2end)
-				{
-					if (*it > *it2)
-					{
-						this->splice(it, other, it2);
-						it = this->begin();
-						it2 = other.begin();
-					}
-					else
-						it++;
-				}
-				this->splice(iterator(this->_end), other);
-				return ;
+				merge(other, ft::is_less<value_type>);
 			}
 			template <class Compare>
 			void merge (list &other, Compare comp)
@@ -549,7 +510,8 @@ namespace ft
 			}
 			void		sort(void)
 			{
-				quick_sort(this->begin(), iterator(this->_end));
+				quick_sort(this->begin(), iterator(this->_end),
+					ft::is_less<value_type>);
 			}
 			template <class Compare>
 			void sort (Compare comp)
@@ -559,7 +521,12 @@ namespace ft
 			void		reverse(void)
 			{
 				list temp;
-				temp.assign(this->rbegin(), this->rend());
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					temp.push_front(*it);
+					it++;
+				}
 				this->clear();
 				this->swap(temp);
 			}

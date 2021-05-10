@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 17:52:52 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/10 11:58:39 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/10 12:54:46 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,14 @@ std::cout << std::endl;
 	std::cout << "FTL1.merge(FTL2): ";
 	FTL1.merge(FTL2);
 	my::print(FTL1, name_FTL1);
+std::cout << std::endl;
+	std::cout << "STL1.reverse(): ";
+	STL1.reverse();
+	my::print(STL1, name_STL1);
+	std::cout << "FTL1.reverse(): ";
+	FTL1.reverse();
+	my::print(FTL1, name_FTL1);
+
 std::cout << Color::yellow << "Relational Operators" << Color::clean << std::endl;
 
 }
