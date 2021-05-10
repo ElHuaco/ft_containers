@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 17:59:15 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/10 10:16:27 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace Color
 	Modifier clean("0");
 	Modifier red("31");
 	Modifier yellow("93");
-	Modifier blue("34");
+	Modifier blue("96");
 	Modifier green("32");
 	Modifier bold("1");
 	Modifier def("39");

@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/10 10:05:03 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/10 11:53:51 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include "BidirectionalListIterator.hpp"
 
 # include <iostream>
-//# include <boost/type_traits.hpp>
-//# include <boost/core/enable_if.hpp>
 
 namespace ft
 {
@@ -320,13 +318,17 @@ namespace ft
 			{
 				if (!this->empty())
 				{
-					if (position.getPointer() == nullptr)
-						return (position);
-					position.getPointer->insertBefore(new node(val));
+					this->_size++;
+					if (position.getPointer() == this->_end->next())
+					{
+						this->_end->insertAfter(new node(val));
+						this->_end = this->_end->next();
+						return (iterator(this->_end->prev()));
+					}
+					position.getPointer()->insertBefore(new node(val));
 					if (position.getPointer() == this->_head)
 						this->_head = position.getPointer()->prev();
-					this->_size++;
-					return (position--);
+					return (--position);
 				}
 				else
 				{
@@ -430,6 +432,8 @@ namespace ft
 			void		splice(iterator position, list &other, iterator first,
 				iterator last)
 			{
+				if (other.empty())
+					return ;
 				if (this->empty())
 				{
 					this->swap(other);
@@ -482,25 +486,21 @@ namespace ft
 			void		unique(void)
 			{
 				iterator it = this->begin();
-				while (it != this->end())
-				{
-					if (*it == *(it.getPointer()->next()))
-						this->erase(it.getPointer->next());
-					else
-						it++;
-				}
+				iterator last(this->_end);
+				while (it != last)
+					if (*it == *(++it))
+						this->erase(it--);
 			}
 			template <class BinaryPredicate>
 			void unique (BinaryPredicate binary_pred)
 			{
 				iterator it = this->begin();
-				while (it != this->end())
-				{
-					if (binary_pred(*(it.getPointer()->next()), *it))
-						this->erase(it.getPointer->next());
+				iterator last(this->_end);
+				while (it != last)
+					if (binary_pred(*(++it), *(--it)))
+						this->erase(++it);
 					else
-						it++;
-				}
+						++it;
 			}
 			void		merge(list &other)
 			{
@@ -512,7 +512,7 @@ namespace ft
 				iterator it2end = other.end();
 				while (it != itend && it2 != it2end)
 				{
-					if (*it > *it2 && it != it2)
+					if (*it > *it2)
 					{
 						this->splice(it, other, it2);
 						it = this->begin();
@@ -521,7 +521,7 @@ namespace ft
 					else
 						it++;
 				}
-				this->splice(itend, other);
+				this->splice(iterator(this->_end), other);
 				return ;
 			}
 			template <class Compare>
@@ -544,7 +544,7 @@ namespace ft
 					else
 						it++;
 				}
-				this->splice(itend, other);
+				this->splice(iterator(this->_end), other);
 				return ;
 			}
 			void		sort(void)
