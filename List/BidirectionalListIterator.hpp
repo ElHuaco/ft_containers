@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:38:17 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/06 18:30:29 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/11 09:31:30 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft
 			virtual ~BidirectionalListIterator(void)
 			{
 			}
-			BidirectionalListIterator	&operator=(pointer newNode)
+			BidirectionalListIterator	&operator=(const pointer newNode)
 			{
 				_ptr = newNode;
 				return (*this);
@@ -71,12 +71,25 @@ namespace ft
 				_ptr = _ptr->next();
 				return (temp);
 			}
+			BidirectionalListIterator	operator++(int) const
+			{
+				BidirectionalListIterator temp = *this;
+				_ptr = _ptr->next();
+				return (temp);
+			}
+
 			BidirectionalListIterator	&operator--(void)
 			{
 				_ptr = _ptr->prev();
 				return (*this);
 			}
 			BidirectionalListIterator	operator--(int)
+			{
+				BidirectionalListIterator temp = *this;
+				_ptr = _ptr->prev();
+				return (temp);
+			}
+			BidirectionalListIterator	operator--(int) const
 			{
 				BidirectionalListIterator temp = *this;
 				_ptr = _ptr->prev();
@@ -100,6 +113,89 @@ namespace ft
 	template <class T, class Node>
 		bool operator!= (const BidirectionalListIterator<T, Node> &lhs,
 			const BidirectionalListIterator<T, Node> &rhs)
+		{
+			return (lhs.getPointer() != rhs.getPointer());
+		}
+	template <class Base> class ReverseListIterator :
+		public std::reverse_iterator<Base>
+	{
+		public:
+			typedef typename std::reverse_iterator<Base>	base_iterator;
+			typedef typename base_iterator::value_type		value_type;
+			typedef typename base_iterator::pointer			pointer;
+			typedef typename base_iterator::reference		reference;
+
+			explicit ReverseListIterator(void) : base_iterator()
+			{
+			}
+			ReverseListIterator(const typename base_iterator::iterator_type &it)
+				: base_iterator(it)
+			{
+			}
+			ReverseListIterator(const base_iterator &it) : base_iterator(it)
+			{
+			}
+			ReverseListIterator(pointer defptr)
+				: base_iterator(typename base_iterator::iterator_type(defptr))
+			{
+			}
+			ReverseListIterator &operator=(const ReverseListIterator &rhs)
+			{
+				this->base()._ptr = rhs.base()._ptr;
+				return (*this);
+			}
+			ReverseListIterator operator++(int)
+			{
+				return (base_iterator::operator++(1));
+			}
+			ReverseListIterator operator++(int) const
+			{
+				return (base_iterator::operator++(1));
+			}
+			ReverseListIterator operator++(void)
+			{
+				base_iterator::operator++();
+				return (*this);
+			}
+			ReverseListIterator operator--(int)
+			{
+				return (base_iterator::operator--(1));
+			}
+			ReverseListIterator operator--(int) const
+			{
+				return (base_iterator::operator--(1));
+			}
+			ReverseListIterator operator--(void)
+			{
+				base_iterator::operator--();
+				return (*this);
+			}
+			value_type	&operator*(void) const
+			{
+				return (this->base().getPointer()->getData());
+			}
+			value_type *operator->(void) const
+			{
+				return (&this->base().getPointer()->getData());
+			}
+			pointer		getPointer(void) const
+			{
+				return (this->base().getPointer());
+			}
+			void		setPointer(pointer newPtr)
+			{
+				this->base()._ptr = newPtr;
+			}
+	};
+	template <class Base>
+		bool operator== (const ReverseListIterator<Base> &lhs,
+			const ReverseListIterator<Base> &rhs)
+		{
+			return (lhs.getPointer() == rhs.getPointer());
+		}
+	template <class Base>
+		bool operator!= (const ReverseListIterator<Base> &lhs,
+			const ReverseListIterator<Base> &rhs)
 		{
 			return (lhs.getPointer() != rhs.getPointer());
 		}

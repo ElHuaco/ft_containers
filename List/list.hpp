@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/10 13:39:37 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/11 08:54:15 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ namespace ft
 			typedef typename allocator_type::const_pointer			const_pointer;
 			typedef BidirectionalListIterator<value_type, node>		iterator;
 			typedef BidirectionalListIterator<const value_type, const node> const_iterator;
-			typedef std::reverse_iterator<iterator>					reverse_iterator;
-			typedef std::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef ReverseListIterator<iterator>					reverse_iterator;
+			typedef ReverseListIterator<const_iterator>				const_reverse_iterator;
 			typedef ptrdiff_t										difference_type;
 			typedef size_t											size_type;
 
@@ -175,18 +175,18 @@ namespace ft
 			{
 				reverse_iterator rev_end;
 			if (this->_head == nullptr)
-					rev_end(iterator());
+					rev_end.base() = iterator();
 				else
-					rev_end(iterator(this->_head->prev()));
+					rev_end.base() = iterator(this->_head->prev());
 				return (rev_end);
 			}
 			const_reverse_iterator	rend(void) const
 			{
 				const_reverse_iterator rev_end;
 				if (this->_head == nullptr)
-					rev_end(iterator());
+					rev_end.base() = iterator();
 				else
-					rev_end(iterator(this->_head->prev()));
+					rev_end.base() = iterator(this->_head->prev());
 				return (rev_end);
 			}
 			/****************************/
@@ -231,8 +231,8 @@ namespace ft
 				typename ft::disable_if
 					<ft::is_integral<InputIterator> >::type* dummy = 0)
 			{
-				iterator it(const_cast<node *>(first.getPointer()));
-				iterator it2(const_cast<node *>(last.getPointer()));
+				InputIterator it(const_cast<node *>(first.getPointer()));
+				InputIterator it2(const_cast<node *>(last.getPointer()));
 				this->clear();
 				while (it != it2)
 				{
@@ -329,8 +329,8 @@ namespace ft
 				typename ft::disable_if
 					<ft::is_integral<InputIterator> >::type* dummy = 0)
 			{
-				iterator it(const_cast<node *>(first.getPointer()));
-				iterator it2(const_cast<node *>(last.getPointer()));
+				InputIterator it(const_cast<node *>(first.getPointer()));
+				InputIterator it2(const_cast<node *>(last.getPointer()));
 				while (it != it2)
 				{
 					position = insert(position, *it);
@@ -521,12 +521,7 @@ namespace ft
 			void		reverse(void)
 			{
 				list temp;
-				iterator it = this->begin();
-				while (it != this->end())
-				{
-					temp.push_front(*it);
-					it++;
-				}
+				temp.assign(this->rbegin(), this->rend());
 				this->clear();
 				this->swap(temp);
 			}

@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:49:35 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/07 12:28:26 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/11 08:39:19 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ namespace ft
 			{
 				return (this->_prev);
 			}
+			m_node * const &next(void) const
+			{
+				return (this->_next);
+			}
+			m_node * const &prev(void) const
+			{
+				return (this->_prev);
+			}
+
 			value_type	&getData(void)
 			{
 				return (this->_data);
