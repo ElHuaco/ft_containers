@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/11 11:39:14 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/11 12:52:26 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../shared_tools/predicates.hpp"
 #include "../shared_tools/disable_if.hpp"
 #include "RandomIterator.hpp"
+#include <stdexcept>
 #include <limits>
 
 namespace ft
@@ -173,11 +174,163 @@ namespace ft
 			{
 				return (this->_c[n]);
 			}
-			refrence			at(size_type n)
+			reference			at(size_type n)
 			{
-				//Exception
+				if (n >= _size)
+					throw (std::out_of_range("Out of range"));
+				else
+					return (this->_c[n]);
 			}
-			
+			const_reference		at(size_type n)
+			{
+				if (n >= _size)
+					throw (std::out_of_range("Out of range"));
+				else
+					return (this->_c[n]);
+			}
+			reference			front(void)
+			{
+				return (*this->_c);
+			}
+			const_reference		front(void) const
+			{
+				return (*this->_c);
+			}
+			reference			back(void)
+			{
+				return (this->_c[_size - 1]);
+			}
+			const_reference		back(void) const
+			{
+				return (this->_c[_size - 1]);
+			}
+			/****************************/
+			/* MODIFIER MEMBER FUNCTIONS*/
+			/****************************/
+			template <class InputIterator>
+			void assign (InputIterator first, InputIterator last,
+				typename ft::disable_if
+					<ft::is_integral<InputIterator> >::type *dummy = 0)
+			{
+				this->clear();
+				this->insert(this->begin(), first, last);
+			}
+			void assign(size_type n, const value_type &val = value_type())
+			{
+				this->clear();
+				this->insert(this->begin(), n, val);
+			}
+			void push_back(const value_type &val)
+			{
+				this->insert(iterator(this->end()), val);
+			}
+			void pop_back(const value_type &val)
+			{
+				this->insert(iterator(this->begin()), val);
+			}
+			//insert comprueba si puede simplemente asignar por capacidad
+			//insert en end() pero no vacío?
+			iterator insert(iterator position, const_value &val)
+			{
+			}
+			void insert(iterator position, size_type n, const value_type &val)
+			{
+			}
+			template <class InputIterator>
+			void insert (iterator position, InputIterator first, InputIterator last,
+				typename ft::disable_if
+					<ft::is_integral<InputIterator> >::type *dummy = 0)
+			{
+				InputIterator it(const_cast<pointer>(first.getPointer()));
+				InputIterator it2(const_cast<pointer>(last.getPointer()));
+			}
+			//erase no cambia capacidad?
+			iterator erase(iterator position)
+			{
+			}
+			iterator erase(iterator first, iterator last)
+			{
+			}
+			void swap(vector &other)
+			{
+			}
+			void clear()
+			{
+				this->erase(this->begin(), this->end());
+			}
 	};
+	/****************************/
+	/*  RELATIONAL OPERATORS    */
+	/****************************/
+	template <class T, class Alloc>
+	bool operator== (const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		typename ft::vector<T, Alloc>::iterator it(
+			const_cast<T *>(lhs.begin().getPointer()));
+		typename ft::vector<T, Alloc>::iterator itend(
+			const_cast<T *>(lhs.end().getPointer()));
+		typename ft::vector<T, Alloc>::iterator it2(
+			const_cast<T *>(rhs.begin().getPointer()));
+		while (it.getPointer() != itend)
+		{
+			if (*it != *it2)
+				return (false);
+			it++;
+			it2++;
+		}
+		return (true);
+	}
+	template <class T>
+	bool operator!= (const vector<T> &lhs, const vector<T> &rhs)
+	{
+		return (!(lhs == rhs));
+	}
+	template <class T>
+	bool operator< (const vector<T> &lhs, const vector<T> &rhs)
+	{
+		typename ft::vector<T, Alloc>::iterator it(
+			const_cast<T *>(lhs.begin().getPointer()));
+		typename ft::vector<T, Alloc>::iterator itend(
+			const_cast<T *>(lhs.end().getPointer()));
+		typename ft::vector<T, Alloc>::iterator it2(
+			const_cast<T *>(rhs.begin().getPointer()));
+		while (it != itend)
+		{
+			if (it.getPointer() == nullptr && it2.getPointer() != nullptr)
+				return (true);
+			else if (it2.getPointer() == nullptr)
+				return (false);
+			if (*it < *it2)
+				return (true);
+			it++;
+			it2++;
+		}
+		return (false);
+	}
+	template <class T>
+	bool operator<= (const vector<T> &lhs, const vector<T> &rhs)
+	{
+		return (!(rhs < lhs));
+	}
+	template <class T>
+	bool operator> (const vector<T> &lhs, const vector<T> &rhs)
+	{
+		return (rhs < lhs);
+	}
+	template <class T>
+	bool operator>= (const vector<T> &lhs, const vector<T> &rhs)
+	{
+		return (!(lhs < rhs));
+	}
+	/****************************/
+	/*      SWAP OVERLOAD       */
+	/****************************/
+	template <class T, class Alloc>
+	void swap (vector<T, Alloc> &x, vector<T, Alloc> &y)
+	{
+		x.swap(y);
+	}
 };
 #endif
