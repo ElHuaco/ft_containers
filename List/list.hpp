@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/11 08:54:15 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/11 09:34:06 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include "../shared_tools/predicates.hpp"
 # include "Node.hpp"
 # include "BidirectionalListIterator.hpp"
-
-# include <iostream>
 
 namespace ft
 {

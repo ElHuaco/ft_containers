@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/10 10:16:27 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/11 11:40:12 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ int main (int argc, char **argv)
 	}
 	if (!strcmp(argv[1], "list"))
 		test_list();
+	else if (!strcmp(argv[1], "vector"))
+		test_vector();
 	return (0);
 }
