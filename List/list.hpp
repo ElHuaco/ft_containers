@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/11 09:34:06 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/12 13:12:35 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ namespace ft
 					first++;
 				}
 			}
-			list (const list &other) : _size(0)
+			list (const list &other) : _size(0), _head(nullptr), _end(nullptr)
 			{
 				*this = other;
 			}

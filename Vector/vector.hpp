@@ -6,17 +6,19 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/12 12:24:13 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/12 13:18:01 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "../shared_tools/disable_if.hpp"
-#include "RandomIterator.hpp"
-#include <stdexcept>
-#include <limits>
+# include "../shared_tools/disable_if.hpp"
+# include "RandomIterator.hpp"
+# include <stdexcept>
+# include <limits>
+
+#include <iostream>
 
 namespace ft
 {
@@ -70,7 +72,8 @@ namespace ft
 			{
 				this->insert(this->begin(), first, last);
 			}
-			vector(const vector &other)
+			vector(const vector &other) :
+				_c(nullptr), _size(0), _capacity(0)
 			{
 				*this = other;
 			}
@@ -80,6 +83,8 @@ namespace ft
 			}
 			vector &operator=(const vector &rhs)
 			{
+				if (this == &rhs)
+					return (*this);
 				this->assign(rhs.begin(), rhs.end());
 				return (*this);
 			}
@@ -155,10 +160,13 @@ namespace ft
 				if (_capacity >= n)
 					return ;
 				vector tmp = *this;
+for (iterator it = tmp.begin(); it != tmp.end(); ++it)
+	std::cout << *it << std::endl;
+
 				this->clear();
 				this->_capacity = n;
 				this->_size = tmp._size;
-				this->_c = new value_type[n];
+				this->_c = new value_type[n + 1];
 				for(size_type i = 0; i < _size; ++i)
 					this->_c[i] = tmp._c[i];
 			}
@@ -229,46 +237,61 @@ namespace ft
 			}
 			iterator insert(iterator position, const value_type &val)
 			{
-				this->_size++;
-				if (_capacity >= _size)
+std::cout << "Entering insert on " << position.getPointer() << " with " << val;
+std::cout << std::endl;
+				if (_capacity >= _size + 1)
 				{
+std::cout << "\t Enough-capacity mode..." << std::endl;
 					for (iterator it = this->end(); it != position; --it)
+					{
+std::cout << "position: " << position.getPointer() << std::endl;
+std::cout << "it: " << it.getPointer() << std::endl;
 						*it = *(it - 1);
+					}
 					*position = val;
+					this->_size++;
 					return (position);
 				}
 				else if (this->_capacity == 0)
 				{
+std::cout << "\t No capacity mode..." << std::endl;
 					this->_c = new value_type[2];
 					this->_capacity = 2;
 					this->_c[0] = val;
+					this->_size = 1;
 					return (iterator(this->_c));
 				}
 				else
 				{
+std::cout << "\t Not enough-capacity mode..." << std::endl;
 					pointer tmp = new value_type[(_capacity + 1) * 2];
 					size_type i = 0;
 					size_type j = 0;
 					iterator ret;
 					while (j < _capacity)
 					{
-						if (this->begin() + i == position)
+						if (this->begin() + j == position)
 						{
 							ret = tmp + i;
 							tmp[i++] = val;
 						}
-						tmp[i] = this->_c[j++];
+						tmp[i++] = this->_c[j++];
 					}
 					this->_capacity = (_capacity + 1) * 2;
 					delete[] this->_c;
 					this->_c = tmp;
+					this->_size++;
 					return (ret);
 				}
 			}
 			void insert(iterator position, size_type n, const value_type &val)
 			{
 				for (size_type i = 0; i < n; ++i)
-					this->insert(position, val);
+				{
+					position = this->insert(position, val);
+for (iterator it = this->begin(); it != this->end(); ++it)
+	std::cout << *it << std::endl;
+				}
 			}
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last,
@@ -279,7 +302,7 @@ namespace ft
 				InputIterator it2(const_cast<pointer>(last.getPointer()));
 				while (it != it2)
 				{
-					this->insert(position, *it++);
+					position = this->insert(position, *it++);
 					if (this->_size != 1)
 						position++;
 				}
@@ -314,7 +337,12 @@ namespace ft
 			}
 			void clear()
 			{
+				if (this->_c == nullptr)
+					return ;
+std::cout << "Deleting array..." << std::endl;
 				delete[] this->_c;
+				this->_c = nullptr;
+std::cout << "Deleted array." << std::endl;
 				_size = 0;
 				_capacity = 0;
 			}
