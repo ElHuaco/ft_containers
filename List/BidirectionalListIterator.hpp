@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:38:17 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/11 09:31:30 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/12 10:34:40 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,9 @@ namespace ft
 			}
 			ReverseListIterator(pointer defptr)
 				: base_iterator(typename base_iterator::iterator_type(defptr))
+			{
+			}
+			virtual ~ReverseListIterator(void)
 			{
 			}
 			ReverseListIterator &operator=(const ReverseListIterator &rhs)

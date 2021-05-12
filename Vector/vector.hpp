@@ -6,14 +6,13 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/11 12:52:26 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/12 11:55:54 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "../shared_tools/predicates.hpp"
 #include "../shared_tools/disable_if.hpp"
 #include "RandomIterator.hpp"
 #include <stdexcept>
@@ -44,9 +43,9 @@ namespace ft
 			/****************************/
 			/*        ATTRIBUTES        */
 			/****************************/
-			value_type		*_c;
-			size_type		_size;
-			size_type		_capacity;
+			pointer		_c;
+			size_type	_size;
+			size_type	_capacity;
 
 		public:
 			/****************************/
@@ -60,7 +59,7 @@ namespace ft
 				const allocator_type &alloc = allocator_type()) :
 				_c(nullptr), _size(0), _capacity(0)
 			{
-				this->assign(n, val);
+				this->insert(this->begin(), n, val);
 			}
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
@@ -69,7 +68,7 @@ namespace ft
 					<ft::is_integral<InputIterator> >::type *dummy = 0) :
 				_c(nullptr), _size(0), _capacity(0)
 			{
-				this->assign(first, last);
+				this->insert(this->begin(), first, last);
 			}
 			vector(const vector &other)
 			{
@@ -222,19 +221,53 @@ namespace ft
 			}
 			void push_back(const value_type &val)
 			{
-				this->insert(iterator(this->end()), val);
+				this->insert(this->end(), val);
 			}
 			void pop_back(const value_type &val)
 			{
-				this->insert(iterator(this->begin()), val);
+				this->erase(--this->end());
 			}
-			//insert comprueba si puede simplemente asignar por capacidad
-			//insert en end() pero no vacío?
 			iterator insert(iterator position, const_value &val)
 			{
+				this->_size++;
+				if (_capacity >= _size)
+				{
+					for (iterator it = this->end(); it != position; --it)
+						*it = *(it - 1);
+					*position = val;
+					return (position);
+				}
+				else if (this->_capacity == 0)
+				{
+					this->_c = new value_type[2];
+					this->_capacity = 2;
+					this->_c[0] = val;
+					return (iterator(this->_c));
+				}
+				else
+				{
+					pointer tmp = new value_type[(_capacity + 1) * 2];
+					size_type i = 0;
+					size_type j = 0;
+					while (j < _capacity)
+					{
+						if (this->begin() + i == position)
+						{
+							iterator ret = tmp + i;
+							tmp[i++] = val;
+						}
+						tmp[i] = this->_c[j++];
+					}
+					this->_capacity = (_capacity + 1) * 2;
+					delete[] this->_c;
+					this->_c = tmp;
+					return (ret);
+				}
 			}
 			void insert(iterator position, size_type n, const value_type &val)
 			{
+				for (size_type i = 0; i < n; ++i)
+					this->insert(position, val);
 			}
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last,
@@ -243,20 +276,46 @@ namespace ft
 			{
 				InputIterator it(const_cast<pointer>(first.getPointer()));
 				InputIterator it2(const_cast<pointer>(last.getPointer()));
+				while (it != it2)
+				{
+					this->insert(position, *it++);
+					if (this->_size != 1)
+						position++;
+				}
 			}
-			//erase no cambia capacidad?
 			iterator erase(iterator position)
 			{
+				if (_capacity == 0 || position.getPointer() == nullptr || _size == 0)
+					return (iterator());
+				this->_size--;
+				for (iterator it = position; it != this->end(); ++it)
+					*it = *(it + 1);
+				return (position);
 			}
 			iterator erase(iterator first, iterator last)
 			{
+				iterator ret;
+				while (first != last)
+					ret = this->erase(first++);
+				return (ret);
 			}
 			void swap(vector &other)
 			{
+				size_type tmp_s = this->_size;
+				this->_size = other._size;
+				other._size = tmp_s;
+				tmp_s = this->_capacity;
+				this->_capacity = other._capacity;
+				other._capacity = tmp_s;
+				pointer tmp_c = this->_c;
+				this->_c = other._size;
+				other._size = tmp_c;
 			}
 			void clear()
 			{
-				this->erase(this->begin(), this->end());
+				delete[] this->_c;
+				_size = 0;
+				_capacity = 0;
 			}
 	};
 	/****************************/
