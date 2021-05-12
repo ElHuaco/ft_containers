@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 10:09:20 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/12 10:34:52 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/12 12:21:52 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ namespace ft
 	template <class T>
 		bool operator<= (const RandomIterator<T> &lhs, const RandomIterator<T> &rhs)
 		{
-			return (!(rh < lhs));
+			return (!(rhs < lhs));
 		}
 	template <class T>
 		bool operator>= (const RandomIterator<T> &lhs, const RandomIterator<T> &rhs)
@@ -267,7 +267,7 @@ namespace ft
 		bool operator<= (const ReverseRandomIterator<Base> &lhs,
 			const ReverseRandomIterator<Base> &rhs)
 		{
-			return (!(rh < lhs));
+			return (!(rhs < lhs));
 		}
 	template <class Base>
 		bool operator>= (const ReverseRandomIterator<Base> &lhs,

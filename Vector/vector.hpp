@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/12 11:55:54 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/12 12:24:13 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ namespace ft
 			typedef value_type const					&const_reference;
 			typedef RandomIterator<value_type>			iterator;
 			typedef RandomIterator<value_type const>	const_iterator;
-			typedef ReverseVecIterator<iterator>		reverse_iterator;
-			typedef ReverseVecIterator<const_iterator>	const_reverse_iterator;
+			typedef ReverseRandomIterator<iterator>		reverse_iterator;
+			typedef ReverseRandomIterator<const_iterator>	const_reverse_iterator;
 			typedef ptrdiff_t							difference_type;
 			typedef size_t								size_type;
 
@@ -180,7 +180,7 @@ namespace ft
 				else
 					return (this->_c[n]);
 			}
-			const_reference		at(size_type n)
+			const_reference		at(size_type n) const
 			{
 				if (n >= _size)
 					throw (std::out_of_range("Out of range"));
@@ -227,7 +227,7 @@ namespace ft
 			{
 				this->erase(--this->end());
 			}
-			iterator insert(iterator position, const_value &val)
+			iterator insert(iterator position, const value_type &val)
 			{
 				this->_size++;
 				if (_capacity >= _size)
@@ -249,11 +249,12 @@ namespace ft
 					pointer tmp = new value_type[(_capacity + 1) * 2];
 					size_type i = 0;
 					size_type j = 0;
+					iterator ret;
 					while (j < _capacity)
 					{
 						if (this->begin() + i == position)
 						{
-							iterator ret = tmp + i;
+							ret = tmp + i;
 							tmp[i++] = val;
 						}
 						tmp[i] = this->_c[j++];
@@ -295,8 +296,8 @@ namespace ft
 			iterator erase(iterator first, iterator last)
 			{
 				iterator ret;
-				while (first != last)
-					ret = this->erase(first++);
+				while (first != last--)
+					ret = this->erase(first);
 				return (ret);
 			}
 			void swap(vector &other)
@@ -349,11 +350,11 @@ namespace ft
 	template <class T>
 	bool operator< (const vector<T> &lhs, const vector<T> &rhs)
 	{
-		typename ft::vector<T, Alloc>::iterator it(
+		typename ft::vector<T>::iterator it(
 			const_cast<T *>(lhs.begin().getPointer()));
-		typename ft::vector<T, Alloc>::iterator itend(
+		typename ft::vector<T>::iterator itend(
 			const_cast<T *>(lhs.end().getPointer()));
-		typename ft::vector<T, Alloc>::iterator it2(
+		typename ft::vector<T>::iterator it2(
 			const_cast<T *>(rhs.begin().getPointer()));
 		while (it != itend)
 		{
