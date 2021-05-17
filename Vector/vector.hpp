@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 10:42:58 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/17 11:32:03 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,12 +216,18 @@ namespace ft
 				typename ft::disable_if
 					<ft::is_integral<InputIterator> >::type *dummy = 0)
 			{
-				this->clear();
+				if (last.getPointer() - first.getPointer() + _size >= _capacity)
+					this->clear();
+				else
+					this->erase(this->begin(), this->end());
 				this->insert(this->begin(), first, last);
 			}
 			void assign(size_type n, const value_type &val = value_type())
 			{
-				this->clear();
+				if (n + _size >= _capacity)
+					this->clear();
+				else
+					this->erase(this->begin(), this->end());
 				this->insert(this->begin(), n, val);
 			}
 			void push_back(const value_type &val)
@@ -252,7 +258,7 @@ namespace ft
 				}
 				else
 				{
-					pointer tmp = new value_type[(_capacity + 1) * 2];
+					pointer tmp = new value_type[(_capacity) * 2];
 					size_type i = 0;
 					size_type j = 0;
 					iterator ret;
@@ -265,7 +271,7 @@ namespace ft
 						}
 						tmp[i++] = this->_c[j++];
 					}
-					this->_capacity = (_capacity + 1) * 2;
+					this->_capacity = (_capacity) * 2;
 					delete[] this->_c;
 					this->_c = tmp;
 					this->_size++;
@@ -318,8 +324,8 @@ namespace ft
 				this->_capacity = other._capacity;
 				other._capacity = tmp_s;
 				pointer tmp_c = this->_c;
-				this->_c = other._size;
-				other._size = tmp_c;
+				this->_c = other._c;
+				other._c = tmp_c;
 			}
 			void clear()
 			{
@@ -345,7 +351,7 @@ namespace ft
 			const_cast<T *>(lhs.end().getPointer()));
 		typename ft::vector<T, Alloc>::iterator it2(
 			const_cast<T *>(rhs.begin().getPointer()));
-		while (it.getPointer() != itend)
+		while (it != itend)
 		{
 			if (*it != *it2)
 				return (false);
