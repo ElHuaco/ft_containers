@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 11:39:40 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 11:53:17 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/17 13:21:48 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 
 namespace ft
 {
-	typename <class T, class Container = ft::list<T> > class stack
+	template <class T, class Container = ft::list<T> > class stack
 	{
 		public:
-			typename T			value_type;
-			typename Container	container_type;
-			typename size_t		size_type;
+			typedef T			value_type;
+			typedef Container	container_type;
+			typedef size_t		size_type;
 
 		private:
 			container_type		_c;

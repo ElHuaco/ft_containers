@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 11:56:25 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 11:59:14 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/17 13:22:00 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 namespace ft
 {
-	typename <class T, class Container = ft::list<T> > class queue
+	template <class T, class Container = ft::list<T> > class queue
 	{
 		public:
-			typename T			value_type;
-			typename Container	container_type;
+			typedef T			value_type;
+			typedef Container	container_type;
 
 		private:
 			container_type		_c;
