@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/17 13:39:15 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/17 13:45:08 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,15 @@ int main (int argc, char **argv)
 		test_stack();
 	else if (!strcmp(argv[1], "queue"))
 		test_queue();
+	else if (!strcmp(argv[1], "map"))
+		test_map();
+	else if (!strcmp(argv[1], "all"))
+	{
+		test_list();
+		test_vector();
+		test_map();
+		test_stack();
+		test_queue();
+	}
 	return (0);
 }
