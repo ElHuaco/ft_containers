@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 11:56:25 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 13:22:00 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/17 13:39:48 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ namespace ft
 		public:
 			typedef T			value_type;
 			typedef Container	container_type;
+			typedef size_t		size_type;
 
 		private:
 			container_type		_c;

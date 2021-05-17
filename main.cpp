@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/17 13:02:40 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/17 13:39:15 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ namespace Color
 #include "Tests/test_list.cpp"
 #include "Tests/test_vector.cpp"
 #include "Tests/test_stack.cpp"
+#include "Tests/test_queue.cpp"
 
 int main (int argc, char **argv)
 {
@@ -53,5 +54,7 @@ int main (int argc, char **argv)
 		test_vector();
 	else if (!strcmp(argv[1], "stack"))
 		test_stack();
+	else if (!strcmp(argv[1], "queue"))
+		test_queue();
 	return (0);
 }
