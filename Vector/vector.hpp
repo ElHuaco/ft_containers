@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/12 13:18:01 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/17 10:42:58 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,9 +160,6 @@ namespace ft
 				if (_capacity >= n)
 					return ;
 				vector tmp = *this;
-for (iterator it = tmp.begin(); it != tmp.end(); ++it)
-	std::cout << *it << std::endl;
-
 				this->clear();
 				this->_capacity = n;
 				this->_size = tmp._size;
@@ -231,30 +228,22 @@ for (iterator it = tmp.begin(); it != tmp.end(); ++it)
 			{
 				this->insert(this->end(), val);
 			}
-			void pop_back(const value_type &val)
+			void pop_back(void)
 			{
 				this->erase(--this->end());
 			}
 			iterator insert(iterator position, const value_type &val)
 			{
-std::cout << "Entering insert on " << position.getPointer() << " with " << val;
-std::cout << std::endl;
-				if (_capacity >= _size + 1)
+				if (_capacity > _size + 1)
 				{
-std::cout << "\t Enough-capacity mode..." << std::endl;
 					for (iterator it = this->end(); it != position; --it)
-					{
-std::cout << "position: " << position.getPointer() << std::endl;
-std::cout << "it: " << it.getPointer() << std::endl;
 						*it = *(it - 1);
-					}
 					*position = val;
 					this->_size++;
 					return (position);
 				}
 				else if (this->_capacity == 0)
 				{
-std::cout << "\t No capacity mode..." << std::endl;
 					this->_c = new value_type[2];
 					this->_capacity = 2;
 					this->_c[0] = val;
@@ -263,7 +252,6 @@ std::cout << "\t No capacity mode..." << std::endl;
 				}
 				else
 				{
-std::cout << "\t Not enough-capacity mode..." << std::endl;
 					pointer tmp = new value_type[(_capacity + 1) * 2];
 					size_type i = 0;
 					size_type j = 0;
@@ -287,10 +275,9 @@ std::cout << "\t Not enough-capacity mode..." << std::endl;
 			void insert(iterator position, size_type n, const value_type &val)
 			{
 				for (size_type i = 0; i < n; ++i)
-				{
+				{	
 					position = this->insert(position, val);
-for (iterator it = this->begin(); it != this->end(); ++it)
-	std::cout << *it << std::endl;
+					position++;
 				}
 			}
 			template <class InputIterator>
@@ -303,8 +290,7 @@ for (iterator it = this->begin(); it != this->end(); ++it)
 				while (it != it2)
 				{
 					position = this->insert(position, *it++);
-					if (this->_size != 1)
-						position++;
+					position++;
 				}
 			}
 			iterator erase(iterator position)
@@ -339,10 +325,8 @@ for (iterator it = this->begin(); it != this->end(); ++it)
 			{
 				if (this->_c == nullptr)
 					return ;
-std::cout << "Deleting array..." << std::endl;
 				delete[] this->_c;
 				this->_c = nullptr;
-std::cout << "Deleted array." << std::endl;
 				_size = 0;
 				_capacity = 0;
 			}
