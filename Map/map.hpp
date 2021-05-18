@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/18 10:07:50 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/18 11:51:25 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ namespace ft
 			/****************************/
 			typedef Key										key_type;
 			typedef T										mapped_type;
-			typedef pair<const key_type, mapped_type>		value_type;
+			typedef std::pair<const key_type, mapped_type>	value_type;
 			typedef Compare									key_compare;
 			typedef Alloc									allocator_type;
-			typedef allocator_type::reference				reference
-			typedef allocator_type::const_reference			const_reference
-			typedef allocator_type::pointer					pointer
-			typedef allocator_type::const_pointer			const_pointer
+			typedef typename allocator_type::reference		reference
+			typedef typename allocator_type::const_reference	const_reference
+			typedef typename allocator_type::pointer		pointer
+			typedef typename allocator_type::const_pointer	const_pointer
 			typedef BSTNode<value_type>						node;
 			typedef BidirectionalMapIterator<value_type>	iterator;
 			typedef BidirectionalMapIterator<const value_type>	const_iterator;
@@ -91,15 +91,93 @@ namespace ft
 				_root(nullptr), _size(0)
 			{
 			}
-			map(const map &other)
+			map(const map &other) :
+				_root(nullptr), _size(0)
 			{
 				*this = other;
 			}
 			~map(void)
 			{
+				this->clear();
 			}
 			map	&operator=(const map &rhs)
 			{
+				if (this == &rhs)
+					return (*this);
+				if (this->_size != 0)
+					this->clear();
+				this->insert(rhs.begin(), rhs.end());
+				return (*this);
+			}
+			/****************************/
+			/* ITERATOR MEMBER FUNCTIONS*/
+			/****************************/
+			iterator		begin(void)
+			{
+				if (this->_root == nullptr)
+					return (iterator(this->_root));
+				node *tmp = this->_root;
+				while (tmp->left() != nullptr)
+					tmp = tmp->left();
+				return (iterator(tmp));
+			}
+			const_iterator	begin(void) const
+			{
+				if (this->_root == nullptr)
+					return (const_iterator(this->_root));
+				node *tmp = this->_root;
+				while (tmp->left() != nullptr)
+					tmp = tmp->left();
+				return (const_iterator(tmp));
+			}
+			iterator		end(void)
+			{
+				return (iterator(nullptr));
+			}
+			const_iterator	end(void) const
+			{
+				return (const_iterator(nullptr));
+			}
+			reverse_iterator		rbegin(void)
+			{
+				if (this->_root == nullptr)
+					return (reverse_iterator(this->_root));
+				node *tmp = this->_root;
+				while (tmp->right() != nullptr)
+					tmp = tmp->right();
+				return (reverse_iterator(tmp));
+			}
+			const_reverse_iterator	rbegin(void) const
+			{
+				if (this->_root == nullptr)
+					return (const_reverse_iterator(this->_root));
+				node *tmp = this->_root;
+				while (tmp->right() != nullptr)
+					tmp = tmp->right();
+				return (const_reverse_iterator(tmp));
+			}
+			reverse_iterator		rend(void)
+			{
+				return (reverse_iterator(nullptr));
+			}
+			const_reverse_iterator	rend(void) const
+			{
+				return (const_reverse_iterator(nullptr));
+			}
+			/****************************/
+			/* CAPACITY MEMBER FUNCTIONS*/
+			/****************************/
+			bool		empty(void) const
+			{
+				return (this->_size == 0);
+			}
+			size_type	size(void) const
+			{
+				return (this->_size);
+			}
+			size_type	max_size(void) const
+			{
+				return (std::numeric_limits<size_type>::max() / sizeof(node));
 			}
 	};
 };

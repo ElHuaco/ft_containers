@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 11:32:03 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/18 11:45:52 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ namespace ft
 			/****************************/
 			typedef T									value_type;
 			typedef Alloc								allocator_type;
-			typedef value_type							*pointer;
-			typedef value_type const					*const_pointer;
-			typedef value_type							&reference;
-			typedef value_type const					&const_reference;
+			typedef typename allocator_type::pointer	pointer;
+			typedef typename allocator_type::const_pointer		const_pointer;
+			typedef typename allocator_type::reference	reference;
+			typedef typename allocator_type::const_reference	const_reference;
 			typedef RandomIterator<value_type>			iterator;
 			typedef RandomIterator<value_type const>	const_iterator;
 			typedef ReverseRandomIterator<iterator>		reverse_iterator;

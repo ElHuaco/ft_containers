@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 09:46:29 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/18 10:03:26 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/18 12:01:03 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ namespace ft
 	template <class T> class BSTNode
 	{
 		public:
-			typedef T					value_type;
-			typedef BSTNode<value_type>	m_node;
+			typedef T									value_type;
+//			typedef typename value_type::first_type		key_type;
+//			typedef typename value_type::second_type	mapped_type;
+			typedef BSTNode<value_type>					m_node;
 			
 		private:
 			value_type		_data;
