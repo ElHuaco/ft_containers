@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 10:18:12 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/19 10:31:27 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,19 @@ namespace ft
 					<ft::is_integral<InputIterator> >::type* dummy = 0)
 			{
 			}
+			void	swap(map &x)
+			{
+				node *tmp = this->_root;
+				this->_root = x._root;
+				x._root = tmp;
+				size_type tmp_s = this->_size;
+				this->_size = x._size;
+				x._size = tmp_s;
+			}
+			void	clear(void)
+			{
+				this->erase(this->begin(), this->end());
+			}
 			/****************************/
 			/* OBSERVER MEMBER FUNCTIONS*/
 			/****************************/
@@ -247,8 +260,59 @@ namespace ft
 				iterator tmp = this->find(k);
 				return (tmp.getPointer() == nullptr ? 0 : 1);
 			}
-			iterator	lower_bound(const key_type &k)
+			iterator		lower_bound(const key_type &k)
 			{
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					if (key_compate(it->first, k) == false)
+						return (it);
+					++it;
+				}
+				return (it);
+			}
+			const_iterator	lower_bound(const key_type &k) const
+			{
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					if (key_compate(it->first, k) == false)
+						return (const_iterator(it.getPointer()));
+					++it;
+				}
+				return (const_iterator(it.getPointer()));
+			}
+			iterator		upper_bound(const key_type &k)
+			{
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					if (key_compate(it->first, k) == true)
+						return (it);
+					++it;
+				}
+				return (it);
+			}
+			const_iterator	upper_bound(const key_type &k) const
+			{
+				iterator it = this->begin();
+				while (it != this->end())
+				{
+					if (key_compate(it->first, k) == true)
+						return (const_iterator(it.getPointer()));
+					++it;
+				}
+				return (const_iterator(it.getPointer()));
+			}
+			std::pair<iterator, iterator>				equal_range(const key_type &k)
+			{
+				return (std::pair<iterator, iterator>(
+					this->lower_bond(k), this->upper_bond(k)));
+			}
+			std::pair<const_iterator, const_iterator>	equal_range(const key_type &k)
+			{
+				return (std::pair<const_iterator, const_iterator>(
+					this->lower_bond(k), this->upper_bond(k)));
 			}
 	};
 }
