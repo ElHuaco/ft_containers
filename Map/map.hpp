@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 11:53:10 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/19 11:56:35 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ namespace ft
 						{
 							it.getPointer()->InsertRight(new node(val));
 							it.getPointer() = it.getPointer()->right();
+							this->_size++;
 							return (std::make_pair(it, true));
 						}
 						it.getPointer() = it.getPointer()->right();
@@ -220,6 +221,7 @@ namespace ft
 						{
 							it.getPointer()->InsertLeft(new node(val));
 							it.getPointer() = it.getPointer()->left();
+							this->_size++;
 							return (std::make_pair(it, true));
 						}
 						it.getPointer() = it.getPointer()->left();
@@ -237,8 +239,8 @@ namespace ft
 			{
 				InputIterator it(const_cast<node *>(first.getPointer()));
 				InputIterator it2(const_cast<node *>(last.getPointer()));
-				while (first != last)
-					this->insert(*first++);
+				while (it != it2)
+					this->insert(*it++);
 			}
 			void		erase(iterator position)
 			{

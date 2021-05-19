@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 09:46:29 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 09:22:25 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/19 11:59:42 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,25 @@ namespace ft
 			{
 				return (this->_data);
 			}	
+			/* METHODS FOR INSERT */
+			void	insertRight(m_node *ptr)
+			{
+				if (ptr == nullptr)
+					return ;
+				ptr->_parent = this;
+				ptr->_right = nullptr;
+				ptr->_left = nullptr;
+				this->_right = ptr;
+			}
+			void	insertLeft(m_node *ptr)
+			{
+				if (ptr == nullptr)
+					return ;
+				ptr->_parent = this;
+				ptr->_right = nullptr;
+				ptr->_left = nullptr;
+				this->_left = ptr;
+			}
 	};
 }
 #endif
