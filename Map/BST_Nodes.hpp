@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 09:46:29 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/18 12:01:03 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/19 09:22:25 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,27 @@ namespace ft
 				return (*this);
 			}
 			/* SET(GET)TERS */
-			m_node		*&left(void)
+			m_node		*left(void)
 			{
 				return (this->_left);
 			}
-			m_node		*&right(void)
+			m_node		*right(void)
 			{
 				return (this->_right);
 			}
-			m_node		*&parent(void)
+			m_node		*parent(void)
 			{
 				return (this->_parent);
 			}
-			m_node * const &left(void) const
+			m_node const *left(void) const
 			{
 				return (this->_left);
 			}
-			m_node * const &right(void) const
+			m_node const *right(void) const
 			{
 				return (this->_right);
 			}
-			m_node * const &parent(void) const
+			m_node const *parent(void) const
 			{
 				return (this->_parent);
 			}
@@ -86,5 +86,5 @@ namespace ft
 				return (this->_data);
 			}	
 	};
-};
+}
 #endif

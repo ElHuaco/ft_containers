@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/18 11:51:25 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/19 09:22:17 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,17 @@ namespace ft
 			{
 				return (std::numeric_limits<size_type>::max() / sizeof(node));
 			}
+			/****************************/
+			/* OBSERVER MEMBER FUNCTIONS*/
+			/****************************/
+			key_compare	key_comp(void) const
+			{
+				return (key_compare());
+			}
+			value_compare	value_comp(void) const
+			{
+				return (value_compare());
+			}
 	};
-};
+}
 #endif
