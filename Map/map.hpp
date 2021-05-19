@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 10:31:27 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/19 11:53:10 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,15 +193,60 @@ namespace ft
 			/****************************/
 			std::pair<iterator, bool>	insert(const value_type &val)
 			{
+				if (this->_size == 0)
+				{
+					this->_root = new node(val);
+					this->_size++;
+					return (std::make_pair(iterator(this->_root), true));
+				}
+				iterator it(this->_root);
+				while (1)
+				{
+					if (it->first == val.first)
+						return (std::make_pair(it, false));
+					else if (key_compare(it->first, k) == true)
+					{
+						if (it.getPointer()->right() == nullptr)
+						{
+							it.getPointer()->InsertRight(new node(val));
+							it.getPointer() = it.getPointer()->right();
+							return (std::make_pair(it, true));
+						}
+						it.getPointer() = it.getPointer()->right();
+					}
+					else
+					{
+						if (it.getPointer()->left() == nullptr)
+						{
+							it.getPointer()->InsertLeft(new node(val));
+							it.getPointer() = it.getPointer()->left();
+							return (std::make_pair(it, true));
+						}
+						it.getPointer() = it.getPointer()->left();
+					}
+				}
 			}
-			iterator					insert(iterator position,
-				const value_type &val)
+			iterator	insert(iterator position, const value_type &val)
 			{
+				return (this->insert(val));
 			}
 			template <class InputIterator>
 			void insert (InputIterator first, InputIterator last,
 				typename ft::disable_if
 					<ft::is_integral<InputIterator> >::type* dummy = 0)
+			{
+				InputIterator it(const_cast<node *>(first.getPointer()));
+				InputIterator it2(const_cast<node *>(last.getPointer()));
+				while (first != last)
+					this->insert(*first++);
+			}
+			void		erase(iterator position)
+			{
+			}
+			size_type	erase(const key_type &k)
+			{
+			}
+			void		erase(iterator first, iterator last)
 			{
 			}
 			void	swap(map &x)
@@ -233,27 +278,17 @@ namespace ft
 			/****************************/
 			iterator		find(const key_type &k)
 			{
-				iterator tmp(this->_root);
-				while (tmp.getPointer() != nullptr && tmp->first != k)
-				{
-					if (key_compare(tmp->first, k) == true)
-						tmp.getPointer() = tmp.getPointer()->right();
-					else
-						tmp.getPointer() = tmp.getPointer()->left();
-				}
-				return (tmp);
+				for (iterator it = this->begin(); it != this->end(); ++it)
+					if (it->first == k)
+						return (it);
+				return (it);
 			}
 			const_iterator	find(const key_type &k) const
 			{
-				iterator tmp(this->_root);
-				while (tmp.getPointer() != nullptr && tmp->first != k)
-				{
-					if (key_compare(tmp->first, k) == true)
-						tmp.getPointer() = tmp.getPointer()->right();
-					else
-						tmp.getPointer() = tmp.getPointer()->left();
-				}
-				return (const_iterator(tmp.getPointer()));
+				for (iterator it = this->begin(); it != this->end(); ++it)
+					if (it->first == k)
+						return (const_iterator(it.getPointer()));
+				return (const_iterator(it.getPointer()));
 			}
 			size_type	count(const key_type &k) const
 			{
@@ -262,57 +297,39 @@ namespace ft
 			}
 			iterator		lower_bound(const key_type &k)
 			{
-				iterator it = this->begin();
-				while (it != this->end())
-				{
-					if (key_compate(it->first, k) == false)
+				for (iterator it = this->begin(); it != this->end(); ++it)
+					if (key_compare(it->first, k) == true)
 						return (it);
-					++it;
-				}
 				return (it);
 			}
 			const_iterator	lower_bound(const key_type &k) const
 			{
-				iterator it = this->begin();
-				while (it != this->end())
-				{
-					if (key_compate(it->first, k) == false)
+				for (iterator it = this->begin(); it != this->end(); ++it)
+					if (key_compare(it->first, k) == true)
 						return (const_iterator(it.getPointer()));
-					++it;
-				}
 				return (const_iterator(it.getPointer()));
 			}
 			iterator		upper_bound(const key_type &k)
 			{
-				iterator it = this->begin();
-				while (it != this->end())
-				{
-					if (key_compate(it->first, k) == true)
+				for (iterator it = this->begin(); it != this->end(); ++it)
+					if (key_compare(it->first, k) == false)
 						return (it);
-					++it;
-				}
 				return (it);
 			}
 			const_iterator	upper_bound(const key_type &k) const
 			{
-				iterator it = this->begin();
-				while (it != this->end())
-				{
-					if (key_compate(it->first, k) == true)
+				for (iterator it = this->begin(); it != this->end(); ++it)
+					if (key_compare(it->first, k) == false)
 						return (const_iterator(it.getPointer()));
-					++it;
-				}
 				return (const_iterator(it.getPointer()));
 			}
-			std::pair<iterator, iterator>				equal_range(const key_type &k)
+			std::pair<iterator, iterator> equal_range(const key_type &k)
 			{
-				return (std::pair<iterator, iterator>(
-					this->lower_bond(k), this->upper_bond(k)));
+				return (std::make_pair(this->lower_bond(k), this->upper_bond(k)));
 			}
-			std::pair<const_iterator, const_iterator>	equal_range(const key_type &k)
+			std::pair<const_iterator, const_iterator> equal_range(const key_type &k)
 			{
-				return (std::pair<const_iterator, const_iterator>(
-					this->lower_bond(k), this->upper_bond(k)));
+				return (std::make_pair(this->lower_bond(k), this->upper_bond(k)));
 			}
 	};
 }
