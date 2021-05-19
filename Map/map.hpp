@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 09:22:17 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/19 10:18:12 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ namespace ft
 					<ft::is_integral<InputIterator> >::type* dummy = 0) :
 				_root(nullptr), _size(0)
 			{
+				this->insert(first, last);
 			}
 			map(const map &other) :
 				_root(nullptr), _size(0)
@@ -180,6 +181,30 @@ namespace ft
 				return (std::numeric_limits<size_type>::max() / sizeof(node));
 			}
 			/****************************/
+			/* ELEMENT ACCESS FUNCTIONS */
+			/****************************/
+			mapped_type	&operator[](const key_type &k)
+			{
+				return (*((this->insert(
+					std::make_pair(k, mapped_type()))).first).second);
+			}
+			/****************************/
+			/* MODIFIER MEMBER FUNCTIONS*/
+			/****************************/
+			std::pair<iterator, bool>	insert(const value_type &val)
+			{
+			}
+			iterator					insert(iterator position,
+				const value_type &val)
+			{
+			}
+			template <class InputIterator>
+			void insert (InputIterator first, InputIterator last,
+				typename ft::disable_if
+					<ft::is_integral<InputIterator> >::type* dummy = 0)
+			{
+			}
+			/****************************/
 			/* OBSERVER MEMBER FUNCTIONS*/
 			/****************************/
 			key_compare	key_comp(void) const
@@ -189,6 +214,41 @@ namespace ft
 			value_compare	value_comp(void) const
 			{
 				return (value_compare());
+			}
+			/****************************/
+			/* OPERATION MEMBER FUNCTION*/
+			/****************************/
+			iterator		find(const key_type &k)
+			{
+				iterator tmp(this->_root);
+				while (tmp.getPointer() != nullptr && tmp->first != k)
+				{
+					if (key_compare(tmp->first, k) == true)
+						tmp.getPointer() = tmp.getPointer()->right();
+					else
+						tmp.getPointer() = tmp.getPointer()->left();
+				}
+				return (tmp);
+			}
+			const_iterator	find(const key_type &k) const
+			{
+				iterator tmp(this->_root);
+				while (tmp.getPointer() != nullptr && tmp->first != k)
+				{
+					if (key_compare(tmp->first, k) == true)
+						tmp.getPointer() = tmp.getPointer()->right();
+					else
+						tmp.getPointer() = tmp.getPointer()->left();
+				}
+				return (const_iterator(tmp.getPointer()));
+			}
+			size_type	count(const key_type &k) const
+			{
+				iterator tmp = this->find(k);
+				return (tmp.getPointer() == nullptr ? 0 : 1);
+			}
+			iterator	lower_bound(const key_type &k)
+			{
 			}
 	};
 }

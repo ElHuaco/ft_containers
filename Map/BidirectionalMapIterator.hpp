@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 10:09:55 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 09:49:55 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/19 09:53:16 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,9 @@ namespace ft
 				}
 				else
 				{
-					tmp = _ptr->parent();
-					while (tmp != nullptr && _ptr == tmp->right())
-					{
+					while ((tmp = _ptr->parent()) != nullptr
+						&& _ptr == tmp->right())
 						_ptr = tmp;
-						tmp = tmp->parent();
-					}
 				}
 				_ptr = tmp;
 				return (*this);
@@ -104,12 +101,9 @@ namespace ft
 				}
 				else
 				{
-					tmp = _ptr->parent();
-					while (tmp != nullptr && _ptr == tmp->left())
-					{
+					while ((tmp = _ptr->parent()) != nullptr
+						&& _ptr == tmp->left())
 						_ptr = tmp;
-						tmp = tmp->parent();
-					}
 				}
 				_ptr = tmp;
 				return (*this);
