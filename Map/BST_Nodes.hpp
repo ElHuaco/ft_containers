@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 09:46:29 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 11:59:42 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/21 11:32:06 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,38 @@ namespace ft
 				ptr->_right = nullptr;
 				ptr->_left = nullptr;
 				this->_left = ptr;
+			}
+			/* METHODS FOR ERASE */
+			void	deleteLeaf(void)
+			{
+				if (_parent != nullptr)
+				{
+					if (_parent->_left == this)
+						_parent->_left = nullptr;
+					else
+						_parent->_right = nullptr;
+				}
+				delete this;
+				this = nullptr;
+			}
+			void	deleteOneChild(void)
+			{
+				m_node *ptr = (_left == nullptr) ? _right : _left;
+				if (_parent != nullptr)
+				{
+					if (_parent->_left == this)
+						_parent->_left = ptr;
+					else
+						_parent->_right = ptr;
+				}
+				delete this;
+				this = nullptr;
+			}
+			void	swap(m_node *ptr)
+			{
+				value_type tmp = this->_data;
+				this->_data = ptr->_data;
+				ptr->_data = tmp;
 			}
 	};
 }

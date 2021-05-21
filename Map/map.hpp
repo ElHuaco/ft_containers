@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 11:56:35 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/21 11:30:55 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,12 +244,41 @@ namespace ft
 			}
 			void		erase(iterator position)
 			{
+				if (position.getPointer() == nullptr)
+					return ;
+				if (position.getPointer()->left() == nullptr &&
+					position.getPointer()->right() == nullptr)
+					position.getPointer()->deleteLeaf();
+				else if (position.getPointer()->left() == nullptr ||
+					position.getPointer()->right() == nullptr)
+				{
+					if (position.getPointer() == this->_root)
+						this->_root = (position.getPointer()->left() == nullptr) ?
+							position.getPointer()->right() :
+							position.getPointer()->left();
+					position.getPointer()->deleteOneChild();
+				}
+				else
+				{
+					iterator it2 = position;
+					iterator it = ++position;
+					position = it2;
+					position.getPointer()->swap(it.getPointer());
+					this->erase(it);
+				}
+				this->_size--;
 			}
 			size_type	erase(const key_type &k)
 			{
+				iterator it = this->find(k);
+				size_type ret = (it.getPointer() == nullptr) ? 0 : 1;
+				this->erase(it);
+				return (ret);
 			}
 			void		erase(iterator first, iterator last)
 			{
+				while (first != last)
+					this->erase(*first++);
 			}
 			void	swap(map &x)
 			{
@@ -295,7 +324,7 @@ namespace ft
 			size_type	count(const key_type &k) const
 			{
 				iterator tmp = this->find(k);
-				return (tmp.getPointer() == nullptr ? 0 : 1);
+				return ((tmp.getPointer() == nullptr) ? 0 : 1);
 			}
 			iterator		lower_bound(const key_type &k)
 			{
