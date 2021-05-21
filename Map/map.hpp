@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/21 12:12:38 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/21 13:09:47 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft
 			/****************************/
 			typedef Key										key_type;
 			typedef T										mapped_type;
-			typedef std::pair<const key_type, mapped_type>	value_type;
+			typedef std::pair<key_type, mapped_type>	value_type;
 			typedef Compare									key_compare;
 			typedef Alloc									allocator_type;
 			typedef typename allocator_type::reference		reference;
@@ -204,27 +204,27 @@ namespace ft
 				{
 					if (it->first == val.first)
 						return (std::make_pair(it, false));
-					else if (key_compare(it->first, val.first) == true)
+					else if (key_compare()(it->first, val.first) == true)
 					{
 						if (it.getPointer()->right() == nullptr)
 						{
-							it.getPointer()->InsertRight(new node(val));
-							it.getPointer() = it.getPointer()->right();
+							it.getPointer()->insertRight(new node(val));
+							it = it.getPointer()->right();
 							this->_size++;
 							return (std::make_pair(it, true));
 						}
-						it.getPointer() = it.getPointer()->right();
+						it = it.getPointer()->right();
 					}
 					else
 					{
 						if (it.getPointer()->left() == nullptr)
 						{
-							it.getPointer()->InsertLeft(new node(val));
-							it.getPointer() = it.getPointer()->left();
+							it.getPointer()->insertLeft(new node(val));
+							it = it.getPointer()->left();
 							this->_size++;
 							return (std::make_pair(it, true));
 						}
-						it.getPointer() = it.getPointer()->left();
+						it = it.getPointer()->left();
 					}
 				}
 			}
@@ -233,18 +233,21 @@ namespace ft
 				return (this->insert(val));
 			}
 			template <class InputIterator>
-			void insert (InputIterator first, InputIterator last,
-				typename ft::disable_if
-					<ft::is_integral<InputIterator> >::type* dummy = 0)
+			void insert (InputIterator first, InputIterator last)
+//				typename ft::disable_if
+//					<ft::is_integral<InputIterator> >::type* dummy = 0)
 			{
 				InputIterator it(const_cast<node *>(first.getPointer()));
 				InputIterator it2(const_cast<node *>(last.getPointer()));
 				while (it != it2)
-					this->insert(*it++);
+				{
+					this->insert(*it);
+					it++;
+				}
 			}
 			void		erase(iterator position)
 			{
-				if (position.getPointer() == nullptr)
+				if (position.getPointer() == nullptr || this->empty() == true)
 					return ;
 				if (position.getPointer()->left() == nullptr &&
 					position.getPointer()->right() == nullptr)
@@ -278,7 +281,7 @@ namespace ft
 			void		erase(iterator first, iterator last)
 			{
 				while (first != last)
-					this->erase(*first++);
+					this->erase(first++);
 			}
 			void	swap(map &x)
 			{
@@ -332,7 +335,7 @@ namespace ft
 			{
 				iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
-					if (key_compare(it->first, k) == true)
+					if (key_compare()(it->first, k) == true)
 						return (it);
 				return (it);
 			}
@@ -340,7 +343,7 @@ namespace ft
 			{
 				iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
-					if (key_compare(it->first, k) == true)
+					if (key_compare()(it->first, k) == true)
 						return (const_iterator(it.getPointer()));
 				return (const_iterator(it.getPointer()));
 			}
@@ -348,7 +351,7 @@ namespace ft
 			{
 				iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
-					if (key_compare(it->first, k) == false)
+					if (key_compare()(it->first, k) == false)
 						return (it);
 				return (it);
 			}
@@ -356,7 +359,7 @@ namespace ft
 			{
 				iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
-					if (key_compare(it->first, k) == false)
+					if (key_compare()(it->first, k) == false)
 						return (const_iterator(it.getPointer()));
 				return (const_iterator(it.getPointer()));
 			}

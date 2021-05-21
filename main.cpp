@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 12:06:27 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/21 11:34:36 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/21 13:48:32 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ namespace Color
 int main (int argc, char **argv)
 {
 	if (argc != 2)
-	{	
-		std::cout << "Enter a container name." << std::endl;
-		return (0);
+	{
+		test_list();
+		test_vector();
+		test_map();
+		test_stack();
+		test_queue();
 	}
-	if (!strcmp(argv[1], "list"))
+	else if (!strcmp(argv[1], "list"))
 		test_list();
 	else if (!strcmp(argv[1], "vector"))
 		test_vector();

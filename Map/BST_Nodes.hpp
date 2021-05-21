@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 09:46:29 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/21 11:52:24 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/21 12:54:47 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ namespace ft
 						_parent->_right = nullptr;
 				}
 				delete this;
-				this = nullptr;
 			}
 			void	deleteOneChild(void)
 			{
@@ -128,7 +127,6 @@ namespace ft
 						_parent->_right = ptr;
 				}
 				delete this;
-				this = nullptr;
 			}
 			void	swap(m_node *ptr)
 			{

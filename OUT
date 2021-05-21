@@ -1,0 +1,19 @@
+[1m[31mMAP TESTS[0m
+[93mCoplien and Constructors[0m
+Map [96mSTM1: [0mis empty.
+Map [32mFTM1: [0mis empty.
+[93mModifier Member Functions[0m
+STM1.insert(std::make_pair<char, double>('a', 3.14)): 
+	Map [96mSTM1: [0m[a]: 3.14, END; Size: 1
+FTM1.insert(std::make_pair<char, double>('a', 3.14)): 
+	Map [32mFTM1: [0m[a]: 3.14, END; Size: 1
+STM1.insert(std::make_pair<char, double>('A', 0.0001)): 
+	Map [96mSTM1: [0m[A]: 0.0001, [a]: 3.14, END; Size: 2
+FTM1.insert(std::make_pair<char, double>('A', 0.0001)): 
+	Map [32mFTM1: [0m[A]: 0.0001, [a]: 3.14, END; Size: 2
+STM1.insert(std::make_pair<char, double>('b', 42.42)): 
+	Map [96mSTM1: [0m[A]: 0.0001, [a]: 3.14, [b]: 42.42, END; Size: 3
+FTM1.insert(std::make_pair<char, double>('b', 42.42)): 
+	Map [32mFTM1: [0m[A]: 0.0001, [a]: 3.14, [b]: 42.42, END; Size: 3
+STM2(STM1.begin(), STM1.end()): Map [96mSTM2: [0m[A]: 0.0001, [a]: 3.14, [b]: 42.42, END; Size: 3
+FTM2(FTM1.begin(), FTM1.end()): Map test ending.Map [32mFTM2: [0m[A]: 0.0001, [a]: 3.14, [b]: 42.42, END; Size: 3
