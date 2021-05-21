@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 10:09:55 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/19 09:53:16 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/21 12:04:29 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 namespace ft
 {
-	template <class T> class BidirectionalMapIterator
-		: public std::iterator<std::bidirectional_iterator_tag, BSTNode<T> >
+	template <class T, class Node> class BidirectionalMapIterator
+		: public std::iterator<std::bidirectional_iterator_tag, Node>
 	{
 		public:
 			typedef T			value_type;

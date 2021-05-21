@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 09:46:29 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/21 11:32:06 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/21 11:52:24 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ namespace ft
 
 		public:
 			/* COPLIEN */
-			explicit Node(const value_type &data = value_type()) : _data(data),
+			explicit BSTNode(const value_type &data = value_type()) : _data(data),
 				_left(nullptr), _right(nullptr), _parent(nullptr)
 			{
 			}
-			Node(const Node &other)
+			BSTNode(const BSTNode &other)
 			{
 				*this = other;
 			}
-			~Node(void)
+			~BSTNode(void)
 			{
 			}
-			Node	&operator=(const Node &rhs)
+			BSTNode	&operator=(const BSTNode &rhs)
 			{
 				if (this == &rhs)
 					return (*this);

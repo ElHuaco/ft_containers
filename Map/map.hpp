@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/21 11:30:55 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/21 12:12:38 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 namespace ft
 {
-	template <class Key, class T, class Compare = ft::is_less<Key>,
-		class Alloc = std::allocator<std::pair<const Key, T> > class map
+	template <class Key, class T, class Compare = ft::is_less_ft<Key>,
+		class Alloc = std::allocator<std::pair<const Key, T> > > class map
 	{
 		public:
 			/****************************/
@@ -35,13 +35,13 @@ namespace ft
 			typedef std::pair<const key_type, mapped_type>	value_type;
 			typedef Compare									key_compare;
 			typedef Alloc									allocator_type;
-			typedef typename allocator_type::reference		reference
-			typedef typename allocator_type::const_reference	const_reference
-			typedef typename allocator_type::pointer		pointer
-			typedef typename allocator_type::const_pointer	const_pointer
+			typedef typename allocator_type::reference		reference;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef typename allocator_type::pointer		pointer;
+			typedef typename allocator_type::const_pointer	const_pointer;
 			typedef BSTNode<value_type>						node;
-			typedef BidirectionalMapIterator<value_type>	iterator;
-			typedef BidirectionalMapIterator<const value_type>	const_iterator;
+			typedef BidirectionalMapIterator<value_type, node>	iterator;
+			typedef BidirectionalMapIterator<const value_type, const node> const_iterator;
 			typedef ReverseMapIterator<iterator>			reverse_iterator;
 			typedef ReverseMapIterator<const_iterator>		const_reverse_iterator;
 			typedef ptrdiff_t								difference_type;
@@ -204,7 +204,7 @@ namespace ft
 				{
 					if (it->first == val.first)
 						return (std::make_pair(it, false));
-					else if (key_compare(it->first, k) == true)
+					else if (key_compare(it->first, val.first) == true)
 					{
 						if (it.getPointer()->right() == nullptr)
 						{
@@ -309,14 +309,16 @@ namespace ft
 			/****************************/
 			iterator		find(const key_type &k)
 			{
-				for (iterator it = this->begin(); it != this->end(); ++it)
+				iterator it;
+				for (it = this->begin(); it != this->end(); ++it)
 					if (it->first == k)
 						return (it);
 				return (it);
 			}
 			const_iterator	find(const key_type &k) const
 			{
-				for (iterator it = this->begin(); it != this->end(); ++it)
+				iterator it;
+				for (it = this->begin(); it != this->end(); ++it)
 					if (it->first == k)
 						return (const_iterator(it.getPointer()));
 				return (const_iterator(it.getPointer()));
@@ -328,28 +330,32 @@ namespace ft
 			}
 			iterator		lower_bound(const key_type &k)
 			{
-				for (iterator it = this->begin(); it != this->end(); ++it)
+				iterator it;
+				for (it = this->begin(); it != this->end(); ++it)
 					if (key_compare(it->first, k) == true)
 						return (it);
 				return (it);
 			}
 			const_iterator	lower_bound(const key_type &k) const
 			{
-				for (iterator it = this->begin(); it != this->end(); ++it)
+				iterator it;
+				for (it = this->begin(); it != this->end(); ++it)
 					if (key_compare(it->first, k) == true)
 						return (const_iterator(it.getPointer()));
 				return (const_iterator(it.getPointer()));
 			}
 			iterator		upper_bound(const key_type &k)
 			{
-				for (iterator it = this->begin(); it != this->end(); ++it)
+				iterator it;
+				for (it = this->begin(); it != this->end(); ++it)
 					if (key_compare(it->first, k) == false)
 						return (it);
 				return (it);
 			}
 			const_iterator	upper_bound(const key_type &k) const
 			{
-				for (iterator it = this->begin(); it != this->end(); ++it)
+				iterator it;
+				for (it = this->begin(); it != this->end(); ++it)
 					if (key_compare(it->first, k) == false)
 						return (const_iterator(it.getPointer()));
 				return (const_iterator(it.getPointer()));
@@ -358,10 +364,79 @@ namespace ft
 			{
 				return (std::make_pair(this->lower_bond(k), this->upper_bond(k)));
 			}
-			std::pair<const_iterator, const_iterator> equal_range(const key_type &k)
+			std::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
 			{
 				return (std::make_pair(this->lower_bond(k), this->upper_bond(k)));
 			}
 	};
+	template <class Key,class T, class Compare, class Alloc>
+	bool operator== (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		else
+		{
+			typename ft::map<Key,T,Compare,Alloc>::iterator it(
+				const_cast<BSTNode<T> *>(lhs.begin().getPointer()));
+			typename ft::map<Key,T,Compare,Alloc>::iterator it2(
+				const_cast<BSTNode<T> *>(rhs.begin().getPointer()));
+			while (it.getPointer() != nullptr)
+			{
+				if (*it != *it2)
+					return (false);
+				it++;
+				it2++;
+			}
+		}
+		return (true);
+	}
+	template <class Key,class T, class Compare, class Alloc>
+	bool operator!= (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	{
+		return (!(lhs == rhs));
+	}
+	template <class Key,class T, class Compare, class Alloc>
+	bool operator< (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	{
+		typename ft::map<Key,T,Compare,Alloc>::iterator it(
+			const_cast<BSTNode<T> *>(lhs.begin().getPointer()));
+		typename ft::map<Key,T,Compare,Alloc>::iterator it2(
+			const_cast<BSTNode<T> *>(rhs.begin().getPointer()));
+		while (it.getPointer() != nullptr)
+		{
+			if (it.getPointer() == nullptr && it2.getPointer() != nullptr)
+				return (true);
+			else if (it2.getPointer() == nullptr)
+				return (false);
+			if (*it < *it2)
+				return (true);
+			it++;
+			it2++;
+		}
+		return (false);
+	}
+	template <class Key,class T, class Compare, class Alloc>
+	bool operator<= (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	{
+		return (!(rhs < lhs));
+	}
+	template <class Key,class T, class Compare, class Alloc>
+	bool operator> (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	{
+		return (rhs < lhs);
+	}
+	template <class Key,class T, class Compare, class Alloc>
+	bool operator>= (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	{
+		return (!(lhs < rhs));
+	}
+	/****************************/
+	/*      SWAP OVERLOAD       */
+	/****************************/
+	template <class Key,class T, class Compare, class Alloc>
+	void swap (map<Key,T,Compare,Alloc> &x, map<Key,T,Compare,Alloc> &y)
+	{
+		x.swap(y);
+	}
 }
 #endif
