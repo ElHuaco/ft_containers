@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:35:21 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 11:07:11 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 11:41:49 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,30 @@ std::cout << Color::yellow << "Operation Functions" << Color::clean << std::endl
 	std::cout << "FTM2.count('Z'): " << FTM2.count('Z') << std::endl;
 	std::cout << "STM2.count('k'): " << STM2.count('k') << std::endl;
 	std::cout << "FTM2.count('k'): " << FTM2.count('k') << std::endl;
-std::cout << "Map test ended." << std::endl;
+	std::cout << std::endl;
+	std::cout << "STM2.lower_bound('A'): " << STM2.lower_bound('A')->first << std::endl;
+	std::cout << "FTM2.lower_bound('A'): " << FTM2.lower_bound('A')->first << std::endl;
+	std::cout << "STM2.lower_bound('a'): " << STM2.lower_bound('a')->first << std::endl;
+	std::cout << "FTM2.lower_bound('a'): " << FTM2.lower_bound('a')->first << std::endl;
+	std::cout << "STM2.lower_bound('b'): " << STM2.lower_bound('b')->first << std::endl;
+	std::cout << "FTM2.lower_bound('b'): " << FTM2.lower_bound('b')->first << std::endl;
+	std::cout << "STM2.lower_bound('Z'): " << STM2.lower_bound('Z')->first << std::endl;
+	std::cout << "FTM2.lower_bound('Z'): " << FTM2.lower_bound('Z')->first << std::endl;
+	std::cout << std::endl;
+	std::cout << "STM2.upper_bound('A'): " << STM2.upper_bound('A')->first << std::endl;
+	std::cout << "FTM2.upper_bound('A'): " << FTM2.upper_bound('A')->first << std::endl;
+	std::cout << "STM2.upper_bound('a'): " << STM2.upper_bound('a')->first << std::endl;
+	std::cout << "FTM2.upper_bound('a'): " << FTM2.upper_bound('a')->first << std::endl;
+	std::cout << "STM2.upper_bound('b'): " << STM2.upper_bound('b')->first << std::endl;
+	std::cout << "FTM2.upper_bound('b'): " << FTM2.upper_bound('b')->first << std::endl;
+	std::cout << "STM2.upper_bound('Z'): " << STM2.upper_bound('Z')->first << std::endl;
+	std::cout << "FTM2.upper_bound('Z'): " << FTM2.upper_bound('Z')->first << std::endl;
+	std::cout << std::endl;
+	std::cout << "STM2.equal_range('A'): " << STM2.equal_range('A').first->first << std::endl;
+	std::cout << "FTM2.equal_range('A'): " << FTM2.equal_range('A').first->first << std::endl;
+	std::cout << "STM2.equal_range('c'): " << STM2.equal_range('c').first->first << std::endl;
+	std::cout << "FTM2.equal_range('c'): " << FTM2.equal_range('c').first->first << std::endl;
+	std::cout << "STM2.equal_range('b'): " << STM2.equal_range('b').first->first << std::endl;
+	std::cout << "FTM2.equal_range('b'): " << FTM2.equal_range('b').first->first << std::endl;
 	return ;
 }

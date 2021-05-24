@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 11:04:42 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 11:42:24 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,7 +357,7 @@ namespace ft
 			{
 				iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
-					if (key_compare()(it->first, k) == true)
+					if (key_compare()(it->first, k) == false)
 						return (it);
 				return (it);
 			}
@@ -365,7 +365,7 @@ namespace ft
 			{
 				const_iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
-					if (key_compare()(it->first, k) == true)
+					if (key_compare()(it->first, k) == false)
 						return (it);
 				return (it);
 			}
@@ -373,7 +373,7 @@ namespace ft
 			{
 				iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
-					if (key_compare()(it->first, k) == false)
+					if (key_compare()(k, it->first) == true)
 						return (it);
 				return (it);
 			}
@@ -381,17 +381,17 @@ namespace ft
 			{
 				const_iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
-					if (key_compare()(it->first, k) == false)
+					if (key_compare()(k, it->first) == true)
 						return (it);
 				return (it);
 			}
 			std::pair<iterator, iterator> equal_range(const key_type &k)
 			{
-				return (std::make_pair(this->lower_bond(k), this->upper_bond(k)));
+				return (std::make_pair(this->lower_bound(k), this->upper_bound(k)));
 			}
 			std::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
 			{
-				return (std::make_pair(this->lower_bond(k), this->upper_bond(k)));
+				return (std::make_pair(this->lower_bound(k), this->upper_bound(k)));
 			}
 	};
 	template <class Key,class T, class Compare, class Alloc>
