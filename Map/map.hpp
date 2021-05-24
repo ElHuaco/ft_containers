@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 09:12:15 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 11:04:42 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,8 @@ namespace ft
 			/****************************/
 			mapped_type	&operator[](const key_type &k)
 			{
-				return (*((this->insert(
-					std::make_pair(k, mapped_type()))).first).second);
+				return (this->insert(
+					std::make_pair(k, mapped_type())).first->second);
 			}
 			/****************************/
 			/* MODIFIER MEMBER FUNCTIONS*/
@@ -196,7 +196,7 @@ namespace ft
 			{
 				if (this->_size == 0)
 				{
-//std::cout << "\tNo size insert" << std::endl;
+////std::cout << "\tNo size insert" << std::endl;
 					this->_root = new node(val);
 					this->_size++;
 					return (std::make_pair(iterator(this->_root), true));
@@ -210,27 +210,27 @@ namespace ft
 					{
 						if (it.getPointer()->right() == nullptr)
 						{
-//std::cout << "\tInserting right" << std::endl;
+////std::cout << "\tInserting right" << std::endl;
 							it.getPointer()->insertRight(new node(val));
 							it = it.getPointer()->right();
 							this->_size++;
 							return (std::make_pair(it, true));
 						}
 						it = it.getPointer()->right();
-//std::cout << "\tChecking next right" << std::endl;
+////std::cout << "\tChecking next right" << std::endl;
 					}
 					else
 					{
 						if (it.getPointer()->left() == nullptr)
 						{
-//std::cout << "\tInserting left" << std::endl;
+////std::cout << "\tInserting left" << std::endl;
 							it.getPointer()->insertLeft(new node(val));
 							it = it.getPointer()->left();
 							this->_size++;
 							return (std::make_pair(it, true));
 						}
 						it = it.getPointer()->left();
-//std::cout << "\tChecking next left" << std::endl;
+////std::cout << "\tChecking next left" << std::endl;
 					}
 				}
 			}
@@ -245,7 +245,7 @@ namespace ft
 				InputIterator it2(const_cast<node *>(last.getPointer()));
 				while (it != it2)
 				{
-//std::cout << "Inserting at " << it.getPointer() << std::endl;
+////std::cout << "Inserting at " << it.getPointer() << std::endl;
 					this->insert(*it);
 					it++;
 				}
@@ -278,6 +278,7 @@ namespace ft
 					position = it2;
 					position.getPointer()->swap(it.getPointer());
 					this->erase(it);
+					return ;
 				}
 				this->_size--;
 			}
@@ -298,7 +299,10 @@ namespace ft
 //std::cout << "Erasing " << first->first << std::endl;
 					this->erase(first);
 					first = temp;
+////std::cout << "First: " << first.getPointer() << std::endl;
+////std::cout << "Last: " << last.getPointer() << std::endl;
 				}
+//std::cout << "Erasing done." << std::endl;
 			}
 			void	swap(map &x)
 			{
@@ -312,6 +316,7 @@ namespace ft
 			void	clear(void)
 			{
 				this->erase(this->begin(), this->end());
+				this->_root = nullptr;
 			}
 			/****************************/
 			/* OBSERVER MEMBER FUNCTIONS*/
@@ -337,15 +342,15 @@ namespace ft
 			}
 			const_iterator	find(const key_type &k) const
 			{
-				iterator it;
+				const_iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
 					if (it->first == k)
-						return (const_iterator(it.getPointer()));
-				return (const_iterator(it.getPointer()));
+						return (it);
+				return (it);
 			}
 			size_type	count(const key_type &k) const
 			{
-				iterator tmp = this->find(k);
+				const_iterator tmp = this->find(k);
 				return ((tmp.getPointer() == nullptr) ? 0 : 1);
 			}
 			iterator		lower_bound(const key_type &k)
@@ -358,11 +363,11 @@ namespace ft
 			}
 			const_iterator	lower_bound(const key_type &k) const
 			{
-				iterator it;
+				const_iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
 					if (key_compare()(it->first, k) == true)
-						return (const_iterator(it.getPointer()));
-				return (const_iterator(it.getPointer()));
+						return (it);
+				return (it);
 			}
 			iterator		upper_bound(const key_type &k)
 			{
@@ -374,11 +379,11 @@ namespace ft
 			}
 			const_iterator	upper_bound(const key_type &k) const
 			{
-				iterator it;
+				const_iterator it;
 				for (it = this->begin(); it != this->end(); ++it)
 					if (key_compare()(it->first, k) == false)
-						return (const_iterator(it.getPointer()));
-				return (const_iterator(it.getPointer()));
+						return (it);
+				return (it);
 			}
 			std::pair<iterator, iterator> equal_range(const key_type &k)
 			{
