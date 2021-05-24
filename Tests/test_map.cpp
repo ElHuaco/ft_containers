@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:35:21 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 12:08:29 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 12:44:20 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,5 +220,14 @@ std::cout << Color::yellow << "Relational Operators" << Color::clean << std::end
 	std::cout << " STM2 >= STM3 " << std::boolalpha << (STM2 >= STM3) << std::endl;
 	std::cout << " FTM2 >= FTM3 " << std::boolalpha << (FTM2 >= FTM3) << std::endl;
 	std::cout << std::endl;
+std::cout << Color::yellow << "Swap Overload" << Color::clean << std::endl;
+	std::cout << "swap(STM2, STM3): " << std::endl;
+	swap(STM2, STM3);
+	my::print(STM2, name_STM2);
+	my::print(STM3, name_STM3);
+	std::cout << "swap(FTM2, FTM3): " << std::endl;
+	swap(FTM2, FTM3);
+	my::print(FTM2, name_FTM2);
+	my::print(FTM3, name_FTM3);
 	return ;
 }

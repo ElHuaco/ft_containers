@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 12:17:39 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 12:33:50 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 12:44:50 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,4 +264,13 @@ std::cout << Color::yellow << "Relational Operators" << Color::clean << std::end
 	std::cout << "FTV4 > FTV1: ";
 	std::cout << std::boolalpha << (FTV4 > FTV1);
 	std::cout << std::endl;
+std::cout << Color::yellow << "Swap overload" << Color::clean << std::endl;
+	std::cout << "swap(STV5, STV4): " << std::endl;
+	swap(STV5, STV4);
+	my::print(STV5, name_STV5);
+	my::print(STV4, name_STV4);
+	std::cout << "swap(FTV5, FTV4): " << std::endl;
+	swap(FTV5, FTV4);
+	my::print(FTV5, name_FTV5);
+	my::print(FTV4, name_FTV4);
 }
