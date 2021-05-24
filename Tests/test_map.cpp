@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:35:21 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/21 13:42:07 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 09:10:48 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace my
 			std::cout << "[" << it->first << "]: " << it->second << ", ";
 			it++;
 		}
-		std::cout << "END; " << "Size: " << mp.size() << std::endl;
+		std::cout << "END" << "; Size: " << mp.size() << std::endl; 
 		return ;
 	}
 		template <class Key, class T> void print(std::map<Key, T> &mp, std::string &name)
@@ -46,7 +46,7 @@ namespace my
 			std::cout << "[" << it->first << "]: " << it->second << ", ";
 			it++;
 		}
-		std::cout << "END; " << "Size: " << mp.size() << std::endl;
+		std::cout << "END" << "; Size: " << mp.size() << std::endl; 
 		return ;
 	}
 };
@@ -75,36 +75,37 @@ void test_map(void)
 //		my::print(FTM5, name_FTM5);
 std::cout << Color::yellow << "Modifier Member Functions" << Color::clean << std::endl;
 	std::cout << "STM1.insert(std::make_pair<char, double>('a', 3.14)): "<< std::endl;
-	std::cout << "\t";
 	STM1.insert(std::make_pair<char, double>('a', 3.14));
 	my::print(STM1, name_STM1);
 	std::cout << "FTM1.insert(std::make_pair<char, double>('a', 3.14)): "<< std::endl;
-	std::cout << "\t";
 	FTM1.insert(std::make_pair<char, double>('a', 3.14));
 	my::print(FTM1, name_FTM1);
 	std::cout << "STM1.insert(std::make_pair<char, double>('A', 0.0001)): "<< std::endl;
-	std::cout << "\t";
 	STM1.insert(std::make_pair<char, double>('A', 0.0001));
 	my::print(STM1, name_STM1);
 	std::cout << "FTM1.insert(std::make_pair<char, double>('A', 0.0001)): "<< std::endl;
-	std::cout << "\t";
 	FTM1.insert(std::make_pair<char, double>('A', 0.0001));
 	my::print(FTM1, name_FTM1);
+	std::cout << "STM1.insert(std::make_pair<char, double>('c', 69.0)): "<< std::endl;
+	STM1.insert(std::make_pair<char, double>('c', 69.0));
+	my::print(STM1, name_STM1);
+	std::cout << "FTM1.insert(std::make_pair<char, double>('c', 69.0)): "<< std::endl;
+	FTM1.insert(std::make_pair<char, double>('c', 69.0));
+	my::print(FTM1, name_FTM1);
 	std::cout << "STM1.insert(std::make_pair<char, double>('b', 42.42)): "<< std::endl;
-	std::cout << "\t";
 	STM1.insert(std::make_pair<char, double>('b', 42.42));
 	my::print(STM1, name_STM1);
 	std::cout << "FTM1.insert(std::make_pair<char, double>('b', 42.42)): "<< std::endl;
-	std::cout << "\t";
 	FTM1.insert(std::make_pair<char, double>('b', 42.42));
 	my::print(FTM1, name_FTM1);
-	std::map<char, double> STM2(STM1.begin(), STM1.end()); std::string name_STM2 = "STM2";
-		std::cout << "STM2(STM1.begin(), STM1.end()): ";
-		my::print(STM2, name_STM2);
-	ft::map<char, double> FTM2(FTM1.begin(), FTM1.end()); std::string name_FTM2 = "FTM2";
-		std::cout << "FTM2(FTM1.begin(), FTM1.end()): ";
-	std::cout << "Map test ending.";
-		my::print(FTM2, name_FTM2);
-	std::cout << "Map test ended.";
-	return ;
+	FTM1.erase('a');
+	my::print(FTM1, name_FTM1);
+//	std::map<char, double> STM2(STM1.begin(), STM1.end()); std::string name_STM2 = "STM2";
+//		std::cout << "STM2(STM1.begin(), STM1.end()): " << std::endl;
+//		my::print(STM2, name_STM2);
+//	ft::map<char, double> FTM2(FTM1.begin(), FTM1.end()); std::string name_FTM2 = "FTM2";
+//		std::cout << "FTM2(FTM1.begin(), FTM1.end()): " << std::endl;
+//	my::print(FTM2, name_FTM2);
+//	std::cout << "Map test ended." << std::endl;
+//	return ;
 }

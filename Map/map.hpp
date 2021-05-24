@@ -6,14 +6,13 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/21 13:09:47 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 09:12:15 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
 
-# include "../shared_tools/disable_if.hpp"
 # include "../shared_tools/predicates.hpp"
 # include "BidirectionalMapIterator.hpp"
 # include "BST_Nodes.hpp"
@@ -30,22 +29,22 @@ namespace ft
 			/****************************/
 			/*       MEMBER TYPES       */
 			/****************************/
-			typedef Key										key_type;
-			typedef T										mapped_type;
-			typedef std::pair<key_type, mapped_type>	value_type;
-			typedef Compare									key_compare;
-			typedef Alloc									allocator_type;
-			typedef typename allocator_type::reference		reference;
+			typedef Key											key_type;
+			typedef T											mapped_type;
+			typedef std::pair<key_type, mapped_type>			value_type;
+			typedef Compare										key_compare;
+			typedef Alloc										allocator_type;
+			typedef typename allocator_type::reference			reference;
 			typedef typename allocator_type::const_reference	const_reference;
-			typedef typename allocator_type::pointer		pointer;
-			typedef typename allocator_type::const_pointer	const_pointer;
-			typedef BSTNode<value_type>						node;
+			typedef typename allocator_type::pointer			pointer;
+			typedef typename allocator_type::const_pointer		const_pointer;
+			typedef BSTNode<value_type>							node;
 			typedef BidirectionalMapIterator<value_type, node>	iterator;
 			typedef BidirectionalMapIterator<const value_type, const node> const_iterator;
-			typedef ReverseMapIterator<iterator>			reverse_iterator;
-			typedef ReverseMapIterator<const_iterator>		const_reverse_iterator;
-			typedef ptrdiff_t								difference_type;
-			typedef size_t									size_type;
+			typedef ReverseMapIterator<iterator>				reverse_iterator;
+			typedef ReverseMapIterator<const_iterator>			const_reverse_iterator;
+			typedef ptrdiff_t									difference_type;
+			typedef size_t										size_type;
 			class value_compare : std::binary_function<value_type, value_type, bool>
 			{
 				private:
@@ -74,6 +73,10 @@ namespace ft
 			size_type		_size;
 
 		public:
+			node			*getRoot(void) const
+			{
+				return (this->_root);
+			}
 			/****************************/
 			/* COPLIEN MEMBER FUNCTIONS */
 			/****************************/
@@ -85,9 +88,7 @@ namespace ft
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last,
 				const key_compare &comp = key_compare(),
-				const allocator_type &alloc = allocator_type(),
-				typename ft::disable_if
-					<ft::is_integral<InputIterator> >::type* dummy = 0) :
+				const allocator_type &alloc = allocator_type()) : 
 				_root(nullptr), _size(0)
 			{
 				this->insert(first, last);
@@ -195,6 +196,7 @@ namespace ft
 			{
 				if (this->_size == 0)
 				{
+//std::cout << "\tNo size insert" << std::endl;
 					this->_root = new node(val);
 					this->_size++;
 					return (std::make_pair(iterator(this->_root), true));
@@ -208,23 +210,27 @@ namespace ft
 					{
 						if (it.getPointer()->right() == nullptr)
 						{
+//std::cout << "\tInserting right" << std::endl;
 							it.getPointer()->insertRight(new node(val));
 							it = it.getPointer()->right();
 							this->_size++;
 							return (std::make_pair(it, true));
 						}
 						it = it.getPointer()->right();
+//std::cout << "\tChecking next right" << std::endl;
 					}
 					else
 					{
 						if (it.getPointer()->left() == nullptr)
 						{
+//std::cout << "\tInserting left" << std::endl;
 							it.getPointer()->insertLeft(new node(val));
 							it = it.getPointer()->left();
 							this->_size++;
 							return (std::make_pair(it, true));
 						}
 						it = it.getPointer()->left();
+//std::cout << "\tChecking next left" << std::endl;
 					}
 				}
 			}
@@ -234,13 +240,12 @@ namespace ft
 			}
 			template <class InputIterator>
 			void insert (InputIterator first, InputIterator last)
-//				typename ft::disable_if
-//					<ft::is_integral<InputIterator> >::type* dummy = 0)
 			{
 				InputIterator it(const_cast<node *>(first.getPointer()));
 				InputIterator it2(const_cast<node *>(last.getPointer()));
 				while (it != it2)
 				{
+//std::cout << "Inserting at " << it.getPointer() << std::endl;
 					this->insert(*it);
 					it++;
 				}
@@ -251,7 +256,10 @@ namespace ft
 					return ;
 				if (position.getPointer()->left() == nullptr &&
 					position.getPointer()->right() == nullptr)
+				{
+//std::cout << "\tDeleting Leaf Node" << std::endl;
 					position.getPointer()->deleteLeaf();
+				}
 				else if (position.getPointer()->left() == nullptr ||
 					position.getPointer()->right() == nullptr)
 				{
@@ -259,10 +267,12 @@ namespace ft
 						this->_root = (position.getPointer()->left() == nullptr) ?
 							position.getPointer()->right() :
 							position.getPointer()->left();
+//std::cout << "\tDeleting Node with 1 child" << std::endl;
 					position.getPointer()->deleteOneChild();
 				}
 				else
 				{
+//std::cout << "\tDeleting Node with 2 children" << std::endl;
 					iterator it2 = position;
 					iterator it = ++position;
 					position = it2;
@@ -280,8 +290,15 @@ namespace ft
 			}
 			void		erase(iterator first, iterator last)
 			{
-				while (first != last)
-					this->erase(first++);
+				iterator temp;
+				while ((first != last))
+				{
+					temp = first;
+					++temp;
+//std::cout << "Erasing " << first->first << std::endl;
+					this->erase(first);
+					first = temp;
+				}
 			}
 			void	swap(map &x)
 			{
