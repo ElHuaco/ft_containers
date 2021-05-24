@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 17:52:52 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 12:18:26 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 16:16:39 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,14 +166,15 @@ std::cout << std::endl;
 	STL1.swap(STL3);
 	my::print(STL1, name_STL1);
 	my::print(STL3, name_STL3);
-	std::cout << "STL1.swap(STL5): "<< std::endl;
-	STL1.swap(STL5);
-	my::print(STL1, name_STL1);
-	my::print(STL5, name_STL5);
 	std::cout << "FTL1.swap(FTL3): "<< std::endl;
 	FTL1.swap(FTL3);
 	my::print(FTL1, name_FTL1);
 	my::print(FTL3, name_FTL3);
+std::cout << std::endl;
+	std::cout << "STL1.swap(STL5): "<< std::endl;
+	STL1.swap(STL5);
+	my::print(STL1, name_STL1);
+	my::print(STL5, name_STL5);
 	std::cout << "FTL1.swap(FTL5): "<< std::endl;
 	FTL1.swap(FTL5);
 	my::print(FTL1, name_FTL1);
@@ -182,12 +183,12 @@ std::cout << std::endl;
 	std::cout << "STL1.resize(8): ";
 	STL1.resize(8);
 	my::print(STL1, name_STL1);
-	std::cout << "STL5.resize(3): ";
-	STL5.resize(3);
-	my::print(STL5, name_STL5);
 	std::cout << "FTL1.resize(8): ";
 	FTL1.resize(8);
 	my::print(FTL1, name_FTL1);
+	std::cout << "STL5.resize(3): ";
+	STL5.resize(3);
+	my::print(STL5, name_STL5);
 	std::cout << "FTL5.resize(3): ";
 	FTL5.resize(3);
 	my::print(FTL5, name_FTL5);
@@ -272,14 +273,15 @@ std::cout << Color::yellow << "Relational Operators" << Color::clean << std::end
 	STL2.push_back(500);
 	my::print(STL2, name_STL2);
 	my::print(STL4, name_STL4);
-	std::cout << "STL2 == STL4: ";
-	std::cout << std::boolalpha << (STL2 == STL4);
-	std::cout << std::endl;
 	FTL2.push_back(100);
 	FTL2.push_back(-100);
 	FTL2.push_back(500);
 	my::print(FTL2, name_FTL2);
 	my::print(FTL4, name_FTL4);
+	std::cout << std::endl;
+	std::cout << "STL2 == STL4: ";
+	std::cout << std::boolalpha << (STL2 == STL4);
+	std::cout << std::endl;
 	std::cout << "FTL2 == FTL4: ";
 	std::cout << std::boolalpha << (FTL2 == FTL4);
 	std::cout << std::endl;
@@ -291,7 +293,6 @@ std::cout << Color::yellow << "Relational Operators" << Color::clean << std::end
 	std::cout << std::boolalpha << (FTL4 < FTL2);
 	std::cout << std::endl;
 	std::cout << std::endl;
-	
 	std::cout << "STL4 > STL2: ";
 	std::cout << std::boolalpha << (STL4 > STL2);
 	std::cout << std::endl;

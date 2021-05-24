@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:35:21 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 12:44:20 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 16:51:04 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,24 @@ namespace my
 			mp.getRoot()->getData().first << std::endl; 
 		return ;
 	}
-		template <class Key, class T> void print(std::map<Key, T> &mp, std::string &name)
+	template<class Key, class T> void printBT(const std::string &prefix,
+		const ft::BSTNode<std::pair<Key,T> > *node, bool isLeft)
+	{
+		if (node != nullptr)
+		{
+			std::cout << prefix;
+			std::cout << (isLeft ? "├──" : "└──" );
+			std::cout << "[" << node->getData().first << "]: ";
+			std::cout << node->getData().second << std::endl;
+			printBT(prefix + (isLeft ? "│   " : "    "), node->left(), true);
+			printBT(prefix + (isLeft ? "│   " : "    "), node->right(), false);
+		}
+	}
+	template <class Key, class T> void printBT(const ft::BSTNode<std::pair<Key,T> > *node)
+	{
+		printBT("", node, false);
+	}
+	template <class Key, class T> void print(std::map<Key, T> &mp, std::string &name)
 	{
 		std::cout << "Map " << Color::blue << name << ": " << Color::clean;
 		if (mp.empty())
@@ -110,12 +127,15 @@ std::cout << Color::yellow << "Modifier Member Functions" << Color::clean << std
 		std::cout << "FTM3(FTM1): " << std::endl;
 	my::print(FTM3, name_FTM3);
 	std::cout << std::endl;
+	my::print(FTM1, name_FTM1);
+	my::printBT(FTM1.getRoot());
 	std::cout << "STM1.erase('a'): " << std::endl;
 	STM1.erase('a');
 	my::print(STM1, name_STM1);
 	std::cout << "FTM1.erase('a'): " << std::endl;
 	FTM1.erase('a');
 	my::print(FTM1, name_FTM1);
+	my::printBT(FTM1.getRoot());
 	std::cout << std::endl;
 	std::cout << "STM2.erase(++STM2.begin(), STM2.end()): " << std::endl;
 	STM2.erase(++STM2.begin(), STM2.end());
@@ -194,10 +214,10 @@ std::cout << Color::yellow << "Observer Functions" << Color::clean << std::endl;
 	std::cout << "STM2.value_comp()(*STM2.begin(), *STM2.find(c)): " << std::boolalpha << STM2.key_comp()('A', 'Z') << std::endl;
 	std::cout << "FTM2.value_comp()(*FTM2.begin(), *FTM2.find(c)): " << std::boolalpha << FTM2.key_comp()('A', 'Z') << std::endl;
 std::cout << Color::yellow << "Relational Operators" << Color::clean << std::endl;
-	STM3.insert(std::make_pair('u', -245.2));	
-	FTM3.insert(std::make_pair('u', -245.2));	
-	STM3.insert(std::make_pair('T', -12.007));	
-	FTM3.insert(std::make_pair('T', -12.007));
+	STM3.insert(std::make_pair('u', 0));	
+	FTM3.insert(std::make_pair('u', 0));	
+	STM3.insert(std::make_pair('Z', -1.007));	
+	FTM3.insert(std::make_pair('Z', -1.007));
 	my::print(STM2, name_STM2);
 	my::print(STM3, name_STM3);
 	my::print(FTM2, name_FTM2);

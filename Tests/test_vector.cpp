@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 12:17:39 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 12:44:50 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 16:24:07 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void test_vector(void)
 		std::cout << "FTV5 = FTV4: ";
 		my::print(FTV5, name_FTV5);
 	std::cout << Color::yellow << "Capacity Member Functions" << Color::clean << std::endl;
-	std::cout << "Vector STV1.empty(): " << STV1.empty() << std::endl;
-	std::cout << "Vector FTV1.empty(): " << FTV1.empty() << std::endl;
+	std::cout << "Vector STV1.empty(): " << std::boolalpha << STV1.empty() << std::endl;
+	std::cout << "Vector FTV1.empty(): " << std::boolalpha << FTV1.empty() << std::endl;
 	std::cout << "Vector STV1.capacity(): " << STV1.capacity() << std::endl;
 	std::cout << "Vector FTV1.capacity(): " << FTV1.capacity() << std::endl;
 	std::cout << "Vector STV5.reserve(50) -> ";
@@ -97,12 +97,24 @@ void test_vector(void)
 	std::cout << "Vector FTV2.size(): " << FTV2.size() << std::endl;
 	std::cout << "Vector STV2.max_size(): " << STV2.max_size() << std::endl;
 	std::cout << "Vector FTV2.max_size(): " << FTV2.max_size() << std::endl;
-	std::cout << "Vector STV2.resize(100): ";
-	STV2.resize(100);
+	std::cout << "Vector STV1.resize(1): ";
+	STV1.resize(1);
+	my::print(STV1, name_STV1);
+	std::cout << "Vector FTV1.resize(1): ";
+	FTV1.resize(1);
+	my::print(FTV1, name_FTV1);
+	std::cout << "Vector STV2.resize(10): ";
+	STV2.resize(10);
 	my::print(STV2, name_STV2);
-	std::cout << "Vector FTV2.resize(100): ";
-	FTV2.resize(100);
+	std::cout << "Vector FTV2.resize(10): ";
+	FTV2.resize(10);
 	my::print(FTV2, name_FTV2);
+	std::cout << "Vector STV3.resize(2): ";
+	STV3.resize(2);
+	my::print(STV3, name_STV3);
+	std::cout << "Vector FTV3.resize(2): ";
+	FTV3.resize(2);
+	my::print(FTV3, name_FTV3);
 std::cout << Color::yellow << "Element Access Functions" << Color::clean << std::endl;
 	STV5.push_back(1.57);
 	STV5.insert(STV5.begin(), 234);
@@ -245,21 +257,21 @@ std::cout << Color::yellow << "Relational Operators" << Color::clean << std::end
 	my::print(FTV1, name_FTV1);
 	my::print(FTV5, name_FTV5);
 	my::print(FTV4, name_FTV4);
+	std::cout << std::endl;
 	std::cout << "STV5 == STV4: ";
 	std::cout << std::boolalpha << (STV5 == STV4);
-	std::cout << std::endl;
-	std::cout << "STV4 < STV1: ";
-	std::cout << std::boolalpha << (STV4 < STV1);
-	std::cout << std::endl;
-	std::cout << "STV4 > STV1: ";
-	std::cout << std::boolalpha << (STV4 > STV1);
-	std::cout << std::endl;
 	std::cout << std::endl;
 	std::cout << "FTV5 == FTV4: ";
 	std::cout << std::boolalpha << (FTV5 == FTV4);
 	std::cout << std::endl;
+	std::cout << "STV4 < STV1: ";
+	std::cout << std::boolalpha << (STV4 < STV1);
+	std::cout << std::endl;
 	std::cout << "FTV4 < FTV1: ";
 	std::cout << std::boolalpha << (FTV4 < FTV1);
+	std::cout << std::endl;
+	std::cout << "STV4 > STV1: ";
+	std::cout << std::boolalpha << (STV4 > STV1);
 	std::cout << std::endl;
 	std::cout << "FTV4 > FTV1: ";
 	std::cout << std::boolalpha << (FTV4 > FTV1);
