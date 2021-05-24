@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 12:17:39 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 11:34:30 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 12:33:50 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,28 @@ void test_vector(void)
 	std::cout << "Vector STV2.max_size(): " << STV2.max_size() << std::endl;
 	std::cout << "Vector FTV2.max_size(): " << FTV2.max_size() << std::endl;
 	std::cout << "Vector STV2.resize(100): ";
+	STV2.resize(100);
 	my::print(STV2, name_STV2);
 	std::cout << "Vector FTV2.resize(100): ";
+	FTV2.resize(100);
 	my::print(FTV2, name_FTV2);
 std::cout << Color::yellow << "Element Access Functions" << Color::clean << std::endl;
+	STV5.push_back(1.57);
+	STV5.insert(STV5.begin(), 234);
+	FTV5.push_back(1.57);
+	FTV5.insert(FTV5.begin(), 234);
+	FTV5.erase(++FTV5.begin(), ++++++++FTV5.begin());
+	STV5.erase(++STV5.begin(), ++++++++STV5.begin());
+	my::print(STV5, name_STV5);
+	my::print(FTV5, name_FTV5);
 	std::cout << "Vector STV5.front(): " << STV5.front() << std::endl;
 	std::cout << "Vector FTV5.front(): " << FTV5.front() << std::endl;
 	std::cout << "Vector STV5.back(): " << STV5.back() << std::endl;
 	std::cout << "Vector FTV5.back(): " << FTV5.back() << std::endl;
-	std::cout << "Vector STV5[2]: " << STV5[2] << std::endl;
-	std::cout << "Vector FTV5[2]: " << FTV5[2] << std::endl;
-	std::cout << "Vector STV5.at(2): " << STV5.at(2) << std::endl;
-	std::cout << "Vector FTV5.at(2): " << FTV5.at(2) << std::endl;
+	std::cout << "Vector STV5[1]: " << STV5[1] << std::endl;
+	std::cout << "Vector FTV5[1]: " << FTV5[1] << std::endl;
+	std::cout << "Vector STV5.at(1): " << STV5.at(1) << std::endl;
+	std::cout << "Vector FTV5.at(1): " << FTV5.at(1) << std::endl;
 	try
 	{
 		std::cout << "Vector STV5.at(10000): " << STV5.at(10000) << std::endl;
@@ -121,6 +131,22 @@ std::cout << Color::yellow << "Element Access Functions" << Color::clean << std:
 	try
 	{
 		std::cout << "Vector FTV5.at(10000): " << FTV5.at(10000) << std::endl;
+	}
+	catch (std::out_of_range &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	try
+	{
+		std::cout << "Vector STV5.at(-10000): " << STV5.at(-10000) << std::endl;
+	}
+	catch (std::out_of_range &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	try
+	{
+		std::cout << "Vector FTV5.at(-10000): " << FTV5.at(-10000) << std::endl;
 	}
 	catch (std::out_of_range &e)
 	{
@@ -208,19 +234,19 @@ std::cout << std::endl;
 	my::print(FTV1, name_FTV1);
 	my::print(FTV5, name_FTV5);
 std::cout << Color::yellow << "Relational Operators" << Color::clean << std::endl;
-	STV2.push_back(420.69);
-	STV2.push_back(420.69);
+	STV5.push_back(420.69);
+	STV5.push_back(420.69);
 	my::print(STV1, name_STV1);
-	my::print(STV2, name_STV2);
+	my::print(STV5, name_STV5);
 	my::print(STV4, name_STV4);
 	std::cout << std::endl;
-	FTV2.push_back(420.69);
-	FTV2.push_back(420.69);
+	FTV5.push_back(420.69);
+	FTV5.push_back(420.69);
 	my::print(FTV1, name_FTV1);
-	my::print(FTV2, name_FTV2);
+	my::print(FTV5, name_FTV5);
 	my::print(FTV4, name_FTV4);
-	std::cout << "STV2 == STV4: ";
-	std::cout << std::boolalpha << (STV2 == STV4);
+	std::cout << "STV5 == STV4: ";
+	std::cout << std::boolalpha << (STV5 == STV4);
 	std::cout << std::endl;
 	std::cout << "STV4 < STV1: ";
 	std::cout << std::boolalpha << (STV4 < STV1);
@@ -229,8 +255,8 @@ std::cout << Color::yellow << "Relational Operators" << Color::clean << std::end
 	std::cout << std::boolalpha << (STV4 > STV1);
 	std::cout << std::endl;
 	std::cout << std::endl;
-	std::cout << "FTV2 == FTV4: ";
-	std::cout << std::boolalpha << (FTV2 == FTV4);
+	std::cout << "FTV5 == FTV4: ";
+	std::cout << std::boolalpha << (FTV5 == FTV4);
 	std::cout << std::endl;
 	std::cout << "FTV4 < FTV1: ";
 	std::cout << std::boolalpha << (FTV4 < FTV1);

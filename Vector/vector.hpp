@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/18 11:45:52 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 12:21:29 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,6 +382,8 @@ namespace ft
 				return (false);
 			if (*it < *it2)
 				return (true);
+			else if (*it > *it2)
+				return (false);
 			it++;
 			it2++;
 		}

@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 11:42:24 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 12:20:08 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,6 @@ namespace ft
 			{
 				if (this->_size == 0)
 				{
-////std::cout << "\tNo size insert" << std::endl;
 					this->_root = new node(val);
 					this->_size++;
 					return (std::make_pair(iterator(this->_root), true));
@@ -210,27 +209,23 @@ namespace ft
 					{
 						if (it.getPointer()->right() == nullptr)
 						{
-////std::cout << "\tInserting right" << std::endl;
 							it.getPointer()->insertRight(new node(val));
 							it = it.getPointer()->right();
 							this->_size++;
 							return (std::make_pair(it, true));
 						}
 						it = it.getPointer()->right();
-////std::cout << "\tChecking next right" << std::endl;
 					}
 					else
 					{
 						if (it.getPointer()->left() == nullptr)
 						{
-////std::cout << "\tInserting left" << std::endl;
 							it.getPointer()->insertLeft(new node(val));
 							it = it.getPointer()->left();
 							this->_size++;
 							return (std::make_pair(it, true));
 						}
 						it = it.getPointer()->left();
-////std::cout << "\tChecking next left" << std::endl;
 					}
 				}
 			}
@@ -245,7 +240,6 @@ namespace ft
 				InputIterator it2(const_cast<node *>(last.getPointer()));
 				while (it != it2)
 				{
-////std::cout << "Inserting at " << it.getPointer() << std::endl;
 					this->insert(*it);
 					it++;
 				}
@@ -257,7 +251,6 @@ namespace ft
 				if (position.getPointer()->left() == nullptr &&
 					position.getPointer()->right() == nullptr)
 				{
-//std::cout << "\tDeleting Leaf Node" << std::endl;
 					position.getPointer()->deleteLeaf();
 				}
 				else if (position.getPointer()->left() == nullptr ||
@@ -267,12 +260,10 @@ namespace ft
 						this->_root = (position.getPointer()->left() == nullptr) ?
 							position.getPointer()->right() :
 							position.getPointer()->left();
-//std::cout << "\tDeleting Node with 1 child" << std::endl;
 					position.getPointer()->deleteOneChild();
 				}
 				else
 				{
-//std::cout << "\tDeleting Node with 2 children" << std::endl;
 					iterator it2 = position;
 					iterator it = ++position;
 					position = it2;
@@ -296,13 +287,9 @@ namespace ft
 				{
 					temp = first;
 					++temp;
-//std::cout << "Erasing " << first->first << std::endl;
 					this->erase(first);
 					first = temp;
-////std::cout << "First: " << first.getPointer() << std::endl;
-////std::cout << "Last: " << last.getPointer() << std::endl;
 				}
-//std::cout << "Erasing done." << std::endl;
 			}
 			void	swap(map &x)
 			{
@@ -402,12 +389,12 @@ namespace ft
 		else
 		{
 			typename ft::map<Key,T,Compare,Alloc>::iterator it(
-				const_cast<BSTNode<T> *>(lhs.begin().getPointer()));
+				const_cast<BSTNode<std::pair<Key, T> > *>(lhs.begin().getPointer()));
 			typename ft::map<Key,T,Compare,Alloc>::iterator it2(
-				const_cast<BSTNode<T> *>(rhs.begin().getPointer()));
+				const_cast<BSTNode<std::pair<Key, T> > *>(rhs.begin().getPointer()));
 			while (it.getPointer() != nullptr)
 			{
-				if (*it != *it2)
+				if ((it->first != it2->first) || (it->second != it2->second))
 					return (false);
 				it++;
 				it2++;
@@ -424,17 +411,23 @@ namespace ft
 	bool operator< (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
 	{
 		typename ft::map<Key,T,Compare,Alloc>::iterator it(
-			const_cast<BSTNode<T> *>(lhs.begin().getPointer()));
+			const_cast<BSTNode<std::pair<Key, T> > *>(lhs.begin().getPointer()));
 		typename ft::map<Key,T,Compare,Alloc>::iterator it2(
-			const_cast<BSTNode<T> *>(rhs.begin().getPointer()));
+			const_cast<BSTNode<std::pair<Key, T> > *>(rhs.begin().getPointer()));
 		while (it.getPointer() != nullptr)
 		{
 			if (it.getPointer() == nullptr && it2.getPointer() != nullptr)
 				return (true);
 			else if (it2.getPointer() == nullptr)
 				return (false);
-			if (*it < *it2)
+			if (it->first < it2->first)
 				return (true);
+			else if (it->first > it2->first)
+				return (false);
+			else if ((it->first == it2->first) && (it->second < it2->second))
+				return (true);
+			else if ((it->first == it2->first) && (it->second > it2->second))
+				return (false);
 			it++;
 			it2++;
 		}

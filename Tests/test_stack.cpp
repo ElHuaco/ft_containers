@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 12:51:48 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 13:42:06 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 12:36:50 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void test_stack(void)
 {
-	std::cout << Color::bold << Color::red << "LIST TESTS" << Color::clean << std::endl;
+	std::cout << Color::bold << Color::red << "STACK TESTS" << Color::clean << std::endl;
 	std::cout << Color::yellow << "Coplien and Constructors" << Color::clean << std::endl;
 	std::stack<int> STL1; std::string name_STL1 = "STL1";
 	ft::stack<int> FTL1; std::string name_FTL1 = "FTL1";

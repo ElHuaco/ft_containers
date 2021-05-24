@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:35:21 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 11:41:49 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/24 12:08:29 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ std::cout << Color::yellow << "Coplien and Constructors" << Color::clean << std:
 		my::print(STM1, name_STM1);
 	ft::map<char, double> FTM1; std::string name_FTM1 = "FTM1";
 		my::print(FTM1, name_FTM1);
+	std::cout << std::endl;
 std::cout << Color::yellow << "Modifier Member Functions" << Color::clean << std::endl;
 	std::cout << "STM1.insert(std::make_pair<char, double>('a', 3.14)): "<< std::endl;
 	STM1.insert(std::make_pair<char, double>('a', 3.14));
@@ -186,5 +187,38 @@ std::cout << Color::yellow << "Operation Functions" << Color::clean << std::endl
 	std::cout << "FTM2.equal_range('c'): " << FTM2.equal_range('c').first->first << std::endl;
 	std::cout << "STM2.equal_range('b'): " << STM2.equal_range('b').first->first << std::endl;
 	std::cout << "FTM2.equal_range('b'): " << FTM2.equal_range('b').first->first << std::endl;
+	std::cout << std::endl;
+std::cout << Color::yellow << "Observer Functions" << Color::clean << std::endl;
+	std::cout << "STM2.key_comp()('A', 'Z'): " << std::boolalpha << STM2.key_comp()('A', 'Z') << std::endl;
+	std::cout << "FTM2.key_comp()('A', 'Z'): " << std::boolalpha << FTM2.key_comp()('A', 'Z') << std::endl;
+	std::cout << "STM2.value_comp()(*STM2.begin(), *STM2.find(c)): " << std::boolalpha << STM2.key_comp()('A', 'Z') << std::endl;
+	std::cout << "FTM2.value_comp()(*FTM2.begin(), *FTM2.find(c)): " << std::boolalpha << FTM2.key_comp()('A', 'Z') << std::endl;
+std::cout << Color::yellow << "Relational Operators" << Color::clean << std::endl;
+	STM3.insert(std::make_pair('u', -245.2));	
+	FTM3.insert(std::make_pair('u', -245.2));	
+	STM3.insert(std::make_pair('T', -12.007));	
+	FTM3.insert(std::make_pair('T', -12.007));
+	my::print(STM2, name_STM2);
+	my::print(STM3, name_STM3);
+	my::print(FTM2, name_FTM2);
+	my::print(FTM3, name_FTM3);
+	std::cout << " STM2 == STM3 " << std::boolalpha << (STM2 == STM3) << std::endl;
+	std::cout << " FTM2 == FTM3 " << std::boolalpha << (FTM2 == FTM3) << std::endl;
+	std::cout << std::endl;
+	std::cout << " STM2 != STM3 " << std::boolalpha << (STM2 != STM3) << std::endl;
+	std::cout << " FTM2 != FTM3 " << std::boolalpha << (FTM2 != FTM3) << std::endl;
+	std::cout << std::endl;
+	std::cout << " STM2 < STM3 " << std::boolalpha << (STM2 < STM3) << std::endl;
+	std::cout << " FTM2 < FTM3 " << std::boolalpha << (FTM2 < FTM3) << std::endl;
+	std::cout << std::endl;
+	std::cout << " STM2 <= STM3 " << std::boolalpha << (STM2 <= STM3) << std::endl;
+	std::cout << " FTM2 <= FTM3 " << std::boolalpha << (FTM2 <= FTM3) << std::endl;
+	std::cout << std::endl;
+	std::cout << " STM2 > STM3 " << std::boolalpha << (STM2 > STM3) << std::endl;
+	std::cout << " FTM2 > FTM3 " << std::boolalpha << (FTM2 > FTM3) << std::endl;
+	std::cout << std::endl;
+	std::cout << " STM2 >= STM3 " << std::boolalpha << (STM2 >= STM3) << std::endl;
+	std::cout << " FTM2 >= FTM3 " << std::boolalpha << (FTM2 >= FTM3) << std::endl;
+	std::cout << std::endl;
 	return ;
 }
