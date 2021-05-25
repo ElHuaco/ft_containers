@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:35:21 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 16:51:04 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/25 08:39:42 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 namespace my
 {
-	template <class Key, class T> void print(ft::map<Key, T> &mp, std::string &name)
+	template <class Key, class T> void print(ft::map<Key, T> &mp, const std::string &name)
 	{
 		std::cout << "Map " << Color::green << name << ": " << Color::clean;
 		if (mp.empty())
@@ -249,5 +249,6 @@ std::cout << Color::yellow << "Swap Overload" << Color::clean << std::endl;
 	swap(FTM2, FTM3);
 	my::print(FTM2, name_FTM2);
 	my::print(FTM3, name_FTM3);
+	std::cout << std::endl;
 	return ;
 }

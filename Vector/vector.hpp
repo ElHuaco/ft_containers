@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:16:09 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 12:21:29 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/25 08:42:29 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,7 +341,7 @@ namespace ft
 	/*  RELATIONAL OPERATORS    */
 	/****************************/
 	template <class T, class Alloc>
-	bool operator== (const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+	bool operator== (const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
@@ -361,12 +361,12 @@ namespace ft
 		return (true);
 	}
 	template <class T>
-	bool operator!= (const vector<T> &lhs, const vector<T> &rhs)
+	bool operator!= (const ft::vector<T> &lhs, const ft::vector<T> &rhs)
 	{
 		return (!(lhs == rhs));
 	}
 	template <class T>
-	bool operator< (const vector<T> &lhs, const vector<T> &rhs)
+	bool operator< (const ft::vector<T> &lhs, const ft::vector<T> &rhs)
 	{
 		typename ft::vector<T>::iterator it(
 			const_cast<T *>(lhs.begin().getPointer()));
@@ -390,17 +390,17 @@ namespace ft
 		return (false);
 	}
 	template <class T>
-	bool operator<= (const vector<T> &lhs, const vector<T> &rhs)
+	bool operator<= (const ft::vector<T> &lhs, const ft::vector<T> &rhs)
 	{
 		return (!(rhs < lhs));
 	}
 	template <class T>
-	bool operator> (const vector<T> &lhs, const vector<T> &rhs)
+	bool operator> (const ft::vector<T> &lhs, const ft::vector<T> &rhs)
 	{
 		return (rhs < lhs);
 	}
 	template <class T>
-	bool operator>= (const vector<T> &lhs, const vector<T> &rhs)
+	bool operator>= (const ft::vector<T> &lhs, const ft::vector<T> &rhs)
 	{
 		return (!(lhs < rhs));
 	}
@@ -408,7 +408,7 @@ namespace ft
 	/*      SWAP OVERLOAD       */
 	/****************************/
 	template <class T, class Alloc>
-	void swap (vector<T, Alloc> &x, vector<T, Alloc> &y)
+	void swap (ft::vector<T, Alloc> &x, ft::vector<T, Alloc> &y)
 	{
 		x.swap(y);
 	}

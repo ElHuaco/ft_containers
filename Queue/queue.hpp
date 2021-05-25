@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 11:56:25 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 13:39:48 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/25 08:43:24 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,32 +77,32 @@ namespace ft
 			}
 	};
 	template <class T, class Container>
-	bool operator==(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
+	bool operator==(const ft::queue<T, Container> &lhs, const ft::queue<T, Container> &rhs)
 	{
 		return (lhs._c == rhs._c);
 	}
 	template <class T, class Container>
-	bool operator!=(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
+	bool operator!=(const ft::queue<T, Container> &lhs, const ft::queue<T, Container> &rhs)
 	{
 		return (lhs._c != rhs._c);
 	}
 	template <class T, class Container>
-	bool operator<(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
+	bool operator<(const ft::queue<T, Container> &lhs, const ft::queue<T, Container> &rhs)
 	{
 		return (lhs._c < rhs._c);
 	}
 	template <class T, class Container>
-	bool operator<=(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
+	bool operator<=(const ft::queue<T, Container> &lhs, const ft::queue<T, Container> &rhs)
 	{
 		return (lhs._c <= rhs._c);
 	}
 	template <class T, class Container>
-	bool operator>(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
+	bool operator>(const ft::queue<T, Container> &lhs, const ft::queue<T, Container> &rhs)
 	{
 		return (lhs._c > rhs._c);
 	}
 	template <class T, class Container>
-	bool operator>=(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
+	bool operator>=(const ft::queue<T, Container> &lhs, const ft::queue<T, Container> &rhs)
 	{
 		return (lhs._c >= rhs._c);
 	}

@@ -6,7 +6,7 @@
 /*   By: aleon-ca <aleon-ca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 11:05:47 by aleon-ca          #+#    #+#             */
-/*   Updated: 2021/05/24 12:21:01 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/25 08:41:49 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -527,7 +527,7 @@ namespace ft
 	/*  RELATIONAL OPERATORS    */
 	/****************************/
 	template <class T>
-	bool operator== (const list<T> &lhs, const list<T> &rhs)
+	bool operator== (const ft::list<T> &lhs, const ft::list<T> &rhs)
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
@@ -548,12 +548,12 @@ namespace ft
 		return (true);
 	}
 	template <class T>
-	bool operator!= (const list<T> &lhs, const list<T> &rhs)
+	bool operator!= (const ft::list<T> &lhs, const ft::list<T> &rhs)
 	{
 		return (!(lhs == rhs));
 	}
 	template <class T>
-	bool operator< (const list<T> &lhs, const list<T> &rhs)
+	bool operator< (const ft::list<T> &lhs, const ft::list<T> &rhs)
 	{
 		typename ft::list<T>::iterator it(
 			const_cast<Node<T> *>(lhs.begin().getPointer()));
@@ -575,17 +575,17 @@ namespace ft
 		return (false);
 	}
 	template <class T>
-	bool operator<= (const list<T> &lhs, const list<T> &rhs)
+	bool operator<= (const ft::list<T> &lhs, const ft::list<T> &rhs)
 	{
 		return (!(rhs < lhs));
 	}
 	template <class T>
-	bool operator> (const list<T> &lhs, const list<T> &rhs)
+	bool operator> (const ft::list<T> &lhs, const ft::list<T> &rhs)
 	{
 		return (rhs < lhs);
 	}
 	template <class T>
-	bool operator>= (const list<T> &lhs, const list<T> &rhs)
+	bool operator>= (const ft::list<T> &lhs, const ft::list<T> &rhs)
 	{
 		return (!(lhs < rhs));
 	}
@@ -593,7 +593,7 @@ namespace ft
 	/*      SWAP OVERLOAD       */
 	/****************************/
 	template <class T>
-	void swap (list<T> &x, list<T> &y)
+	void swap (ft::list<T> &x, ft::list<T> &y)
 	{
 		x.swap(y);
 	}

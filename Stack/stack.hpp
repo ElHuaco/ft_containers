@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 11:39:40 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/17 13:21:48 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/25 08:44:46 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,32 @@ namespace ft
 			}
 	};
 	template <class T, class Container>
-	bool operator==(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+	bool operator==(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
 		return (lhs._c == rhs._c);
 	}
 	template <class T, class Container>
-	bool operator!=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+	bool operator!=(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
 		return (lhs._c != rhs._c);
 	}
 	template <class T, class Container>
-	bool operator<(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+	bool operator<(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
 		return (lhs._c < rhs._c);
 	}
 	template <class T, class Container>
-	bool operator<=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+	bool operator<=(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
 		return (lhs._c <= rhs._c);
 	}
 	template <class T, class Container>
-	bool operator>(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+	bool operator>(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
 		return (lhs._c > rhs._c);
 	}
 	template <class T, class Container>
-	bool operator>=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+	bool operator>=(const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs)
 	{
 		return (lhs._c >= rhs._c);
 	}

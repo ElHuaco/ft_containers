@@ -6,7 +6,7 @@
 /*   By: alejandroleon <aleon-ca@student.42.fr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 08:50:51 by alejandro         #+#    #+#             */
-/*   Updated: 2021/05/24 12:20:08 by alejandro        ###   ########.fr       */
+/*   Updated: 2021/05/25 08:41:04 by alejandro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,8 @@ namespace ft
 				if (position.getPointer()->left() == nullptr &&
 					position.getPointer()->right() == nullptr)
 				{
+					if (position.getPointer() == this->_root)
+						this->_root = nullptr;
 					position.getPointer()->deleteLeaf();
 				}
 				else if (position.getPointer()->left() == nullptr ||
@@ -382,7 +384,7 @@ namespace ft
 			}
 	};
 	template <class Key,class T, class Compare, class Alloc>
-	bool operator== (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	bool operator== (const ft::map<Key,T,Compare,Alloc> &lhs, const ft::map<Key,T,Compare,Alloc> &rhs)
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
@@ -403,12 +405,12 @@ namespace ft
 		return (true);
 	}
 	template <class Key,class T, class Compare, class Alloc>
-	bool operator!= (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	bool operator!= (const ft::map<Key,T,Compare,Alloc> &lhs, const ft::map<Key,T,Compare,Alloc> &rhs)
 	{
 		return (!(lhs == rhs));
 	}
 	template <class Key,class T, class Compare, class Alloc>
-	bool operator< (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	bool operator< (const ft::map<Key,T,Compare,Alloc> &lhs, const ft::map<Key,T,Compare,Alloc> &rhs)
 	{
 		typename ft::map<Key,T,Compare,Alloc>::iterator it(
 			const_cast<BSTNode<std::pair<Key, T> > *>(lhs.begin().getPointer()));
@@ -434,17 +436,17 @@ namespace ft
 		return (false);
 	}
 	template <class Key,class T, class Compare, class Alloc>
-	bool operator<= (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	bool operator<= (const ft::map<Key,T,Compare,Alloc> &lhs, const ft::map<Key,T,Compare,Alloc> &rhs)
 	{
 		return (!(rhs < lhs));
 	}
 	template <class Key,class T, class Compare, class Alloc>
-	bool operator> (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	bool operator> (const ft::map<Key,T,Compare,Alloc> &lhs, const ft::map<Key,T,Compare,Alloc> &rhs)
 	{
 		return (rhs < lhs);
 	}
 	template <class Key,class T, class Compare, class Alloc>
-	bool operator>= (const map<Key,T,Compare,Alloc> &lhs, const map<Key,T,Compare,Alloc> &rhs)
+	bool operator>= (const ft::map<Key,T,Compare,Alloc> &lhs, const ft::map<Key,T,Compare,Alloc> &rhs)
 	{
 		return (!(lhs < rhs));
 	}
@@ -452,7 +454,7 @@ namespace ft
 	/*      SWAP OVERLOAD       */
 	/****************************/
 	template <class Key,class T, class Compare, class Alloc>
-	void swap (map<Key,T,Compare,Alloc> &x, map<Key,T,Compare,Alloc> &y)
+	void swap (ft::map<Key,T,Compare,Alloc> &x, ft::map<Key,T,Compare,Alloc> &y)
 	{
 		x.swap(y);
 	}
